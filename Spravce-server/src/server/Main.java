@@ -24,6 +24,7 @@ public class Main {
                 Thread t = new Thread(new ClientConnection(client));
                 t.start();
             }
+
         } catch (IOException ex) {
             System.err.println("ERROR CONNECTED!");
             System.exit(1);
