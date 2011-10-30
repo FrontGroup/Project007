@@ -16,7 +16,7 @@ class DBConnection {
 
 
     public String login(String id, String pass) {
-        //metoda vraci admin/manager/hr/user/KO
+        //metoda vraci ADMIN/MANAGER/HR/EMPLOYEE/KO
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }
