@@ -1,0 +1,106 @@
+<mockup version="1.0" skin="sketch" measuredW="1702" measuredH="530" mockupW="1661" mockupH="517">
+  <controls>
+    <control controlID="67" controlTypeID="com.balsamiq.mockups::TitleWindow" x="41" y="80" w="-1" h="-1" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20SPRAVCE%20-%20User%3A%20ID</text>
+      </controlProperties>
+    </control>
+    <control controlID="68" controlTypeID="com.balsamiq.mockups::MenuBar" x="48" y="105" w="443" h="29" measuredW="206" measuredH="29" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Session%2C%20Users%2C%20Groups</text>
+      </controlProperties>
+    </control>
+    <control controlID="69" controlTypeID="com.balsamiq.mockups::Menu" x="130" y="130" w="-1" h="-1" measuredW="150" measuredH="73" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20User%0ADelete%20User%0AEdit%20User</text>
+      </controlProperties>
+    </control>
+    <control controlID="70" controlTypeID="com.balsamiq.mockups::Canvas" x="562" y="80" w="553" h="450" measuredW="100" measuredH="70" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="71" controlTypeID="com.balsamiq.mockups::TextInput" x="747" y="273" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="72" controlTypeID="com.balsamiq.mockups::Label" x="674" y="277" w="-1" h="-1" measuredW="60" measuredH="21" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Password</text>
+      </controlProperties>
+    </control>
+    <control controlID="73" controlTypeID="com.balsamiq.mockups::List" x="747" y="346" w="-1" h="-1" measuredW="100" measuredH="126" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%DA%u010Detn%ED%0AZedn%EDci%0AProgram%E1to%u0159i</text>
+      </controlProperties>
+    </control>
+    <control controlID="74" controlTypeID="com.balsamiq.mockups::Label" x="685" y="346" w="-1" h="-1" measuredW="48" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Groups</text>
+      </controlProperties>
+    </control>
+    <control controlID="75" controlTypeID="com.balsamiq.mockups::Button" x="746" y="486" w="-1" h="-1" measuredW="97" measuredH="27" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Create%20User</text>
+      </controlProperties>
+    </control>
+    <control controlID="76" controlTypeID="com.balsamiq.mockups::SubTitle" x="596" y="102" w="-1" h="-1" measuredW="179" measuredH="33" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Create%20user%201/2</text>
+      </controlProperties>
+    </control>
+    <control controlID="77" controlTypeID="com.balsamiq.mockups::RadioButtonGroup" x="747" y="201" w="-1" h="-1" measuredW="181" measuredH="63" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%28o%29%20Employee%0A%28%20%29%20Project%20Manager%0A%28%20%29%20Human%20Resources%20Manager</text>
+      </controlProperties>
+    </control>
+    <control controlID="78" controlTypeID="com.balsamiq.mockups::Label" x="667" y="201" w="-1" h="-1" measuredW="63" measuredH="21" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>User%20role%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="79" controlTypeID="com.balsamiq.mockups::StickyNote" x="834" y="355" w="-1" h="-1" measuredW="109" measuredH="123" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Povolen%E9%20%28enabled%29%20jen%20pro%20Employee</text>
+      </controlProperties>
+    </control>
+    <control controlID="80" controlTypeID="com.balsamiq.mockups::Canvas" x="1161" y="82" w="541" h="446" measuredW="100" measuredH="70" zOrder="13" locked="false" isInGroup="-1"/>
+    <control controlID="81" controlTypeID="com.balsamiq.mockups::Label" x="604" y="142" w="-1" h="-1" measuredW="230" measuredH="21" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>User%20ID%20will%20be%20automatically%20generated.</text>
+      </controlProperties>
+    </control>
+    <control controlID="82" controlTypeID="com.balsamiq.mockups::TextInput" x="747" y="304" w="-1" h="-1" measuredW="79" measuredH="27" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="83" controlTypeID="com.balsamiq.mockups::Label" x="642" y="306" w="-1" h="-1" measuredW="92" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Password%20again</text>
+      </controlProperties>
+    </control>
+    <control controlID="84" controlTypeID="com.balsamiq.mockups::Label" x="1219" y="157" w="-1" h="-1" measuredW="220" measuredH="21" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>User%20successfuly%20created%20with%20ID%20xxx.</text>
+      </controlProperties>
+    </control>
+    <control controlID="85" controlTypeID="com.balsamiq.mockups::SubTitle" x="1219" y="109" w="-1" h="-1" measuredW="183" measuredH="33" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Create%20user%202/2</text>
+      </controlProperties>
+    </control>
+    <control controlID="86" controlTypeID="com.balsamiq.mockups::Title" x="43" y="13" w="-1" h="-1" measuredW="437" measuredH="50" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Mockup%20spr%E1vy%20u%u017Eivatel%u016F</text>
+      </controlProperties>
+    </control>
+    <control controlID="87" controlTypeID="com.balsamiq.mockups::Button" x="1308" y="202" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Finish</text>
+      </controlProperties>
+    </control>
+    <control controlID="88" controlTypeID="com.balsamiq.mockups::StickyNote" x="1298" y="228" w="-1" h="-1" measuredW="109" measuredH="123" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Po%20kliknut%ED%20vr%E1t%ED%20na%20%FAvodn%ED%20obrazovku</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>

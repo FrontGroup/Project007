@@ -1,0 +1,163 @@
+<mockup version="1.0" skin="sketch" measuredW="1041" measuredH="1132" mockupW="988" mockupH="1077">
+  <controls>
+    <control controlID="236" controlTypeID="com.balsamiq.mockups::TitleWindow" x="67" y="239" w="450" h="400" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20SPRAVCE</text>
+      </controlProperties>
+    </control>
+    <control controlID="237" controlTypeID="com.balsamiq.mockups::TextInput" x="279" y="375" w="79" h="-1" measuredW="79" measuredH="27" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="238" controlTypeID="com.balsamiq.mockups::TextInput" x="279" y="415" w="79" h="-1" measuredW="79" measuredH="27" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="239" controlTypeID="com.balsamiq.mockups::Label" x="215" y="377" w="49" h="21" measuredW="49" measuredH="21" zOrder="3" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>User%20ID</text>
+      </controlProperties>
+    </control>
+    <control controlID="240" controlTypeID="com.balsamiq.mockups::Label" x="209" y="417" w="60" h="21" measuredW="60" measuredH="21" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Password</text>
+      </controlProperties>
+    </control>
+    <control controlID="241" controlTypeID="com.balsamiq.mockups::Button" x="264" y="454" w="53" h="27" measuredW="53" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Login</text>
+      </controlProperties>
+    </control>
+    <control controlID="242" controlTypeID="com.balsamiq.mockups::Label" x="100" y="196" w="139" h="21" measuredW="139" measuredH="21" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>P%u0159ihla%u0161ovac%ED%20obrazovka</text>
+      </controlProperties>
+    </control>
+    <control controlID="243" controlTypeID="com.balsamiq.mockups::Label" x="626" y="196" w="140" h="21" measuredW="140" measuredH="21" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Nepoveden%E9%20p%u0159ihl%E1%u0161en%ED</text>
+      </controlProperties>
+    </control>
+    <control controlID="244" controlTypeID="com.balsamiq.mockups::TitleWindow" x="591" y="239" w="450" h="400" measuredW="450" measuredH="400" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20SPRAVCE</text>
+      </controlProperties>
+    </control>
+    <control controlID="245" controlTypeID="com.balsamiq.mockups::TextInput" x="803" y="375" w="79" h="-1" measuredW="79" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="246" controlTypeID="com.balsamiq.mockups::TextInput" x="803" y="415" w="79" h="-1" measuredW="79" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="247" controlTypeID="com.balsamiq.mockups::Label" x="739" y="377" w="49" h="21" measuredW="49" measuredH="21" zOrder="11" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>User%20ID</text>
+      </controlProperties>
+    </control>
+    <control controlID="248" controlTypeID="com.balsamiq.mockups::Label" x="733" y="417" w="60" h="21" measuredW="60" measuredH="21" zOrder="12" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Password</text>
+      </controlProperties>
+    </control>
+    <control controlID="249" controlTypeID="com.balsamiq.mockups::Button" x="788" y="454" w="53" h="27" measuredW="53" measuredH="27" zOrder="13" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Login</text>
+      </controlProperties>
+    </control>
+    <control controlID="250" controlTypeID="com.balsamiq.mockups::Label" x="723" y="341" w="181" h="19" measuredW="181" measuredH="21" zOrder="14" locked="false" isInGroup="-1">
+      <controlProperties>
+        <color>13369344</color>
+        <text>Incorrect%20User%20ID%20or%20password.</text>
+      </controlProperties>
+    </control>
+    <control controlID="252" controlTypeID="com.balsamiq.mockups::Label" x="78" y="665" w="280" h="21" measuredW="280" measuredH="21" zOrder="15" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Po%20p%u0159ihl%E1%u0161en%ED%20-%20spole%u010Dn%FD%20obsah%20pro%20v%u0161echny%20role</text>
+      </controlProperties>
+    </control>
+    <control controlID="259" controlTypeID="com.balsamiq.mockups::Label" x="608" y="664" w="234" h="21" measuredW="234" measuredH="21" zOrder="16" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Change%20Password%20-%20vyskakovac%ED%20ok%E9nko</text>
+      </controlProperties>
+    </control>
+    <control controlID="260" controlTypeID="com.balsamiq.mockups::TitleWindow" x="582" y="741" w="362" h="178" measuredW="450" measuredH="400" zOrder="17" locked="false" isInGroup="-1">
+      <controlProperties>
+        <bottomheight>3</bottomheight>
+        <close>false</close>
+        <dragger>false</dragger>
+        <text>Change%20Password</text>
+      </controlProperties>
+    </control>
+    <control controlID="261" controlTypeID="com.balsamiq.mockups::Label" x="612" y="790" w="108" h="21" measuredW="108" measuredH="21" zOrder="18" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Current%20Password</text>
+      </controlProperties>
+    </control>
+    <control controlID="262" controlTypeID="com.balsamiq.mockups::Label" x="616" y="819" w="89" h="21" measuredW="89" measuredH="21" zOrder="19" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>New%20Password</text>
+      </controlProperties>
+    </control>
+    <control controlID="263" controlTypeID="com.balsamiq.mockups::Label" x="614" y="847" w="121" h="21" measuredW="121" measuredH="21" zOrder="20" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>New%20Password%20again</text>
+      </controlProperties>
+    </control>
+    <control controlID="264" controlTypeID="com.balsamiq.mockups::TextInput" x="759" y="788" w="79" h="-1" measuredW="79" measuredH="27" zOrder="21" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="265" controlTypeID="com.balsamiq.mockups::TextInput" x="762" y="817" w="79" h="-1" measuredW="79" measuredH="27" zOrder="22" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="266" controlTypeID="com.balsamiq.mockups::TextInput" x="763" y="848" w="79" h="-1" measuredW="79" measuredH="27" zOrder="23" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text/>
+      </controlProperties>
+    </control>
+    <control controlID="267" controlTypeID="com.balsamiq.mockups::Button" x="651" y="877" w="125" h="27" measuredW="125" measuredH="27" zOrder="24" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Change%20password</text>
+      </controlProperties>
+    </control>
+    <control controlID="268" controlTypeID="com.balsamiq.mockups::Button" x="810" y="877" w="64" h="27" measuredW="64" measuredH="27" zOrder="25" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Cancel</text>
+      </controlProperties>
+    </control>
+    <control controlID="270" controlTypeID="com.balsamiq.mockups::TitleWindow" x="85" y="732" w="-1" h="-1" measuredW="450" measuredH="400" zOrder="26" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20SPRAVCE%20-%20User%3A%20ID</text>
+      </controlProperties>
+    </control>
+    <control controlID="271" controlTypeID="com.balsamiq.mockups::MenuBar" x="92" y="757" w="443" h="29" measuredW="386" measuredH="29" zOrder="27" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Session%2C%20Funkce%20podle%20role%201%2C%20Funkce%20podle%20role%202%2C%20...</text>
+      </controlProperties>
+    </control>
+    <control controlID="272" controlTypeID="com.balsamiq.mockups::Menu" x="91" y="786" w="150" h="-1" measuredW="150" measuredH="52" zOrder="28" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Change%20Password%0ALogout</text>
+      </controlProperties>
+    </control>
+    <control controlID="275" controlTypeID="com.balsamiq.mockups::Label" x="134" y="868" w="288" h="44" measuredW="448" measuredH="21" zOrder="29" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Welcome%20to%20System%20SPRAVCE.%20Please%20choose%20your%20action%20from%20menu%20above.</text>
+      </controlProperties>
+    </control>
+    <control controlID="276" controlTypeID="com.balsamiq.mockups::Title" x="53" y="55" w="-1" h="-1" measuredW="550" measuredH="50" zOrder="30" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Mockup%20p%u0159ihla%u0161ovac%ED%20obrazovky</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
