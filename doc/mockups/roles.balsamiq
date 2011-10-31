@@ -1,0 +1,56 @@
+<mockup version="1.0" skin="sketch" measuredW="749" measuredH="332" mockupW="716" mockupH="330">
+  <controls>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::ComboBox" x="78" y="128" w="108" h="-1" measuredW="54" measuredH="23" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>role</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::VerticalScrollBar" x="667" y="88" w="-1" h="159" measuredW="16" measuredH="100" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::CheckBoxGroup" x="488" y="84" w="-1" h="-1" measuredW="70" measuredH="168" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>%5B%20%5D%20Item%201%0A%5Bx%5D%20Item%202%0A%5B%20%5D%20Item%203%0A%5B%20%5D%20Item%204%0A%5Bx%5D%20Item%205%0A%5B%20%5D%20Item%206%0A%5B%20%5D%20Item%207%0A%5B%20%5D%20Item%208</text>
+      </controlProperties>
+    </control>
+    <control controlID="5" controlTypeID="com.balsamiq.mockups::Button" x="147" y="75" w="122" h="27" measuredW="75" measuredH="27" zOrder="5" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>New%20role</text>
+      </controlProperties>
+    </control>
+    <control controlID="6" controlTypeID="com.balsamiq.mockups::Button" x="201" y="127" w="-1" h="-1" measuredW="45" measuredH="27" zOrder="6" locked="false" isInGroup="-1">
+      <controlProperties>
+        <markup>true</markup>
+        <text>Edit</text>
+      </controlProperties>
+    </control>
+    <control controlID="7" controlTypeID="com.balsamiq.mockups::TitleWindow" x="33" y="2" w="350" h="330" measuredW="450" measuredH="400" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Roles</text>
+      </controlProperties>
+    </control>
+    <control controlID="8" controlTypeID="com.balsamiq.mockups::TitleWindow" x="399" y="2" w="350" h="330" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>NEW/EDIT%20role</text>
+      </controlProperties>
+    </control>
+    <control controlID="9" controlTypeID="com.balsamiq.mockups::TextInput" x="548" y="41" w="-1" h="-1" measuredW="71" measuredH="27" zOrder="7" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Employee</text>
+      </controlProperties>
+    </control>
+    <control controlID="10" controlTypeID="com.balsamiq.mockups::Label" x="500" y="43" w="-1" h="-1" measuredW="44" measuredH="21" zOrder="8" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Name%3A</text>
+      </controlProperties>
+    </control>
+    <control controlID="11" controlTypeID="com.balsamiq.mockups::Button" x="551" y="268" w="-1" h="-1" measuredW="54" measuredH="27" zOrder="9" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Save</text>
+      </controlProperties>
+    </control>
+    <control controlID="12" controlTypeID="com.balsamiq.mockups::Button" x="252" y="127" w="-1" h="-1" measuredW="63" measuredH="27" zOrder="10" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Delete</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
