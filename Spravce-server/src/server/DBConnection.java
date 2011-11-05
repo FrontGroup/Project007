@@ -19,4 +19,9 @@ class DBConnection {
         //metoda vraci ADMIN/MANAGER/HR/EMPLOYEE/KO
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    String getInfo(String id) {
+        //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

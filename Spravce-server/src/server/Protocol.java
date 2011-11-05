@@ -29,11 +29,23 @@ public class Protocol {
      */
     public String process(String msg) {
 
+        if (msg.startsWith("TEST")) {
+            //uzivatel testuje pripojeni
+            return "OK";
+        }
+
         if (msg.startsWith("LOGIN")) {
             //uzivatel se pripojuje (LOGIN ID PASS)
             String id = msg.substring(2);
             String pass = msg.substring(3);
             String response = dbc.login(id, pass);
+            return response;
+        }
+
+        if (msg.startsWith("INFO")) {
+            //zadost o atributy profilu uzivatele
+            String id = msg.substring(2);
+            String response = dbc.getInfo(id);
             return response;
         }
 

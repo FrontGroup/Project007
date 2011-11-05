@@ -6,9 +6,13 @@ package client;
  */
 public class Main {
 
-    public ServerConnection sc = new ServerConnection();
-
     public static void main(String[] args) {
-        //vytvoreni hlavni GUI aplikace
+        java.awt.EventQueue.invokeLater(new Runnable() {
+
+            @Override
+            public void run() {
+                new Frame().setVisible(true);
+            }
+        });
     }
 }

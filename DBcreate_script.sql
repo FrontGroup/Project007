@@ -9,7 +9,8 @@ CREATE TABLE Teams (
   id INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
   name CHAR(15)  NOT NULL  ,
   project CHAR(15)  NOT NULL  ,
-  info VARCHAR  NOT NULL    ,
+  info VARCHAR  NOT NULL  ,
+  active BOOL  NOT NULL DEFAULT 1   ,
 PRIMARY KEY(id));
 
 
@@ -24,7 +25,7 @@ PRIMARY KEY(idGroups));
 CREATE TABLE Users (
   id INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
   Groups_idGroups INTEGER UNSIGNED  NOT NULL  ,
-  pass INTEGER UNSIGNED  NOT NULL  ,
+  pass VARCHAR  NOT NULL  ,
   name CHAR(15)  NULL  ,
   lastname CHAR(15)  NULL  ,
   address CHAR(15)  NULL  ,
