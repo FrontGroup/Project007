@@ -1,0 +1,26 @@
+<mockup version="1.0" skin="sketch" measuredW="861" measuredH="318" mockupW="400" mockupH="300">
+  <controls>
+    <control controlID="0" controlTypeID="com.balsamiq.mockups::TitleWindow" x="461" y="18" w="400" h="300" measuredW="450" measuredH="400" zOrder="0" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>System%20SPRAVCE%20-%20Add%20members%20to%20team</text>
+      </controlProperties>
+    </control>
+    <control controlID="1" controlTypeID="com.balsamiq.mockups::Label" x="476" y="52" w="-1" h="-1" measuredW="107" measuredH="24" zOrder="1" locked="false" isInGroup="-1">
+      <controlProperties>
+        <size>16</size>
+        <text>Search%20results</text>
+      </controlProperties>
+    </control>
+    <control controlID="2" controlTypeID="com.balsamiq.mockups::List" x="476" y="76" w="370" h="160" measuredW="100" measuredH="170" zOrder="2" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Member%201%2C%20profession%201%0AMember%202%2C%20profession%202%0AMember%203%2C%20profession%203%0AMember%204%2C%20profession%204%0AMember%205%2C%20profession%202%0AMember%206%2C%20profession%202%0AMember%207%2C%20profession%201%0AMember%208%2C%20profession%203</text>
+      </controlProperties>
+    </control>
+    <control controlID="3" controlTypeID="com.balsamiq.mockups::VerticalScrollBar" x="824" y="81" w="-1" h="149" measuredW="16" measuredH="100" zOrder="3" locked="false" isInGroup="-1"/>
+    <control controlID="4" controlTypeID="com.balsamiq.mockups::Button" x="476" y="245" w="-1" h="-1" measuredW="151" measuredH="27" zOrder="4" locked="false" isInGroup="-1">
+      <controlProperties>
+        <text>Add%20selected%20to%20team</text>
+      </controlProperties>
+    </control>
+  </controls>
+</mockup>
