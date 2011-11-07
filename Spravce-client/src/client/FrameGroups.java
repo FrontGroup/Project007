@@ -4,6 +4,8 @@
  */
 package client;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -52,5 +54,20 @@ public class FrameGroups extends javax.swing.JFrame {
         getContentPane().add(p2);
         getContentPane().add(new JPanel());
         setVisible(true);
+
+        edit.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                new FrameEditGroup((String) box.getSelectedItem());
+            }
+        });
+        groups.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                new FrameEditGroup(null);
+            }
+        });
     }
 }

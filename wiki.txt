@@ -1,0 +1,51 @@
+*Welcome to the Project007 wiki!*
+
+***
+*_Zadání:_* Správa profilù zamìstnancù a tımù
+
+*_Vıkaz práce (souèet je dole na +- 100. øádku):_* "ZDE":https://docs.google.com/spreadsheet/ccc?key=0Au3bHhTeXwVEdERIOHIydU5iZlMtT2xLTXdkR0MxSGc&hl=en_US
+
+*_Èlenové:_*  "ZDE":Èlenové 
+
+
+h2. Dokumenty
+
+h3. Finální verze
+
+* [[FURPS]]
+* "Kontextovı model":https://docs.google.com/leaf?id=0B5_WWNOlJx9zMjQ5NjIyZGYtM2MyZS00MGViLTg5MzYtNTA3NjQzY2U3NmIx&hl=en_US
+* [[Model poadavkù]]
+* "Use cases":https://docs.google.com/leaf?id=0B5_WWNOlJx9zYjdhYmE3ODktYTFjOC00MzMwLTlmYmQtOWJmM2VmM2RiMjRj&hl=en_US
+* [[Project overview statement]]
+* "Rozpoèet":https://docs.google.com/spreadsheet/ccc?key=0Ap_WWNOlJx9zdG0wYlVtNWMyM2NrVkhDTmtkTFhQUVE&hl=en_US
+* [[WBS]]
+* [[Síovı model]]
+* [[Oponentura POS]]
+
+h3. První (pracovní) verze
+* [[Tabulka rizik]] - new
+* [[Class model]] - updated
+* [[DB model]]
+* [[Protokol]] komunikace mezi klientem a serverem
+* [[Mockupy GUI]]
+
+h2. Pøerozdìlení bodù
+
+Na 3. cvièení nám byly pøidìleny 4 body z 5 monıch.
+
+Na 6. cvièení nám bylo pøidìleno 6 bodù z 6 monıch.
+
+{background:#ddd}. |_. Jméno |_. Bodù z 3. cvièení |_. Bodù z 6. cvièení |_. Bodù celkem |
+|<. Jan Ševcù |<. 1 |<. 0 |=. *1* |
+|<. Radim Tobolka |<. 1 |<. 2 |=. *3* |
+|<. Petr Matìjù |<. 1 |<. 1 |=. *2* |
+|<. Lukáš Vydrel |<. 1 |<. 1 |=. *2* |
+|<. David Stašèák |<. 0 |<. 1 |=. *1* |
+|<. Jozef Matúš |<. 0 |<. 1 |=. *1* |
+
+***
+[[Poznámky z prvních tøi cvièení]]
+
+[[Pøíprava na ètvrté cvièení]]
+
+[[Pøíprava na páté cvièení]]

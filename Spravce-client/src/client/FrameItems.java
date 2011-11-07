@@ -40,7 +40,7 @@ public class FrameItems extends javax.swing.JFrame {
         save = new JButton("Save");
         delete = new JButton("Delete");
         box = new JComboBox();
-        box.addItem("                          ");
+        box.addItem("     ..insert new..       ");
         name = new JTextField(10);
         JPanel p1 = new JPanel();
         p1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
