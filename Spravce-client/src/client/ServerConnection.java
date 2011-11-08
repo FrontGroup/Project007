@@ -11,7 +11,7 @@ import java.net.UnknownHostException;
 public class ServerConnection {
 
     protected static ServerConnection instance = null;
-    private static int port = 1001;//cislo portu, na kterem server komunikuje
+    private static int port = 10010;//cislo portu, na kterem server komunikuje
     private static String host = "localhost";//adresa serveru
     private Socket server = null;
     private BufferedReader in = null;
@@ -30,6 +30,7 @@ public class ServerConnection {
     private ServerConnection() {
     }
 
+    // return KO or one of roles defined in protocol
     public String connect(String id, String pass) {
         try {
 

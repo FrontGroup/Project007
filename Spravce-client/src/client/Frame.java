@@ -4,6 +4,8 @@
  */
 package client;
 
+import java.awt.Color;
+import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import javax.swing.JMenu;
@@ -43,6 +45,9 @@ public class Frame extends javax.swing.JFrame {
         system.add(test);
         JMenuItem exit = new JMenuItem("EXIT");
         system.add(exit);
+        panel=new LoginPanel();
+        setLayout(new FlowLayout(FlowLayout.CENTER));
+        getContentPane().add(panel);
 
         about.addActionListener(new ActionListener() {
 

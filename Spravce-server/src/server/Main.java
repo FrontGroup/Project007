@@ -10,7 +10,7 @@ import java.io.IOException;
  */
 public class Main {
 
-    private static int port = 1001;//cislo portu, pres ktery se bude komunikovat
+    private static int port = 10010;//cislo portu, pres ktery se bude komunikovat
     private static ServerSocket server = null;
     private static Socket client = null;
 
