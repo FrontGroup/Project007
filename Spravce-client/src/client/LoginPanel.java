@@ -4,6 +4,7 @@
  */
 package client;
 
+import java.awt.Color;
 import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
@@ -32,7 +33,9 @@ public class LoginPanel extends JPanel {
         tuser = new JTextField(20);
         tpass = new JPasswordField(20);
         JButton ok = new JButton("Login");
+        JButton cancel=new JButton("cancel");
         warn=new JLabel("");
+        warn.setForeground(Color.red);
         r1.setLayout(new FlowLayout());
         r2.setLayout(new FlowLayout());
         r0.setLayout(new FlowLayout());
@@ -42,6 +45,7 @@ public class LoginPanel extends JPanel {
         r2.add(lpass);
         r2.add(tpass);
         r3.add(ok);
+        r3.add(cancel);
         add(r0);
         add(r1);
         add(r2);
@@ -50,22 +54,31 @@ public class LoginPanel extends JPanel {
 
             @Override
             public void actionPerformed(ActionEvent e) {
+                warn.setText("");
                 ServerConnection s=ServerConnection.getInstance();
+                if(!tuser.getText().matches("^\\d+$")) {
+                    warn.setText("User ID must be a number.");
+                    return;
+                }
+                if(tpass.getPassword().length<1) {
+                    warn.setText("You must specify a password.");
+                    return;
+                }
                 String ret=s.connect(tuser.getText(), new String(tpass.getPassword()));
                 if(ret.startsWith("KO")) {
                     warn.setText(ret);
-                }
-                //s.sendMSG("")
-                // TODO podle funkcí
-                // TODO id cislo
-                // TODO vymazat form pri chybe
-                
+                }               
             }
         });
-        //r1.add();
-        /*add(luser);
-        add(tuser);
-        add(lpass);
-        add(tpass);*/
+
+        cancel.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tuser.setText("");
+                tpass.setText("");
+                warn.setText("");
+            }
+        });
     }
 }
