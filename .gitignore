@@ -3,3 +3,7 @@ Spravce-client/nbproject/private
 Spravce-server/build
 Spravce-client/build
 .metadata
+Spravce-client/.classpath
+Spravce-client/.project
+Spravce-server/.classpath
+Spravce-server/.project
