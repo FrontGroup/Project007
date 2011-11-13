@@ -6,24 +6,32 @@ package client;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
+import javax.swing.JTextField;
 
 /**
  *
  * @author lucas
  */
-public class Frame extends javax.swing.JFrame {
+public class LoginFrame extends javax.swing.JFrame {
 
     JPanel panel;
     JMenuBar menubar;
+    JTextField tuser;
+    JPasswordField tpass;
+    JLabel warn;
 
-    public Frame() {
+    public LoginFrame() {
         initComponents();
     }
 
@@ -45,9 +53,64 @@ public class Frame extends javax.swing.JFrame {
         system.add(test);
         JMenuItem exit = new JMenuItem("EXIT");
         system.add(exit);
-        panel=new LoginPanel();
+        panel = new JPanel();
         setLayout(new FlowLayout(FlowLayout.CENTER));
         getContentPane().add(panel);
+        // login panel
+        JPanel r0 = new JPanel(), r1 = new JPanel(), r2 = new JPanel(), r3 = new JPanel();
+        panel.setLayout(new GridLayout(4, 1));
+        JLabel luser = new JLabel("User ID");
+        JLabel lpass = new JLabel("Password");
+        tuser = new JTextField(20);
+        tpass = new JPasswordField(20);
+        JButton ok = new JButton("Login");
+        JButton cancel = new JButton("cancel");
+        warn = new JLabel("");
+        warn.setForeground(Color.red);
+        r1.setLayout(new FlowLayout());
+        r2.setLayout(new FlowLayout());
+        r0.setLayout(new FlowLayout());
+        r0.add(warn);
+        r1.add(luser);
+        r1.add(tuser);
+        r2.add(lpass);
+        r2.add(tpass);
+        r3.add(ok);
+        r3.add(cancel);
+        panel.add(r0);
+        panel.add(r1);
+        panel.add(r2);
+        panel.add(r3);
+        ok.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                warn.setText("");
+                ServerConnection s = ServerConnection.getInstance();
+                if (!tuser.getText().matches("^\\d+$")) {
+                    warn.setText("User ID must be a number.");
+                    return;
+                }
+                if (tpass.getPassword().length < 1) {
+                    warn.setText("You must specify a password.");
+                    return;
+                }
+                String ret = s.connect(tuser.getText(), new String(tpass.getPassword()));
+                if (ret.startsWith("KO")) {
+                    warn.setText(ret);
+                }
+            }
+        });
+
+        cancel.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                tuser.setText("");
+                tpass.setText("");
+                warn.setText("");
+            }
+        });
 
         about.addActionListener(new ActionListener() {
 
