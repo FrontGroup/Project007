@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.Collection;
 import java.util.HashMap;
 import javax.swing.JButton;
@@ -16,208 +18,248 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.JTableHeader;
 import javax.swing.table.TableModel;
 
-public class FramePMShowTeams extends JFrame
-{
-  private static HashMap<String, Team> activeTeams = new HashMap();
-  private static HashMap<String, Team> archivedTeams = new HashMap();
+public class FramePMShowTeams extends JFrame {
+	private static HashMap<String, Team> activeTeams = new HashMap();
+	private static HashMap<String, Team> archivedTeams = new HashMap();
 
-  private String id = null;
-  private Font headline = new Font("Arial", 0, 30);
-  private JButton[] viewButtons;
-  private JButton[] editButtons;
-  final Object[] tableHeaderData = { "ID", "Name", "Goal", 
-    "Number of members" };
+	private String id = null;
+	private Font headline = new Font("Arial", 0, 30);
+	private JButton[] viewButtons;
+	private JButton[] editButtons;
+	private ActionListener[] viewListeners;
+	private ActionListener[] editListeners;
+	final Object[] tableHeaderData = { "ID", "Name", "Goal",
+			"Number of members" };
 
-  public FramePMShowTeams(String id)
-  {
-    this.id = id;
-    initComponents();
-  }
+	public FramePMShowTeams(String id) {
+		this.id = id;
+		initComponents();
+	}
 
-  private void initComponents() {
-    setDefaultCloseOperation(2);
-    setTitle("Teams - " + this.id);
-    setSize(640, 450);
-    setMinimumSize(new Dimension(640, 450));
+	private void initComponents() {
+		setDefaultCloseOperation(2);
+		setTitle("Teams - " + this.id);
+		setSize(640, 450);
+		setMinimumSize(new Dimension(640, 450));
 
-    getContentPane().setLayout(new GridLayout(2, 1));
-    getContentPane().add(JSPActiveTeams());
-    getContentPane().add(JSPArchivedTeams());
-    setVisible(true);
-  }
+		getContentPane().setLayout(new GridLayout(2, 1));
+		getContentPane().add(JSPActiveTeams());
+		getContentPane().add(JSPArchivedTeams());
+		setVisible(true);
+	}
 
-  public JScrollPane JSPActiveTeams() {
-    JPanel panel = new JPanel();
-    GridBagLayout gridbag = new GridBagLayout();
-    GridBagConstraints constraint = new GridBagConstraints();
-    panel.setLayout(gridbag);
-    constraint.fill = 2;
+	public JScrollPane JSPActiveTeams() {
+		JPanel panel = new JPanel();
+		GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints constraint = new GridBagConstraints();
+		panel.setLayout(gridbag);
+		constraint.fill = 2;
 
-    JLabel headlineActive = new JLabel("Active teams");
-    headlineActive.setFont(this.headline);
-    constraint.gridwidth = 5;
-    constraint.gridx = 0;
-    constraint.gridy = 0;
-    gridbag.setConstraints(headlineActive, constraint);
-    panel.add(headlineActive);
+		JLabel headlineActive = new JLabel("Active teams");
+		headlineActive.setFont(this.headline);
+		constraint.gridwidth = 5;
+		constraint.gridx = 0;
+		constraint.gridy = 0;
+		gridbag.setConstraints(headlineActive, constraint);
+		panel.add(headlineActive);
 
-    constraint.gridwidth = 1;
-    constraint.weightx = 1.0D;
+		constraint.gridwidth = 1;
+		constraint.weightx = 1.0D;
 
-    this.viewButtons = new JButton[activeTeams.values().size()];
-    for (int i = 0; i < this.viewButtons.length; i++) {
-      this.viewButtons[i] = new JButton("View team");
-    }
-    this.editButtons = new JButton[activeTeams.values().size()];
-    for (int i = 0; i < this.editButtons.length; i++) {
-      this.editButtons[i] = new JButton("Edit team");
-    }
+		this.viewButtons = new JButton[activeTeams.values().size()];
+		this.viewListeners = new ActionListener[activeTeams.values().size()];
+		for (int i = 0; i < this.viewButtons.length; i++) {
+			this.viewButtons[i] = new JButton("View team");
+			this.viewButtons[i].setName("btnView" + i);
+			this.viewListeners[i] = new ActionListener() {
 
-    int i = 1;
-    for (Team team : activeTeams.values()) {
-      JLabel id = new JLabel(team.getId()+"");
-      JLabel name = new JLabel(team.getName());
-      JLabel goal = new JLabel(team.getGoal());
-      JLabel numMembers = new JLabel(team.getMembers().length+"");
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					System.out.println("Button View team ID="
+							+ arg0.toString().charAt(
+									arg0.toString().length() - 1));
+				}
+			};
+			this.viewButtons[i].addActionListener(this.viewListeners[i]);
+		}
+		this.editButtons = new JButton[activeTeams.values().size()];
+		this.editListeners = new ActionListener[activeTeams.values().size()];
+		for (int i = 0; i < this.editButtons.length; i++) {
+			this.editButtons[i] = new JButton("Edit team");
+			this.editButtons[i].setName("btnEdit" + i);
+			this.editListeners[i] = new ActionListener() {
 
-      constraint.gridx = 0;
-      constraint.gridy = i;
-      gridbag.setConstraints(id, constraint);
-      panel.add(id);
+				@Override
+				public void actionPerformed(ActionEvent arg0) {
+					// TODO Auto-generated method stub
+					System.out.println("Button Edit team ID="
+							+ arg0.toString().charAt(
+									arg0.toString().length() - 1));
+				}
+			};
+			this.editButtons[i].addActionListener(this.editListeners[i]);
+		}
 
-      constraint.gridx = 1;
-      gridbag.setConstraints(name, constraint);
-      panel.add(name);
+		int i = 1;
+		for (Team team : activeTeams.values()) {
+			JLabel id = new JLabel(team.getId() + "");
+			JLabel name = new JLabel(team.getName());
+			JLabel goal = new JLabel(team.getGoal());
+			JLabel numMembers = new JLabel(team.getMembers().length + "");
 
-      constraint.gridx = 2;
-      gridbag.setConstraints(goal, constraint);
-      panel.add(goal);
+			constraint.gridx = 0;
+			constraint.gridy = i;
+			gridbag.setConstraints(id, constraint);
+			panel.add(id);
 
-      constraint.gridx = 3;
-      gridbag.setConstraints(numMembers, constraint);
-      panel.add(numMembers);
+			constraint.gridx = 1;
+			gridbag.setConstraints(name, constraint);
+			panel.add(name);
 
-      constraint.gridx = 4;
-      gridbag.setConstraints(this.viewButtons[(i - 1)], constraint);
-      panel.add(this.viewButtons[(i - 1)]);
+			constraint.gridx = 2;
+			gridbag.setConstraints(goal, constraint);
+			panel.add(goal);
 
-      constraint.gridx = 5;
-      gridbag.setConstraints(this.editButtons[(i - 1)], constraint);
-      panel.add(this.editButtons[(i - 1)]);
+			constraint.gridx = 3;
+			gridbag.setConstraints(numMembers, constraint);
+			panel.add(numMembers);
 
-      i++;
-    }
-    JScrollPane jsp = new JScrollPane(panel);
-    return jsp;
-  }
+			constraint.gridx = 4;
+			gridbag.setConstraints(this.viewButtons[(i - 1)], constraint);
+			panel.add(this.viewButtons[(i - 1)]);
 
-  public JScrollPane JSPArchivedTeams() {
-    JPanel panel = new JPanel();
-    GridBagLayout gridbag = new GridBagLayout();
-    GridBagConstraints constraint = new GridBagConstraints();
-    panel.setLayout(gridbag);
-    constraint.fill = 2;
+			constraint.gridx = 5;
+			gridbag.setConstraints(this.editButtons[(i - 1)], constraint);
+			panel.add(this.editButtons[(i - 1)]);
 
-    JLabel headlineArchived = new JLabel("Archived teams");
-    headlineArchived.setHorizontalAlignment(2);
-    headlineArchived.setFont(this.headline);
-    constraint.gridwidth = 1;
-    constraint.gridx = 0;
-    constraint.gridy = 0;
-    gridbag.setConstraints(headlineArchived, constraint);
-    panel.add(headlineArchived);
+			i++;
+		}
+		JScrollPane jsp = new JScrollPane(panel);
+		return jsp;
+	}
 
-    constraint.gridwidth = 1;
-    constraint.weightx = 1.0D;
+	public JScrollPane JSPArchivedTeams() {
+		JPanel panel = new JPanel();
+		GridBagLayout gridbag = new GridBagLayout();
+		GridBagConstraints constraint = new GridBagConstraints();
+		panel.setLayout(gridbag);
+		constraint.fill = 2;
 
-    Object[][] tableData = new Object[archivedTeams.values().size()][this.tableHeaderData.length];
-    int tmp = 0;
-    for (Team team : archivedTeams.values()) {
-      tableData[tmp][0] = Integer.valueOf(team.getId());
-      tableData[tmp][1] = team.getName();
-      tableData[tmp][2] = team.getGoal();
-      tableData[tmp][3] = Integer.valueOf(team.getMembers().length);
-      tmp++;
-    }
+		JLabel headlineArchived = new JLabel("Archived teams");
+		headlineArchived.setHorizontalAlignment(2);
+		headlineArchived.setFont(this.headline);
+		constraint.gridwidth = 1;
+		constraint.gridx = 0;
+		constraint.gridy = 0;
+		gridbag.setConstraints(headlineArchived, constraint);
+		panel.add(headlineArchived);
 
-    DefaultTableModel tableModel = new DefaultTableModel(tableData, 
-      this.tableHeaderData);
+		constraint.gridwidth = 1;
+		constraint.weightx = 1.0D;
 
-    Object table = new JTable(tableModel) {
-      public boolean isCellEditable(int rowIndex, int colIndex) {
-        return false;
-      }
-    };
-    ((JTable)table).getTableHeader().setReorderingAllowed(false);
-    constraint.gridy = 1;
-    panel.add(((JTable)table).getTableHeader(), constraint);
+		Object[][] tableData = new Object[archivedTeams.values().size()][this.tableHeaderData.length];
+		int tmp = 0;
+		for (Team team : archivedTeams.values()) {
+			tableData[tmp][0] = Integer.valueOf(team.getId());
+			tableData[tmp][1] = team.getName();
+			tableData[tmp][2] = team.getGoal();
+			tableData[tmp][3] = Integer.valueOf(team.getMembers().length);
+			tmp++;
+		}
 
-    ((JTable)table).setGridColor(Color.BLACK);
-    ((JTable)table).setShowVerticalLines(false);
+		DefaultTableModel tableModel = new DefaultTableModel(tableData,
+				this.tableHeaderData);
 
-    constraint.gridy = 2;
-    gridbag.setConstraints((Component)table, constraint);
-    panel.add((Component)table);
+		final JTable table = new JTable(tableModel) {
+			public boolean isCellEditable(int rowIndex, int colIndex) {
+				return false;
+			}
+		};
+		table.getTableHeader().setReorderingAllowed(false);
+		constraint.gridy = 1;
+		panel.add(((JTable) table).getTableHeader(), constraint);
 
-    JScrollPane jsp = new JScrollPane(panel);
-    return (JScrollPane)jsp;
-  }
+		table.setGridColor(Color.BLACK);
+		table.setShowVerticalLines(false);
 
-  public static void main(String[] args)
-  {
-    Team team1 = new Team(1);
-    team1.setName("Team 1");
-    team1.setGoal("Goal 1");
-    team1.addMember(111);
-    team1.isActive(Boolean.valueOf(true));
-    Team team2 = new Team(2);
-    team2.setName("Team 2");
-    team2.setGoal("Goal 2");
-    team2.addMember(112);
-    team2.addMember(113);
-    team2.addMember(114);
-    team2.isActive(Boolean.valueOf(false));
-    Team team3 = new Team(3);
-    team3.setName("Team 3");
-    team3.setGoal("Goal 3");
-    team3.isActive(Boolean.valueOf(true));
-    Team team4 = new Team(4);
-    team4.setName("Team 4");
-    team4.setGoal("Goal 4");
-    team4.addMember(121);
-    team4.isActive(Boolean.valueOf(false));
-    team4.addMember(122);
-    team4.addMember(123);
-    team4.addMember(124);
+		constraint.gridy = 2;
+		gridbag.setConstraints((Component) table, constraint);
+		panel.add((Component) table);
 
-    activeTeams.put("Team1", team1);
-    activeTeams.put("Team2", team2);
-    activeTeams.put("Team3", team3);
-    activeTeams.put("Team11", team1);
-    activeTeams.put("Team12", team2);
-    activeTeams.put("Team13", team3);
-    activeTeams.put("Team21", team1);
-    activeTeams.put("Team22", team2);
-    activeTeams.put("Team23", team3);
+		table.getSelectionModel().addListSelectionListener(
+				new ListSelectionListener() {
 
-    archivedTeams.put("Team1", team1);
-    archivedTeams.put("Team2", team2);
-    archivedTeams.put("Team3", team3);
-    archivedTeams.put("Team4", team4);
-    archivedTeams.put("Team11", team1);
-    archivedTeams.put("Team12", team2);
-    archivedTeams.put("Team13", team3);
-    archivedTeams.put("Team14", team4);
-    archivedTeams.put("Team21", team1);
-    archivedTeams.put("Team22", team2);
-    archivedTeams.put("Team23", team3);
-    archivedTeams.put("Team24", team4);
+					@Override
+					public void valueChanged(ListSelectionEvent e) {
+						// TODO Auto-generated method stub
+						if (e.getValueIsAdjusting()) {
+							System.out.println("Selected row: "
+									+ table.getSelectedRow());
+						}
+					}
+				});
 
-    FramePMShowTeams fst = new FramePMShowTeams("Jmeno Prijmeni");
-    fst.setVisible(true);
-  }
+		JScrollPane jsp = new JScrollPane(panel);
+		return (JScrollPane) jsp;
+	}
+
+	public static void main(String[] args) {
+		Team team1 = new Team(1);
+		team1.setName("Team 1");
+		team1.setGoal("Goal 1");
+		team1.addMember(111);
+		team1.isActive(Boolean.valueOf(true));
+		Team team2 = new Team(2);
+		team2.setName("Team 2");
+		team2.setGoal("Goal 2");
+		team2.addMember(112);
+		team2.addMember(113);
+		team2.addMember(114);
+		team2.isActive(Boolean.valueOf(false));
+		Team team3 = new Team(3);
+		team3.setName("Team 3");
+		team3.setGoal("Goal 3");
+		team3.isActive(Boolean.valueOf(true));
+		Team team4 = new Team(4);
+		team4.setName("Team 4");
+		team4.setGoal("Goal 4");
+		team4.addMember(121);
+		team4.isActive(Boolean.valueOf(false));
+		team4.addMember(122);
+		team4.addMember(123);
+		team4.addMember(124);
+
+		activeTeams.put("Team1", team1);
+		activeTeams.put("Team2", team2);
+		activeTeams.put("Team3", team3);
+		activeTeams.put("Team11", team1);
+		activeTeams.put("Team12", team2);
+		activeTeams.put("Team13", team3);
+		activeTeams.put("Team21", team1);
+		activeTeams.put("Team22", team2);
+		activeTeams.put("Team23", team3);
+
+		archivedTeams.put("Team1", team1);
+		archivedTeams.put("Team2", team2);
+		archivedTeams.put("Team3", team3);
+		archivedTeams.put("Team4", team4);
+		archivedTeams.put("Team11", team1);
+		archivedTeams.put("Team12", team2);
+		archivedTeams.put("Team13", team3);
+		archivedTeams.put("Team14", team4);
+		archivedTeams.put("Team21", team1);
+		archivedTeams.put("Team22", team2);
+		archivedTeams.put("Team23", team3);
+		archivedTeams.put("Team24", team4);
+
+		FramePMShowTeams fst = new FramePMShowTeams("Jmeno Prijmeni");
+		fst.setVisible(true);
+	}
 }
