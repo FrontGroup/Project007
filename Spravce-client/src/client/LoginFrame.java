@@ -35,6 +35,7 @@ public class LoginFrame extends javax.swing.JFrame {
         initComponents();
     }
 
+    // TODO min-size, max-size
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("Systém SPRÁVCE");
@@ -47,8 +48,7 @@ public class LoginFrame extends javax.swing.JFrame {
         menubar.add(functions);
         JMenu help = new JMenu("Help");
         menubar.add(help);
-        JMenuItem about = new JMenuItem("About program");
-        help.add(about);
+        help.add(Main.getAboutMenuItem());
         JMenuItem test = new JMenuItem("Test connection");
         system.add(test);
         JMenuItem exit = new JMenuItem("EXIT");
@@ -81,6 +81,7 @@ public class LoginFrame extends javax.swing.JFrame {
         panel.add(r1);
         panel.add(r2);
         panel.add(r3);
+        pack();
         ok.addActionListener(new ActionListener() {
 
             @Override
@@ -98,6 +99,10 @@ public class LoginFrame extends javax.swing.JFrame {
                 String ret = s.connect(tuser.getText(), new String(tpass.getPassword()));
                 if (ret.startsWith("KO")) {
                     warn.setText(ret);
+                } else { // show new frame
+                    setVisible(false);
+                    dispose();
+                    new MainFrame().setVisible(true);
                 }
             }
         });
@@ -109,15 +114,6 @@ public class LoginFrame extends javax.swing.JFrame {
                 tuser.setText("");
                 tpass.setText("");
                 warn.setText("");
-            }
-        });
-
-        about.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent arg0) {
-                JOptionPane.showMessageDialog(null, "This program was developed by FrontGroup. \n\r Version 2011.",
-                        "About program", JOptionPane.INFORMATION_MESSAGE);
             }
         });
         exit.addActionListener(new ActionListener() {
