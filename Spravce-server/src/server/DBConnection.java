@@ -19,15 +19,15 @@ class DBConnection
     private Statement statement = null;
     private ResultSet resultSet = null;
     String db_address;
-    String username;
-    String psswd;
+    String db_username;
+    String db_psswd;
     String[] arguments = null;
 
-    public DBConnection(String db_address, String username, String psswd)
+    public DBConnection(String db_address, String db_username, String db_psswd)
     {
         this.db_address = db_address;
-        this.username = username;
-        this.psswd = psswd;
+        this.db_username = db_username;
+        this.db_psswd = db_psswd;
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
@@ -37,7 +37,7 @@ class DBConnection
         }
         try
         {
-            connect = DriverManager.getConnection(db_address, username, psswd);
+            connect = DriverManager.getConnection(db_address, db_username, db_psswd);
         } catch (Exception e)
         {
             System.out.println("Pripojenie zlyhalo");
@@ -48,7 +48,6 @@ class DBConnection
     public DBConnection()
     {
     }
-    
 
     public String login(String id, String pass)
     {
@@ -95,7 +94,8 @@ class DBConnection
         }
     }
 
-    String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
+
+    public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
     {
         //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
         try
@@ -106,9 +106,9 @@ class DBConnection
             resultSet = statement.executeQuery(SQL);
             while (resultSet.next())
             {
-                result =resultSet.getString("meno") + " : " + resultSet.getString("rasa");
+                result = resultSet.getString("meno") + " : " + resultSet.getString("rasa");
             }
-            if(result.equals(""))
+            if (result.equals(""))
             {
                 System.out.println("Uzivatel so zadanym id neexistuje");
                 return result;
@@ -119,7 +119,107 @@ class DBConnection
             System.out.println("SQL Exception: " + e.toString());
             return "";
         }
-         
+
+    }
+// metoda na pridavanie uzivatela ktore je pretazena, je mozne ju volat s menej parametrami
+
+    public boolean addUser(String name, String pass, int role, String lastname,
+            String address, String city, String email, String phone, int group_id)
+    {
+        try
+        {
+            String query = "INSERT into Users (name, pass, role, lastname, address, city, email, phone, group_id)  VALUES ('" + name + "', '" + role + "', '" + lastname
+                    + "', '" + address + "', '" + city + "', '" + email + "', '" + phone
+                    + "', '" + group_id + "')";
+            statement = connect.createStatement();
+            int rows_effected = statement.executeUpdate(query);
+            if (rows_effected != 0)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        } catch (Exception ex)
+        {
+            System.out.println("Chyba v metode addUser");
+            return false;
+        }
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname, String address, String city, String email, String phone)
+    {
+        return addUser(name, pass, role, lastname, address, city, email, phone, 0);
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname, String address, String city, String email)
+    {
+        return addUser(name, pass, role, lastname, address, city, email, "neuvedeno", 0);
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname, String address, String city)
+    {
+        return addUser(name, pass, role, lastname, address, city, "neuvedeno", "neuvedeno", 0);
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname, String address)
+    {
+        return addUser(name, pass, role, lastname, address, "neuvedeno", "neuvedeno", "neuvedeno", 0);
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname)
+    {
+        return addUser(name, pass, role, lastname, "neuvedeno", "neuvedeno", "neuvedeno", "neuvedeno", 0);
+    }
+// metoda ktora meni heslo uzivatela identifikovaneho pomocou ID
+
+    public boolean changePass(int id, String pass)
+    {
+        String query = "UPDATE Users SET pass = '" + pass + "' WHERE id = '" + id + "'";
+        try
+        {
+            statement = connect.createStatement();
+            int rows_effected = statement.executeUpdate(query);
+            if (rows_effected != 0)
+            {
+                return true;
+            } else
+            {
+                return false;
+            }
+        } catch (Exception ex)
+        {
+            System.out.println("Chyba v metode addUser");
+            return false;
+        }
+
+    }
+// metoda ktora uzavre resultset
+    private void close()
+    {
+        try
+        {
+            if (resultSet != null)
+            {
+                resultSet.close();
+            }
+
+            if (statement != null)
+            {
+                statement.close();
+            }
+
+            if (connect != null)
+            {
+                connect.close();
+            }
+        } catch (Exception e)
+        {
+        }
+    }
+// potrebujem si vyjasnit niektore veci v tabulke
+    public void deleteUser(int id, String jmeno)
+    {
     }
 
     public String[] getArguments()
@@ -139,7 +239,7 @@ class DBConnection
 
     public String getPsswd()
     {
-        return psswd;
+        return db_psswd;
     }
 
     public ResultSet getResultSet()
@@ -154,7 +254,7 @@ class DBConnection
 
     public String getUsername()
     {
-        return username;
+        return db_username;
     }
 
     public void setArguments(String[] arguments)
@@ -169,12 +269,11 @@ class DBConnection
 
     public void setPsswd(String psswd)
     {
-        this.psswd = psswd;
+        this.db_psswd = psswd;
     }
 
     public void setUsername(String username)
     {
-        this.username = username;
+        this.db_username = username;
     }
-    
 }
