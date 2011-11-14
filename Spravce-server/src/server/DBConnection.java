@@ -94,7 +94,6 @@ class DBConnection
         }
     }
 
-
     public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
     {
         //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
