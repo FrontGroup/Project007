@@ -121,4 +121,60 @@ class DBConnection
         }
          
     }
+
+    public String[] getArguments()
+    {
+        return arguments;
+    }
+
+    public Connection getConnect()
+    {
+        return connect;
+    }
+
+    public String getDb_address()
+    {
+        return db_address;
+    }
+
+    public String getPsswd()
+    {
+        return psswd;
+    }
+
+    public ResultSet getResultSet()
+    {
+        return resultSet;
+    }
+
+    public Statement getStatement()
+    {
+        return statement;
+    }
+
+    public String getUsername()
+    {
+        return username;
+    }
+
+    public void setArguments(String[] arguments)
+    {
+        this.arguments = arguments;
+    }
+
+    public void setDb_address(String db_address)
+    {
+        this.db_address = db_address;
+    }
+
+    public void setPsswd(String psswd)
+    {
+        this.psswd = psswd;
+    }
+
+    public void setUsername(String username)
+    {
+        this.username = username;
+    }
+    
 }
