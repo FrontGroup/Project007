@@ -7,3 +7,5 @@ Spravce-client/.classpath
 Spravce-client/.project
 Spravce-server/.classpath
 Spravce-server/.project
+Spravce-client/bin
+Spravce-server/bin
