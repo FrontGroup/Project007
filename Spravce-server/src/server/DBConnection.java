@@ -31,14 +31,16 @@ class DBConnection
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("Nepodarilo sa nacitat MySQL driver");
         }
         try
         {
             connect = DriverManager.getConnection(db_address, db_username, db_psswd);
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("Pripojenie zlyhalo");
         }
@@ -87,7 +89,8 @@ class DBConnection
                 default:
                     return "KO";
             }
-        } catch (SQLException ex)
+        }
+        catch (SQLException ex)
         {
             System.out.println("Chyba v metode login v DBConnect");
             return "";
@@ -113,7 +116,8 @@ class DBConnection
                 return result;
             }
             return result;
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
             System.out.println("SQL Exception: " + e.toString());
             return "";
@@ -135,11 +139,13 @@ class DBConnection
             if (rows_effected != 0)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             System.out.println("Chyba v metode addUser");
             return false;
@@ -182,11 +188,13 @@ class DBConnection
             if (rows_effected != 0)
             {
                 return true;
-            } else
+            }
+            else
             {
                 return false;
             }
-        } catch (Exception ex)
+        }
+        catch (Exception ex)
         {
             System.out.println("Chyba v metode addUser");
             return false;
@@ -194,6 +202,7 @@ class DBConnection
 
     }
 // metoda ktora uzavre resultset
+
     private void close()
     {
         try
@@ -212,13 +221,28 @@ class DBConnection
             {
                 connect.close();
             }
-        } catch (Exception e)
+        }
+        catch (Exception e)
         {
         }
     }
 // potrebujem si vyjasnit niektore veci v tabulke
+
     public void deleteUser(int id, String jmeno)
     {
+        try
+        {
+            String query = "DELETE from Users WHERE id = '" + id + "'";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(query);
+            query = "DELETE from Teams_has_Users WHERE Users_id = '" + id + "'";
+            resultSet = statement.executeQuery(query);
+            query = "DELETE from Users_have_Items WHERE Users_id = '" + id + "'";
+            resultSet = statement.executeQuery(query);
+        }
+        catch (Exception ex)
+        {
+            System.out.println("chyba v metode deleteUser v triede DBConnection");        }
     }
 
     public String[] getArguments()
