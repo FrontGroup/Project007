@@ -2,7 +2,6 @@ package client;
 
 import java.awt.Color;
 import java.awt.Component;
-import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
@@ -10,8 +9,9 @@ import java.awt.GridBagLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collection;
+
 import java.util.HashMap;
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -21,14 +21,12 @@ import javax.swing.JTable;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.JTableHeader;
-import javax.swing.table.TableModel;
 
 public class FramePMShowTeams extends JFrame {
 	private static HashMap<String, Team> activeTeams = new HashMap();
 	private static HashMap<String, Team> archivedTeams = new HashMap();
 
-	private String id = null;
+	private User PM = null;
 	private Font headline = new Font("Arial", 0, 30);
 	private JButton[] viewButtons;
 	private JButton[] editButtons;
@@ -37,14 +35,14 @@ public class FramePMShowTeams extends JFrame {
 	final Object[] tableHeaderData = { "ID", "Name", "Goal",
 			"Number of members" };
 
-	public FramePMShowTeams(String id) {
-		this.id = id;
+	public FramePMShowTeams(User pm) {
+		this.PM = pm;
 		initComponents();
 	}
 
 	private void initComponents() {
 		setDefaultCloseOperation(2);
-		setTitle("Teams - " + this.id);
+		setTitle("Teams - " + PM.getFullName());
 		setSize(640, 450);
 		setMinimumSize(new Dimension(640, 450));
 
@@ -62,8 +60,8 @@ public class FramePMShowTeams extends JFrame {
 		constraint.fill = 2;
 
 		JLabel headlineActive = new JLabel("Active teams");
-		headlineActive.setFont(this.headline);
-		constraint.gridwidth = 5;
+		headlineActive.setFont(headline);
+		constraint.gridwidth = 1;
 		constraint.gridx = 0;
 		constraint.gridy = 0;
 		gridbag.setConstraints(headlineActive, constraint);
@@ -72,12 +70,12 @@ public class FramePMShowTeams extends JFrame {
 		constraint.gridwidth = 1;
 		constraint.weightx = 1.0D;
 
-		this.viewButtons = new JButton[activeTeams.values().size()];
-		this.viewListeners = new ActionListener[activeTeams.values().size()];
-		for (int i = 0; i < this.viewButtons.length; i++) {
-			this.viewButtons[i] = new JButton("View team");
-			this.viewButtons[i].setName("btnView" + i);
-			this.viewListeners[i] = new ActionListener() {
+		viewButtons = new JButton[activeTeams.values().size()];
+		viewListeners = new ActionListener[activeTeams.values().size()];
+		for (int i = 0; i < viewButtons.length; i++) {
+			viewButtons[i] = new JButton("View team");
+			viewButtons[i].setName("btnView" + i);
+			viewListeners[i] = new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -87,14 +85,14 @@ public class FramePMShowTeams extends JFrame {
 									arg0.toString().length() - 1));
 				}
 			};
-			this.viewButtons[i].addActionListener(this.viewListeners[i]);
+			viewButtons[i].addActionListener(viewListeners[i]);
 		}
-		this.editButtons = new JButton[activeTeams.values().size()];
-		this.editListeners = new ActionListener[activeTeams.values().size()];
-		for (int i = 0; i < this.editButtons.length; i++) {
-			this.editButtons[i] = new JButton("Edit team");
-			this.editButtons[i].setName("btnEdit" + i);
-			this.editListeners[i] = new ActionListener() {
+		editButtons = new JButton[activeTeams.values().size()];
+		editListeners = new ActionListener[activeTeams.values().size()];
+		for (int i = 0; i < editButtons.length; i++) {
+			editButtons[i] = new JButton("Edit team");
+			editButtons[i].setName("btnEdit" + i);
+			editListeners[i] = new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
@@ -104,42 +102,51 @@ public class FramePMShowTeams extends JFrame {
 									arg0.toString().length() - 1));
 				}
 			};
-			this.editButtons[i].addActionListener(this.editListeners[i]);
+			editButtons[i].addActionListener(editListeners[i]);
 		}
 
 		int i = 1;
-		for (Team team : activeTeams.values()) {
-			JLabel id = new JLabel(team.getId() + "");
-			JLabel name = new JLabel(team.getName());
-			JLabel goal = new JLabel(team.getGoal());
-			JLabel numMembers = new JLabel(team.getMembers().length + "");
-
+		if (activeTeams.values().isEmpty()) {
+			headlineActive.setText("Active teams - none");
 			constraint.gridx = 0;
-			constraint.gridy = i;
-			gridbag.setConstraints(id, constraint);
-			panel.add(id);
+			constraint.gridy = 1;
+			JLabel tmpLBL = new JLabel(" ");
+			gridbag.setConstraints(tmpLBL, constraint);
+			panel.add(tmpLBL);
+		} else {
+			for (Team team : activeTeams.values()) {
+				JLabel id = new JLabel(team.getId() + "");
+				JLabel name = new JLabel(team.getName());
+				JLabel goal = new JLabel(team.getGoal());
+				JLabel numMembers = new JLabel(team.getMembers().length + "");
 
-			constraint.gridx = 1;
-			gridbag.setConstraints(name, constraint);
-			panel.add(name);
+				constraint.gridx = 0;
+				constraint.gridy = i;
+				gridbag.setConstraints(id, constraint);
+				panel.add(id);
 
-			constraint.gridx = 2;
-			gridbag.setConstraints(goal, constraint);
-			panel.add(goal);
+				constraint.gridx = 1;
+				gridbag.setConstraints(name, constraint);
+				panel.add(name);
 
-			constraint.gridx = 3;
-			gridbag.setConstraints(numMembers, constraint);
-			panel.add(numMembers);
+				constraint.gridx = 2;
+				gridbag.setConstraints(goal, constraint);
+				panel.add(goal);
 
-			constraint.gridx = 4;
-			gridbag.setConstraints(this.viewButtons[(i - 1)], constraint);
-			panel.add(this.viewButtons[(i - 1)]);
+				constraint.gridx = 3;
+				gridbag.setConstraints(numMembers, constraint);
+				panel.add(numMembers);
 
-			constraint.gridx = 5;
-			gridbag.setConstraints(this.editButtons[(i - 1)], constraint);
-			panel.add(this.editButtons[(i - 1)]);
+				constraint.gridx = 4;
+				gridbag.setConstraints(viewButtons[(i - 1)], constraint);
+				panel.add(viewButtons[(i - 1)]);
 
-			i++;
+				constraint.gridx = 5;
+				gridbag.setConstraints(editButtons[(i - 1)], constraint);
+				panel.add(editButtons[(i - 1)]);
+
+				i++;
+			}
 		}
 		JScrollPane jsp = new JScrollPane(panel);
 		return jsp;
@@ -154,7 +161,7 @@ public class FramePMShowTeams extends JFrame {
 
 		JLabel headlineArchived = new JLabel("Archived teams");
 		headlineArchived.setHorizontalAlignment(2);
-		headlineArchived.setFont(this.headline);
+		headlineArchived.setFont(headline);
 		constraint.gridwidth = 1;
 		constraint.gridx = 0;
 		constraint.gridy = 0;
@@ -164,18 +171,22 @@ public class FramePMShowTeams extends JFrame {
 		constraint.gridwidth = 1;
 		constraint.weightx = 1.0D;
 
-		Object[][] tableData = new Object[archivedTeams.values().size()][this.tableHeaderData.length];
+		Object[][] tableData = new Object[archivedTeams.values().size()][tableHeaderData.length];
 		int tmp = 0;
-		for (Team team : archivedTeams.values()) {
-			tableData[tmp][0] = Integer.valueOf(team.getId());
-			tableData[tmp][1] = team.getName();
-			tableData[tmp][2] = team.getGoal();
-			tableData[tmp][3] = Integer.valueOf(team.getMembers().length);
-			tmp++;
+		if (archivedTeams.values().isEmpty()) {
+			headlineArchived.setText("Archived teams - none");
+		} else {
+			for (Team team : archivedTeams.values()) {
+				tableData[tmp][0] = Integer.valueOf(team.getId());
+				tableData[tmp][1] = team.getName();
+				tableData[tmp][2] = team.getGoal();
+				tableData[tmp][3] = Integer.valueOf(team.getMembers().length);
+				tmp++;
+			}
 		}
 
 		DefaultTableModel tableModel = new DefaultTableModel(tableData,
-				this.tableHeaderData);
+				tableHeaderData);
 
 		final JTable table = new JTable(tableModel) {
 			public boolean isCellEditable(int rowIndex, int colIndex) {
@@ -184,7 +195,9 @@ public class FramePMShowTeams extends JFrame {
 		};
 		table.getTableHeader().setReorderingAllowed(false);
 		constraint.gridy = 1;
-		panel.add(((JTable) table).getTableHeader(), constraint);
+		if (!archivedTeams.values().isEmpty()) {
+			panel.add(((JTable) table).getTableHeader(), constraint);
+		}
 
 		table.setGridColor(Color.BLACK);
 		table.setShowVerticalLines(false);
@@ -211,30 +224,31 @@ public class FramePMShowTeams extends JFrame {
 	}
 
 	public static void main(String[] args) {
+		// testing data
 		Team team1 = new Team(1);
 		team1.setName("Team 1");
 		team1.setGoal("Goal 1");
-		team1.addMember(111);
-		team1.isActive(Boolean.valueOf(true));
+		team1.addMember(new User(111, 1));
+		team1.isActive(true);
 		Team team2 = new Team(2);
 		team2.setName("Team 2");
 		team2.setGoal("Goal 2");
-		team2.addMember(112);
-		team2.addMember(113);
-		team2.addMember(114);
-		team2.isActive(Boolean.valueOf(false));
+		team2.addMember(new User(112, 1));
+		team2.addMember(new User(113, 1));
+		team2.addMember(new User(114, 1));
+		team2.isActive(false);
 		Team team3 = new Team(3);
 		team3.setName("Team 3");
 		team3.setGoal("Goal 3");
-		team3.isActive(Boolean.valueOf(true));
+		team3.isActive(true);
 		Team team4 = new Team(4);
 		team4.setName("Team 4");
 		team4.setGoal("Goal 4");
-		team4.addMember(121);
-		team4.isActive(Boolean.valueOf(false));
-		team4.addMember(122);
-		team4.addMember(123);
-		team4.addMember(124);
+		team4.addMember(new User(121, 1));
+		team4.isActive(false);
+		team4.addMember(new User(122, 1));
+		team4.addMember(new User(123, 1));
+		team4.addMember(new User(124, 1));
 
 		activeTeams.put("Team1", team1);
 		activeTeams.put("Team2", team2);
@@ -250,8 +264,8 @@ public class FramePMShowTeams extends JFrame {
 		archivedTeams.put("Team2", team2);
 		archivedTeams.put("Team3", team3);
 		archivedTeams.put("Team4", team4);
-		archivedTeams.put("Team11", team1);
 		archivedTeams.put("Team12", team2);
+		archivedTeams.put("Team11", team1);
 		archivedTeams.put("Team13", team3);
 		archivedTeams.put("Team14", team4);
 		archivedTeams.put("Team21", team1);
@@ -259,7 +273,8 @@ public class FramePMShowTeams extends JFrame {
 		archivedTeams.put("Team23", team3);
 		archivedTeams.put("Team24", team4);
 
-		FramePMShowTeams fst = new FramePMShowTeams("Jmeno Prijmeni");
+		FramePMShowTeams fst = new FramePMShowTeams(new User(01, 3, "pass",
+				"Jmeno", "Prijmeni"));
 		fst.setVisible(true);
 	}
 }

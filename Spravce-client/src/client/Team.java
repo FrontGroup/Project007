@@ -8,12 +8,33 @@ package client;
 public class Team {
 
 	private int id;
-	private String name;
-	private String goal;
-	private String project;
-	private String info;
-	private String[] members = new String[0];
+	private String pm, name, goal, project, info;
+	private User[] members = new User[0];
 	private boolean active;
+
+	public Team(int id) {
+		this.id = id;
+	}
+
+	public Team(int id, String name, String goal, boolean active) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.goal = goal;
+		this.active = active;
+	}
+
+	public Team(int id, String pm, String name, String goal, String project, String info,
+			boolean active) {
+		super();
+		this.id = id;
+		this.pm = pm;
+		this.name = name;
+		this.goal = goal;
+		this.project = project;
+		this.info = info;
+		this.active = active;
+	}
 
 	public boolean isActive() {
 		return active;
@@ -21,10 +42,6 @@ public class Team {
 
 	public void isActive(boolean active) {
 		this.active = active;
-	}
-
-	public Team(int id) {
-		this.id = id;
 	}
 
 	public int getId() {
@@ -63,16 +80,29 @@ public class Team {
 		this.info = info;
 	}
 
-	public String[] getMembers() {
+	public User[] getMembers() {
 		return members;
 	}
 
-	public void addMember(int id) {
-		String[] tmpArray = new String[members.length+1];
+	public String getPm() {
+		return pm;
+	}
+
+	public void setPm(String pm) {
+		this.pm = pm;
+	}
+
+	public void addMember(User u) {
+		User[] tmpArray = new User[members.length + 1];
 		for (int i = 0; i < members.length; i++) {
 			tmpArray[i] = members[i];
 		}
 		members = tmpArray.clone();
+		members[members.length-1] = u;
+	}
+	
+	public void removeAllMembers() {
+		members = new User[0];
 	}
 
 }
