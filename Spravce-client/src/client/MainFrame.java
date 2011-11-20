@@ -20,7 +20,7 @@ import javax.swing.JMenuItem;
 public class MainFrame extends JFrame {
 
     JMenuBar menubar;
-
+    // TODO pass role from login
     public MainFrame() {
         // UI design&layout
         setTitle("Systém SPRÁVCE");
@@ -31,7 +31,7 @@ public class MainFrame extends JFrame {
         JMenu session = new JMenu("Session");
         menubar.add(session);
         JMenuItem changePass = new JMenuItem("Change password");
-        session.add(changePass); // TODO change pass
+        session.add(changePass);
         JMenuItem logout = new JMenuItem("Logout");
         session.add(logout);
         JMenuItem exit = new JMenuItem("EXIT");
