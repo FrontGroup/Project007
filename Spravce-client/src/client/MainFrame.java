@@ -74,11 +74,21 @@ public class MainFrame extends JFrame {
                 new LoginFrame().setVisible(true);
             }
         });
+        changePass.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new ChangePassDialog().setVisible(true);
+            }
+        });
     }
 
     private void logoutAndExit() {
-        logout();
-        System.exit(0);
+        try { // since ServerConnection.sendMsg crashes in demo runs
+            logout();
+        } finally {
+            System.exit(0);
+        }
     }
 
     private void logout() {

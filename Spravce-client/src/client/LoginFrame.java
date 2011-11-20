@@ -44,8 +44,6 @@ public class LoginFrame extends javax.swing.JFrame {
         setJMenuBar(menubar);
         JMenu system = new JMenu("System");
         menubar.add(system);
-        JMenu functions = new JMenu("Functions");
-        menubar.add(functions);
         JMenu help = new JMenu("Help");
         menubar.add(help);
         help.add(Main.getAboutMenuItem());
