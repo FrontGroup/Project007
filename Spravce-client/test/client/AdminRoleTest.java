@@ -30,16 +30,6 @@ public class AdminRoleTest {
 
     @Test
     public void testAdminRole() {
-        class AdminRole implements Role {
-
-            AdminRole(ServerConnection s) {
-            }
-
-            @Override
-            public Iterable<JMenuItem> getMenuItems() {
-                return Arrays.asList(new JMenuItem("Add user"), new JMenuItem("Delete user"), new JMenuItem("Edit user"));
-            }
-        }
         Role r = new AdminRole((ServerConnection) null);
         Iterable<JMenuItem> is = r.getMenuItems();
         assertEquals("Add user", is.iterator().next().getText());

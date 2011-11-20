@@ -97,10 +97,15 @@ public class LoginFrame extends javax.swing.JFrame {
                 String ret = s.connect(tuser.getText(), new String(tpass.getPassword()));
                 if (ret.startsWith("KO")) {
                     warn.setText(ret);
-                } else { // show new frame
+                } else { // show new frame based on user role
+                    Role r = null;
+                    if (ret.equals("ADMIN")) { // starts with?
+                        r = new AdminRole();
+                    } //else if MANAGER ...
+                    // TODO dalsi role
+                    new MainFrame(r).setVisible(true);
                     setVisible(false);
                     dispose();
-                    new MainFrame().setVisible(true);
                 }
             }
         });

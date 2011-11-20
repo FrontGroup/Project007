@@ -8,6 +8,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.util.Iterator;
 import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
@@ -21,7 +22,12 @@ public class MainFrame extends JFrame {
 
     JMenuBar menubar;
     // TODO pass role from login
+
     public MainFrame() {
+        this(null); //TODO Null pointer exception!
+    }
+
+    public MainFrame(Role r) {
         // UI design&layout
         setTitle("Systém SPRÁVCE");
 
@@ -39,6 +45,10 @@ public class MainFrame extends JFrame {
 
         JMenu functions = new JMenu("Functions");
         menubar.add(functions);
+        Iterator<JMenuItem> items = r.getMenuItems().iterator();
+        while (items.hasNext()) {
+            functions.add(items.next());
+        }
 
         JMenu help = new JMenu("Help");
         menubar.add(help);
@@ -104,7 +114,7 @@ public class MainFrame extends JFrame {
 
             @Override
             public void run() {
-                new MainFrame().setVisible(true);
+                new MainFrame(new AdminRole()).setVisible(true);
             }
         });
     }
