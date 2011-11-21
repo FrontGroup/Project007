@@ -108,7 +108,7 @@ class DBConnection
             resultSet = statement.executeQuery(SQL);
             while (resultSet.next())
             {
-                result = resultSet.getString("meno") + " : " + resultSet.getString("rasa");
+                result = resultSet.getString("name") + " : " + resultSet.getString("lastname");
             }
             if (result.equals(""))
             {
