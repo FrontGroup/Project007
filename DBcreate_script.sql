@@ -8,9 +8,10 @@ PRIMARY KEY(id));
 CREATE TABLE Teams (
   id INTEGER UNSIGNED  NOT NULL   AUTO_INCREMENT,
   name CHAR(15)  NOT NULL  ,
-  project CHAR(15)  NOT NULL  ,
-  info VARCHAR  NOT NULL  ,
-  active BOOL  NOT NULL DEFAULT 1   ,
+  project CHAR(15)  NULL  ,
+  info VARCHAR  NULL  ,
+  active BOOL  NOT NULL DEFAULT 1 ,
+  goal VARCHAR  NULL    ,
 PRIMARY KEY(id));
 
 
@@ -32,7 +33,8 @@ CREATE TABLE Users (
   city CHAR(15)  NULL  ,
   email CHAR(15)  NULL  ,
   phone CHAR(15)  NULL  ,
-  role INTEGER UNSIGNED  NOT NULL    ,
+  role INTEGER UNSIGNED  NOT NULL  ,
+  professia CHAR(15)  NULL    ,
 PRIMARY KEY(id)  ,
 INDEX Users_FKIndex1(Groups_idGroups),
   FOREIGN KEY(Groups_idGroups)
