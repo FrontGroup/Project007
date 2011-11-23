@@ -53,13 +53,13 @@ public class Protocol {
             int role = Integer.valueOf(msg.substring(4));
             int group = Integer.valueOf(msg.substring(5));
             String pass = msg.substring(6);
-            String response = dbc.addUser(name, lastname, role, group, pass);
+            String response = dbc.addUser(group, pass, name, lastname, role);
             return response;
         }
         if (msg.startsWith("DEL")) {
             //zadost o smazani uzivatele
             String id = msg.substring(2);
-            String response = dbc.delUser(id);
+            String response = dbc.deleteUser(id);
             return response;
         }
         if (msg.startsWith("CHANGE_PASS")) {
