@@ -9,7 +9,7 @@ public class Protocol
 
     private static Protocol instance = null;
     String db_address = "jdbc:mysql://beretis.sh.cvut.cz/oss?"
-            + "user=root&password=topsecret";
+            + "user=frontgroup&password=hesielko";
     DBConnection dbc = new DBConnection(db_address);
 
     /**
