@@ -1,10 +1,7 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package server;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -19,30 +16,26 @@ class DBConnection
     private Statement statement = null;
     private ResultSet resultSet = null;
     String db_address;
-    String db_username;
-    String db_psswd;
     String[] arguments = null;
 
-    public DBConnection(String db_address, String db_username, String db_psswd)
+    public DBConnection(String db_address)
     {
         this.db_address = db_address;
-        this.db_username = db_username;
-        this.db_psswd = db_psswd;
         try
         {
             Class.forName("com.mysql.jdbc.Driver");
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
             System.out.println("Nepodarilo sa nacitat MySQL driver");
         }
         try
         {
-            connect = DriverManager.getConnection(db_address, db_username, db_psswd);
-        }
-        catch (Exception e)
+            connect = DriverManager.getConnection(db_address);
+            System.out.println("PODARILO SA PRIPOJIT");
+        } catch (Exception e)
         {
             System.out.println("Pripojenie zlyhalo");
+
         }
 
     }
@@ -89,8 +82,7 @@ class DBConnection
                 default:
                     return "KO";
             }
-        }
-        catch (SQLException ex)
+        } catch (SQLException ex)
         {
             System.out.println("Chyba v metode login v DBConnect");
             return "";
@@ -100,29 +92,32 @@ class DBConnection
     public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
     {
         //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
+        String query = "Select * from komplex where id =" + id;
         try
         {
-            String result = "";
-            String SQL = "SELECT * FROM Users WHERE id='" + id + "'";
+            ArrayList<String> list = new ArrayList<String>();
             statement = connect.createStatement();
-            resultSet = statement.executeQuery(SQL);
-            while (resultSet.next())
+            resultSet = statement.executeQuery(query);
+            ResultSetMetaData meta = resultSet.getMetaData(); //ziska metadata o vysledku aby bolo mozne
+            int columncount = meta.getColumnCount();        // urcit pocet stlpcov
+            String show_result = "";
+            while (resultSet.next())//pre vsetky radky
             {
-                result = resultSet.getString("name") + " : " + resultSet.getString("lastname");
+                for (int i = 1; i < columncount; i++)//pre vsetky stlpce
+                {//redukcia identickych informacii
+                    if (!show_result.contains(meta.getColumnName(i) + ":" + resultSet.getString(i)))
+                    {
+                        show_result += meta.getColumnName(i) + ":" + resultSet.getString(i) + ";";
+                    }
+                }
             }
-            if (result.equals(""))
-            {
-                System.out.println("Uzivatel so zadanym id neexistuje");
-                return result;
-            }
-            return result;
-        }
-        catch (Exception e)
+            return show_result;
+        } catch (Exception e)
         {
-            System.out.println("SQL Exception: " + e.toString());
+            System.out.println(e.getMessage());
+            System.out.println("Chyba v metode execute_command");
             return "";
         }
-
     }
 // metoda na pridavanie uzivatela ktore je pretazena, je mozne ju volat s menej parametrami
 
@@ -139,20 +134,41 @@ class DBConnection
             if (rows_effected != 0)
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
             System.out.println("Chyba v metode addUser");
             return false;
         }
     }
 
+    public boolean addUser(String name, String pass, int role, String lastname, String address, String city, String email, String phone)
+    {
+        return addUser(name, pass, role, lastname, address, city, email, phone, 0);
+    }
 
+    public boolean addUser(String name, String pass, int role, String lastname, String address, String city, String email)
+    {
+        return addUser(name, pass, role, lastname, address, city, email, "neuvedeno", 0);
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname, String address, String city)
+    {
+        return addUser(name, pass, role, lastname, address, city, "neuvedeno", "neuvedeno", 0);
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname, String address)
+    {
+        return addUser(name, pass, role, lastname, address, "neuvedeno", "neuvedeno", "neuvedeno", 0);
+    }
+
+    public boolean addUser(String name, String pass, int role, String lastname)
+    {
+        return addUser(name, pass, role, lastname, "neuvedeno", "neuvedeno", "neuvedeno", "neuvedeno", 0);
+    }
 // metoda ktora meni heslo uzivatela identifikovaneho pomocou ID
 
     public boolean changePass(int id, String pass)
@@ -165,13 +181,11 @@ class DBConnection
             if (rows_effected != 0)
             {
                 return true;
-            }
-            else
+            } else
             {
                 return false;
             }
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
             System.out.println("Chyba v metode addUser");
             return false;
@@ -198,8 +212,7 @@ class DBConnection
             {
                 connect.close();
             }
-        }
-        catch (Exception e)
+        } catch (Exception e)
         {
         }
     }
@@ -216,10 +229,10 @@ class DBConnection
             resultSet = statement.executeQuery(query);
             query = "DELETE from Users_have_Items WHERE Users_id = '" + id + "'";
             resultSet = statement.executeQuery(query);
-        }
-        catch (Exception ex)
+        } catch (Exception ex)
         {
-            System.out.println("chyba v metode deleteUser v triede DBConnection");        }
+            System.out.println("chyba v metode deleteUser v triede DBConnection");
+        }
     }
 
     public String[] getArguments()
@@ -237,11 +250,6 @@ class DBConnection
         return db_address;
     }
 
-    public String getPsswd()
-    {
-        return db_psswd;
-    }
-
     public ResultSet getResultSet()
     {
         return resultSet;
@@ -252,11 +260,6 @@ class DBConnection
         return statement;
     }
 
-    public String getUsername()
-    {
-        return db_username;
-    }
-
     public void setArguments(String[] arguments)
     {
         this.arguments = arguments;
@@ -265,32 +268,5 @@ class DBConnection
     public void setDb_address(String db_address)
     {
         this.db_address = db_address;
-    }
-
-    public void setPsswd(String psswd)
-    {
-        this.db_psswd = psswd;
-    }
-
-    public void setUsername(String username)
-    {
-        this.db_username = username;
-    }
-
-    String changePass(String id, String oldPass, String newPass) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String adminChangePass(String id, String newPass) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String addUser(String name, String lastname, int role, int group, String pass) {
-        //return id
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String delUser(String id) {
-        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
