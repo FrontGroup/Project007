@@ -152,30 +152,7 @@ class DBConnection
         }
     }
 
-    public boolean addUser(String name, String pass, int role, String lastname, String address, String city, String email, String phone)
-    {
-        return addUser(name, pass, role, lastname, address, city, email, phone, 0);
-    }
 
-    public boolean addUser(String name, String pass, int role, String lastname, String address, String city, String email)
-    {
-        return addUser(name, pass, role, lastname, address, city, email, "neuvedeno", 0);
-    }
-
-    public boolean addUser(String name, String pass, int role, String lastname, String address, String city)
-    {
-        return addUser(name, pass, role, lastname, address, city, "neuvedeno", "neuvedeno", 0);
-    }
-
-    public boolean addUser(String name, String pass, int role, String lastname, String address)
-    {
-        return addUser(name, pass, role, lastname, address, "neuvedeno", "neuvedeno", "neuvedeno", 0);
-    }
-
-    public boolean addUser(String name, String pass, int role, String lastname)
-    {
-        return addUser(name, pass, role, lastname, "neuvedeno", "neuvedeno", "neuvedeno", "neuvedeno", 0);
-    }
 // metoda ktora meni heslo uzivatela identifikovaneho pomocou ID
 
     public boolean changePass(int id, String pass)
@@ -298,5 +275,22 @@ class DBConnection
     public void setUsername(String username)
     {
         this.db_username = username;
+    }
+
+    String changePass(String id, String oldPass, String newPass) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String adminChangePass(String id, String newPass) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String addUser(String name, String lastname, int role, int group, String pass) {
+        //return id
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String delUser(String id) {
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }

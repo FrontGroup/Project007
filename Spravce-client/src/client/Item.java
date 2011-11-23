@@ -9,17 +9,17 @@ package client;
  * @author Lukášek
  */
 public class Item {
-
+    
     public String name;
     public boolean state;
-
+    
     public Item(String name, String s) {
         this.name = name;
-        if (s.contains("false")) {
+        if (s.contains("false") || s.contains("0")) {
             state = false;
         } else {
             state = true;
         }
-
+        
     }
 }
