@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 
 /**
  *
- * @author lucas
+ * @author beretis
  */
 class DBConnection
 {
@@ -219,7 +219,6 @@ class DBConnection
             String query = "DELETE from Users WHERE id = '" + id + "'";
             statement = connect.createStatement();
             int delete = statement.executeUpdate(query);
-            System.out.println("delete je " + delete);
             if (delete == 0)
             {
                 return "KO User s id" + id + "neexistuje";
@@ -230,7 +229,7 @@ class DBConnection
             {
                 System.out.println("User nieje clenom ziadneho teamu");
             }
-            query = "DELETE from Users_have_Items WHERE Users_id = '" + id + "'";
+            query = "DELETE from Users_has_Items WHERE Users_id = '" + id + "'";
             int delete3 = statement.executeUpdate(query);
             if (delete3 == 0)
             {
