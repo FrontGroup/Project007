@@ -15,6 +15,7 @@ public class Main {
     private static Socket client = null;
 
     public static void main(String[] args) {
+        System.out.println("SERVER STARTED!");
 
         try {
             server = new ServerSocket(port);
@@ -23,6 +24,7 @@ public class Main {
                 //vytvoreni noveho vlakna pro komunikaci s klientem
                 Thread t = new Thread(new ClientConnection(client));
                 t.start();
+                System.out.println("New client is connect!");
             }
         } catch (IOException ex) {
             System.err.println("ERROR CONNECTED!");

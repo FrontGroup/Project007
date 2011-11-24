@@ -63,8 +63,11 @@ public class ServerConnection {
      */
     public String sendMSG(String msg) {
         try {
+            System.out.println("OUT:" + msg);
             out.println(msg);
-            return in.readLine();
+            String response = in.readLine();
+            System.out.println("IN:" + response);
+            return response;
         } catch (IOException ex) {
             System.err.println("IO-Exception by running!");
             return null;
