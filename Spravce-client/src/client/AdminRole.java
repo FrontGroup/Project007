@@ -73,7 +73,41 @@ class AdminRole implements Role {
         }
     }
 
+    // Combobox (id, value) pair
+    public static class Pair {
+
+        final int id;
+        final String name;
+
+        Pair(int i, String n) {
+            id = i;
+            name = n;
+        }
+
+        Pair(String string) {
+            String[] s = string.split(" ", 2);
+            id = Integer.valueOf(s[0]);
+            name = s[1];
+        }
+
+        @Override
+        public String toString() { // Default combobox renderer consults toString method of unknown objects
+            return name;
+        }
+    }
+
+    // This expects one line string description of roles in system as per Protocol GET_GROUPS description
+    static Pair[] processGetGroupsResponse(String response) { // Initialize from server response
+        String[] tokens = response.split(";");
+        Pair[] pairs = new Pair[tokens.length];
+        int pos = 0;
+        for (String i : tokens) {
+            pairs[pos++] = new Pair(i);
+        }
+        return pairs;
+    }
     //TODO use for edit as well
+
     static class CreateUserDialog extends JDialog {
 
         JLabel warn;
@@ -86,8 +120,9 @@ class AdminRole implements Role {
             setModalityType(ModalityType.APPLICATION_MODAL);
             warn = new JLabel();
             warn.setForeground(Color.red);
+
             role = new JComboBox(new Object[]{"Employee", "Project Manager"});
-            group = new JComboBox(new Object[]{"Zednik"}); // TODO fill from database, enable based on role
+            group = new JComboBox(new Object[]{new Pair(1, "Zednik"), new Pair(2, "Pridavac")}); // TODO fill from database, enable based on role
             pass = new JPasswordField(10);
             pass2 = new JPasswordField(10);
             create = new JButton("Create user");
@@ -106,7 +141,7 @@ class AdminRole implements Role {
             add(new JPanel(new FlowLayout()) {
 
                 {
-                    add(new JLabel("Password")); // TODO refactor, dupicate code in ChangePassDialog and LoginFrame
+                    add(new JLabel("Password")); // TODO refactor, duplicate code in ChangePassDialog and LoginFrame
                     add(pass);
                 }
             });
@@ -137,6 +172,14 @@ class AdminRole implements Role {
                 public void actionPerformed(ActionEvent e) {
                     setVisible(false);
                     dispose();
+                }
+            });
+            create.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    System.out.println("ADD " + ((Pair) group.getSelectedItem()).id);
+                    // TODO ADD
                 }
             });
             // TODO create handler possibly outside view
