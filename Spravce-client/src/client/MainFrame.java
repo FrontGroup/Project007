@@ -21,11 +21,6 @@ import javax.swing.JMenuItem;
 public class MainFrame extends JFrame {
 
     JMenuBar menubar;
-    // TODO pass role from login
-
-    public MainFrame() {
-        this(null); //TODO Null pointer exception!
-    }
 
     public MainFrame(Role r) {
         // UI design&layout
