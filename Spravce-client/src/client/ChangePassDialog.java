@@ -84,7 +84,7 @@ public class ChangePassDialog extends JDialog {
                     return;
                 }
                 ServerConnection sc = ServerConnection.getInstance();
-                String ret = sc.sendMSG("CHANGE_PASS " + new String(newpass.getPassword()));
+                String ret = sc.sendMSG("CHANGE_PASS " + new String(current.getPassword()) + " " + new String(newpass.getPassword()));
                 if (ret == null) {
                     warn.setText("Error changing password.");
                 } else if (ret.startsWith("KO")) {
