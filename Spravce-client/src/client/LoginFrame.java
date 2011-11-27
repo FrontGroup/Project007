@@ -99,10 +99,14 @@ public class LoginFrame extends javax.swing.JFrame {
                     warn.setText(ret);
                 } else { // show new frame based on user role
                     Role r = null;
+                    // TODO dalsi role
                     if (ret.equals("ADMIN")) { // starts with?
                         r = new AdminRole();
-                    } //else if MANAGER ...
-                    // TODO dalsi role
+                    } else { // vypsat chybu
+                        clearForm();
+                        warn.setText("Unknown role " + ret);
+                        return;
+                    }
                     new MainFrame(r).setVisible(true);
                     setVisible(false);
                     dispose();
@@ -114,9 +118,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                tuser.setText("");
-                tpass.setText("");
-                warn.setText("");
+                clearForm();
             }
         });
         exit.addActionListener(new ActionListener() {
@@ -133,6 +135,12 @@ public class LoginFrame extends javax.swing.JFrame {
                 testConection();
             }
         });
+    }
+
+    private void clearForm() {
+        tuser.setText("");
+        tpass.setText("");
+        warn.setText("");
     }
 
     private void testConection() {
