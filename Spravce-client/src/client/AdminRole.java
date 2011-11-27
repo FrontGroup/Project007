@@ -13,6 +13,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -30,6 +31,11 @@ class AdminRole implements Role {
     public Iterable<JMenuItem> getMenuItems() {
         // TODO bind specific action handlers to these menu items
         JMenuItem add = new JMenuItem("Add user");
+
+        JMenuItem del = new JMenuItem("Delete user");
+        JMenuItem manageItems = new JMenuItem("Manage items");
+        JMenuItem manageGroups = new JMenuItem("Manage groups");
+
         add.addActionListener(new ActionListener() {
 
             @Override
@@ -37,8 +43,22 @@ class AdminRole implements Role {
                 new CreateUserDialog().setVisible(true);
             }
         });
-        JMenuItem del = new JMenuItem("Delete user");
-        return Arrays.asList(add, del, new JMenuItem("Edit user"));
+
+        manageItems.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new FrameItems();
+            }
+        });
+        manageGroups.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new FrameGroups();
+            }
+        });
+        return Arrays.asList(add, del, new JMenuItem("Edit user"), manageItems, manageGroups);
     }
 
     static class DeleteUserDialog extends JDialog {
