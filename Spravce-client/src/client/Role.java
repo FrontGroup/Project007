@@ -12,6 +12,9 @@ import javax.swing.JMenuItem;
  */
 public interface Role {
     // MainFrame iterates over menu items and adds them to Functions top level menu.
+    // Role symbolic constant definitions. Copied from server.DBConnection.
+
+    static final int ADMIN = 1, MANAGER = 2, HR = 3, EMPLOYEE = 4;// TODO verify EMPLOYEE with DBConnection
 
     Iterable<JMenuItem> getMenuItems();
 }
