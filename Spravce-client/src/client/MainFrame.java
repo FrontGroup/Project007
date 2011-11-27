@@ -97,11 +97,7 @@ public class MainFrame extends JFrame {
     }
 
     private void logout() {
-        ServerConnection c = ServerConnection.getInstance();
-        String r = c.sendMSG("LOGOUT");
-        if (!r.equals("OK")) {
-            System.err.println("Error logging out: " + r);
-        }
+        ServerConnection.getInstance().close();
     }
 
     public static void main(String[] args) {
