@@ -121,8 +121,16 @@ class AdminRole implements Role {
             warn = new JLabel();
             warn.setForeground(Color.red);
 
-            role = new JComboBox(new Object[]{"Employee", "Project Manager"});
-            group = new JComboBox(new Object[]{new Pair(1, "Zednik"), new Pair(2, "Pridavac")}); // TODO fill from database, enable based on role
+            role = new JComboBox(new Object[]{new Pair(Role.EMPLOYEE, "Employee"), new Pair(Role.MANAGER, "Project Manager")});
+            String ret = ServerConnection.getInstance().sendMSG("GET_GROUPS"); // TODO mockupize for demos sake
+            Pair[] groups = null;
+            if (ret == null || ret.startsWith("KO")) {
+                System.out.println("GET_GROUPS: error: " + ret);
+            } else {
+                groups = processGetGroupsResponse(ret);
+            }
+            group = new JComboBox(groups); // TODO enable based on role
+            // new Object[]{new Pair(1, "Zednik"), new Pair(2, "Pridavac")}
             pass = new JPasswordField(10);
             pass2 = new JPasswordField(10);
             create = new JButton("Create user");

@@ -101,7 +101,7 @@ public class LoginFrame extends javax.swing.JFrame {
                     Role r = null;
                     // TODO dalsi role
                     if (ret.equals("ADMIN")) { // starts with?
-                        r = new AdminRole();
+                        r = new AdminRole(); // TODO pass ID
                     } else { // vypsat chybu
                         clearForm();
                         warn.setText("Unknown role " + ret);

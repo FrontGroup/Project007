@@ -50,7 +50,7 @@ public class MainFrame extends JFrame {
 
         help.add(Main.getAboutMenuItem());
 
-        // TODO Add profile specific menus / functions
+        // TODO get user information from server
         // TODO David - Add employee profile panel
         pack();
         // UI event handling
