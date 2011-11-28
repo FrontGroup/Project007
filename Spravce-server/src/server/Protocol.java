@@ -131,6 +131,30 @@ public class Protocol {
                 return "KO " + connect;
             }
         }
+        if (msg.startsWith("GET_ITEMS")) {
+            //zadost o seznam items
+            connect = dbc.connect();
+            if (connect.contains("OK")) {
+                String response = dbc.getItems();
+                dbc.disConnect();
+                return response;
+            } else {
+                return "KO " + connect;
+            }
+        }
+        if (msg.startsWith("ADD_ITEM")) {
+            //zadost o vlozeni item
+            connect = dbc.connect();
+            if (connect.contains("OK")) {
+                String[] split = msg.split(" ");
+                String name = split[1];
+                String response = dbc.addItem(name);
+                dbc.disConnect();
+                return response;
+            } else {
+                return "KO " + connect;
+            }
+        }
         return "";
     }
 }

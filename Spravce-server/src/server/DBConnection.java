@@ -237,7 +237,17 @@ class DBConnection {
     }
 
     public String getGroups() {
-        //vraci 1 zednik;2 truhlar;....
+        //vraci 1 zednik;2 truhlar;... nebo KO chyba
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String getItems() {
+        //vraci 1 rezani;2 flakani;...  nebo KO chyba
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String addItem(String name) {
+        //vraci OK nebo KO chyba
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }
