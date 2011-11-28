@@ -9,8 +9,7 @@ import java.util.logging.Logger;
  *
  * @author beretis
  */
-class DBConnection
-{
+class DBConnection {
 
     private Connection connect = null;
     private Statement statement = null;
@@ -18,36 +17,37 @@ class DBConnection
     String db_address;
     String[] arguments = null;
 
-    public DBConnection(String db_address)
-    {
+    public DBConnection(String db_address) {
         this.db_address = db_address;
-        try
-        {
+    }
+
+    public String connect() {
+        try {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch (Exception e)
-        {
-            System.out.println("Nepodarilo sa nacitat MySQL driver");
+        } catch (Exception e) {
+            System.err.println("Nepodarilo sa nacitat MySQL driver");
+            return "MySQL driver failed!";
         }
-        try
-        {
+        try {
             connect = DriverManager.getConnection(db_address);
             System.out.println("PODARILO SA PRIPOJIT");
-        } catch (Exception e)
-        {
-            System.out.println("Pripojenie zlyhalo");
-
+            return "OK";
+        } catch (Exception e) {
+            System.err.println("Pripojenie zlyhalo");
+            return "Connect to DB failed!";
         }
-
     }
 
-    public DBConnection()
-    {
+    public void disConnect() {
+        try {
+            connect.close();
+        } catch (SQLException ex) {
+            System.err.println("Disconnect failed!");
+        }
     }
 
-    public String login(String id, String pass)
-    {
-        try
-        {
+    public String login(String id, String pass) {
+        try {
             //metoda vraci ADMIN/MANAGER/HR/EMPLOYEE/KO
             int role = 0;
             String query = "SELECT role FROM Users WHERE id='" + id + "' and pass='" + pass + "'"; // vytviry SQL dotaz
@@ -61,29 +61,23 @@ class DBConnection
             {
                 System.out.println("Neplatne id nebo heslo");
             }
-            switch (role)
-            {
-                case 0:
-                {
+            switch (role) {
+                case 0: {
                     return "KO";
                 }
-                case 1:
-                {
+                case 1: {
                     return "ADMIN";
                 }
-                case 2:
-                {
+                case 2: {
                     return "MANAGER";
                 }
-                case 3:
-                {
+                case 3: {
                     return "HR";
                 }
                 default:
                     return "KO";
             }
-        } catch (SQLException ex)
-        {
+        } catch (SQLException ex) {
             System.out.println("Chyba v metode login v DBConnect");
             return "";
         }
@@ -93,8 +87,7 @@ class DBConnection
     {
         //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
         String query = "Select * from komplex where id =" + id;
-        try
-        {
+        try {
             ArrayList<String> list = new ArrayList<String>();
             statement = connect.createStatement();
             resultSet = statement.executeQuery(query);
@@ -105,15 +98,13 @@ class DBConnection
             {
                 for (int i = 1; i < columncount; i++)//pre vsetky stlpce
                 {//redukcia identickych informacii
-                    if (!show_result.contains(meta.getColumnName(i) + ":" + resultSet.getString(i)))
-                    {
+                    if (!show_result.contains(meta.getColumnName(i) + ":" + resultSet.getString(i))) {
                         show_result += meta.getColumnName(i) + ":" + resultSet.getString(i) + ";";
                     }
                 }
             }
             return show_result;
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Chyba v metode execute_command");
             return "";
@@ -121,66 +112,36 @@ class DBConnection
     }
 // metoda na pridavanie uzivatela ktore je pretazena, je mozne ju volat s menej parametrami
 
-    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email, String phone, int role)
-    {
-        try
-        {
+    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email, String phone, int role) {
+        try {
             String query = "INSERT into Users (Groups_idGroups, pass, name, lastname, address, city, email, phone, role)  VALUES ('" + Groups_idGroups + "', '" + pass + "', '" + name
                     + "', '" + lastname + "', '" + address + "', '" + city + "', '" + email
                     + "', '" + phone + "', '" + role + "')";
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
-            if (rows_effected != 0)
-            {
+            if (rows_effected != 0) {
                 return "OK";
-            } else
-            {
+            } else {
                 return "KO nepodarilo sa pridat uzivatela";
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Chyba v metode addUser");
             return "KO chyba v metode";
         }
     }
 
-    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email,int role)
-    {
-        return addUser(Groups_idGroups, pass, name, lastname, address, city, email, null,role);
-    }
-
-    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, int role)
-    {
-        return addUser(Groups_idGroups, pass, name, lastname, address, city, null, null,role);
-    }
-
-    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, int role)
-    {
-        return addUser(Groups_idGroups, pass, name, lastname, address, null, null, null,role);
-    }
-
-    public String addUser(int Groups_idGroups, String pass, String name, String lastname, int role)
-    {
-        return addUser(Groups_idGroups, pass, name, lastname, null, null, null, null,role);
-    }
 // metoda ktora meni heslo uzivatela identifikovaneho pomocou ID
-
-    public String changePass(String id, String oldpass, String newpass)
-    {
+    public String changePass(String id, String oldpass, String newpass) {
         String query = "UPDATE Users SET pass = '" + newpass + "' WHERE id ='" + id + "' and pass ='" + oldpass + "'";
-        try
-        {
+        try {
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
-            if (rows_effected != 0)
-            {
+            if (rows_effected != 0) {
                 return "OK";
-            } else
-            {
+            } else {
                 return "KO id/heslo je nespravne";
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Chyba v metode addUser");
             return "KO chyba v metode";
         }
@@ -188,114 +149,95 @@ class DBConnection
     }
 // metoda ktora uzavre resultset
 
-    private void close()
-    {
-        try
-        {
-            if (resultSet != null)
-            {
+    private void close() {
+        try {
+            if (resultSet != null) {
                 resultSet.close();
             }
 
-            if (statement != null)
-            {
+            if (statement != null) {
                 statement.close();
             }
 
-            if (connect != null)
-            {
+            if (connect != null) {
                 connect.close();
             }
-        } catch (Exception e)
-        {
+        } catch (Exception e) {
         }
     }
 // potrebujem si vyjasnit niektore veci v tabulke
 
-    public String deleteUser(String id)
-    {
-        try
-        {
+    public String deleteUser(String id) {
+        try {
             String query = "DELETE from Users WHERE id = '" + id + "'";
             statement = connect.createStatement();
             int delete = statement.executeUpdate(query);
-            if (delete == 0)
-            {
+            if (delete == 0) {
                 return "KO User s id" + id + "neexistuje";
             }
             query = "DELETE from Teams_has_Users WHERE Users_id = '" + id + "'";
             int delete2 = statement.executeUpdate(query);
-            if (delete2 == 0)
-            {
+            if (delete2 == 0) {
                 System.out.println("User nieje clenom ziadneho teamu");
             }
             query = "DELETE from Users_has_Items WHERE Users_id = '" + id + "'";
             int delete3 = statement.executeUpdate(query);
-            if (delete3 == 0)
-            {
+            if (delete3 == 0) {
                 System.out.println("User nema ziadne Itemi");
             }
             return "OK";
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("chyba v metode deleteUser v triede DBConnection");
             return "KO";
         }
     }
 
-    public String[] getArguments()
-    {
+    public String[] getArguments() {
         return arguments;
     }
 
-    public Connection getConnect()
-    {
+    public Connection getConnect() {
         return connect;
     }
 
-    public String getDb_address()
-    {
+    public String getDb_address() {
         return db_address;
     }
 
-    public ResultSet getResultSet()
-    {
+    public ResultSet getResultSet() {
         return resultSet;
     }
 
-    public Statement getStatement()
-    {
+    public Statement getStatement() {
         return statement;
     }
 
-    public void setArguments(String[] arguments)
-    {
+    public void setArguments(String[] arguments) {
         this.arguments = arguments;
     }
 
-    public void setDb_address(String db_address)
-    {
+    public void setDb_address(String db_address) {
         this.db_address = db_address;
     }
 
-    String adminChangePass(String id, String newpass)
-    {
+    public String adminChangePass(String id, String newpass) {
         String query = "UPDATE Users SET pass = '" + newpass + "' WHERE id ='" + id + "'";
-        try
-        {
+        try {
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
-            if (rows_effected != 0)
-            {
+            if (rows_effected != 0) {
                 return "OK";
-            } else
-            {
+            } else {
                 return "KO id/heslo je nespravne";
             }
-        } catch (Exception ex)
-        {
+        } catch (Exception ex) {
             System.out.println("Chyba v metode addUser");
             return "KO chyba v metode";
         }
+    }
+
+    public String getGroups() {
+        //vraci 1 zednik;2 truhlar;....
+        throw new UnsupportedOperationException("Not yet implemented");
     }
 }
