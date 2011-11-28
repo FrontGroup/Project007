@@ -20,7 +20,7 @@ import javax.swing.JTextField;
 
 public class FramePMEditTeam extends JFrame {
 
-	private boolean editing;
+	private boolean editing, newTeam;
 
 	private User PM;
 	private Team team;
@@ -38,18 +38,21 @@ public class FramePMEditTeam extends JFrame {
 	public FramePMEditTeam(User pm) {
 		this.PM = pm;
 		teamLeader.setText(PM.getFullName());
-		this.editing = false;
-		team = new Team(pm.getId());// TODO Need consultation
+		this.editing = true;
+		this.newTeam = true;
+		team = new Team(pm.getId());
 		initComponents();
 	}
 
-	public FramePMEditTeam(User pm, Team team) {
+	public FramePMEditTeam(User pm, Team team, boolean editing) {
 		this.PM = pm;
 		teamLeader.setText(PM.getFullName());
 		if (team == null) {
-			this.editing = false;
+			JOptionPane.showMessageDialog(null,
+					"Error in concstructor FramePMEditTeam", "Error",
+					JOptionPane.ERROR_MESSAGE);
 		} else {
-			this.editing = true;
+			this.editing = editing;
 			this.team = team;
 		}
 		initComponents();
@@ -252,13 +255,56 @@ public class FramePMEditTeam extends JFrame {
 		if (editing) {
 			setTitle("Editing team " + team.getName() + " ("
 					+ this.PM.getFullName() + ")");
+			panel.add(JBAddMembers);
+			panel.add(JBRmMembers);
+			panel.add(JBShowDetail);
+			panel.add(JBSendInvitation);
+			panel.add(new JLabel(" "));
+			panel.add(new JLabel(" "));
+			panel.add(JBSaveChanges);
+			if (newTeam) {
+				setTitle("New team (" + this.PM.getFullName() + ")");
+				panel.add(new JLabel(" "));
+				panel.add(new JLabel(" "));
+				panel.add(new JLabel(" "));
+				panel.add(new JLabel(" "));
+				panel.add(new JLabel(" "));
+			} else {
+				panel.add(JBDiscardChanges);
+				panel.add(new JLabel(" "));
+				panel.add(new JLabel(" "));
+				panel.add(JBDeleteTeam);
+				panel.add(JBArchiveTeam);
+				if (!team.isActive()) {
+					JTFTeamName.setEditable(false);
+					JTFTeamGoal.setEditable(false);
+					JTFProject.setEditable(false);
+					JTFTeamInfo.setEditable(false);
+					JBAddMembers.setEnabled(false);
+					JBRmMembers.setEnabled(false);
+					JBSendInvitation.setEnabled(false);
+					JBSaveChanges.setEnabled(false);
+					JBDiscardChanges.setEnabled(false);
+					JBArchiveTeam.setEnabled(false);
+				}
+			}
+		} else {
+			setTitle("Showing team " + team.getName() + " (" + PM.getFullName()
+					+ ")");
+			JTFTeamName.setEditable(false);
+			JTFTeamGoal.setEditable(false);
+			JTFProject.setEditable(false);
+			JTFTeamInfo.setEditable(false);
+			JBAddMembers.setEnabled(false);
+			JBRmMembers.setEnabled(false);
+			JBSendInvitation.setEnabled(false);
+			JBSaveChanges.setEnabled(false);
+			JBDiscardChanges.setEnabled(false);
+			JBDeleteTeam.setEnabled(false);
+			JBArchiveTeam.setEnabled(false);
 			if (!team.isActive()) {
-				JBAddMembers.setEnabled(false);
-				JBRmMembers.setEnabled(false);
-				JBSendInvitation.setEnabled(false);
-				JBSaveChanges.setEnabled(false);
-				JBDiscardChanges.setEnabled(false);
-				JBArchiveTeam.setEnabled(false);
+				setTitle("Showing archived team " + team.getName() + " ("
+						+ PM.getFullName() + ")");
 			}
 			panel.add(JBAddMembers);
 			panel.add(JBRmMembers);
@@ -272,20 +318,6 @@ public class FramePMEditTeam extends JFrame {
 			panel.add(new JLabel(" "));
 			panel.add(JBDeleteTeam);
 			panel.add(JBArchiveTeam);
-		} else {
-			setTitle("New team (" + this.PM.getFullName() + ")");
-			panel.add(JBAddMembers);
-			panel.add(JBRmMembers);
-			panel.add(JBShowDetail);
-			panel.add(JBSendInvitation);
-			panel.add(new JLabel(" "));
-			panel.add(new JLabel(" "));
-			panel.add(JBSaveChanges);
-			panel.add(new JLabel(" "));
-			panel.add(new JLabel(" "));
-			panel.add(new JLabel(" "));
-			panel.add(new JLabel(" "));
-			panel.add(new JLabel(" "));
 		}
 
 		return panel;
@@ -318,7 +350,7 @@ public class FramePMEditTeam extends JFrame {
 	public static void main(String[] args) {
 		// testing data
 		FramePMEditTeam fst = new FramePMEditTeam(new User(01, 3, "pass",
-				"Jmeno", "Prijmeni"), new Team(11, "Team1", "Goal1", true));
+				"Jmeno", "Prijmeni"), new Team(11, "Team 1", "Goal 1", true), true);
 		fst.setVisible(true);
 	}
 }
