@@ -10,7 +10,7 @@ import java.util.HashMap;
  *
  * @author lucas
  */
-public interface SourceInt {
+public interface SourceUserInt {
 
     //metoda, ktera naplni tridu daty o uzivateli s id
     public void loadData(int id);

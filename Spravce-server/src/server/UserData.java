@@ -16,7 +16,7 @@ public class UserData
     
     public UserData(Hashtable data)
     {
-        this.data = data;
+        UserData.data = data;
     }
 // s mapou bude pracovat server v triede Protocol
     public Hashtable getData()

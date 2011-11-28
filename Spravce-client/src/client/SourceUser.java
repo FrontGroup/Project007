@@ -10,12 +10,12 @@ import java.util.HashMap;
  *
  * @author lucas
  */
-public class Source implements SourceInt {
+public class SourceUser implements SourceUserInt {
 
     private HashMap<String, String> data = null;
     private String[] allItems = null;
 
-    public Source() {
+    public SourceUser() {
     }
 
     private void saveData(String response) {

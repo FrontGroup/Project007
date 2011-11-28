@@ -2,14 +2,12 @@ package server;
 
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  *
  * @author beretis
  */
-class DBConnection {
+public class DBConnection {
 
     private Connection connect = null;
     private Statement statement = null;
