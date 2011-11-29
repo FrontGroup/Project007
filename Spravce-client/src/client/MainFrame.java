@@ -13,6 +13,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JPanel;
 
 /**
  *
@@ -21,6 +22,7 @@ import javax.swing.JMenuItem;
 public class MainFrame extends JFrame {
 
     JMenuBar menubar;
+    JPanel panel;
 
     public MainFrame(Role r) {
         // UI design&layout
@@ -52,6 +54,10 @@ public class MainFrame extends JFrame {
 
         // TODO get user information from server
         // TODO David - Add employee profile panel
+        panel = new JPanel();
+        getContentPane().add(panel);
+        CommonFrame info = new CommonFrame();
+        panel.add(info);
         pack();
         // UI event handling
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

@@ -20,6 +20,8 @@ public class EmployeeFrame extends JFrame {
     JMenuBar menubar;
     JPanel panel;
     JButton back;
+    JButton save;
+    SourceUser su;
 
     public EmployeeFrame() {
         initComponents();
@@ -47,6 +49,7 @@ public class EmployeeFrame extends JFrame {
         help.add(Main.getAboutMenuItem());
         JMenuItem exit = new JMenuItem("EXIT");
         system.add(exit);
+        su = new SourceUser();
         panel = new JPanel();
         setLayout(new FlowLayout(FlowLayout.LEFT));
         getContentPane().add(panel);
@@ -59,13 +62,14 @@ public class EmployeeFrame extends JFrame {
         city = new JLabel("City:");
         email = new JLabel("E-mail:");
         phone = new JLabel("Phone:");
-        tname = new JTextField(20);
-        tlastname = new JTextField(20);
-        taddress = new JTextField(20);
-        tcity = new JTextField(20);
-        temail = new JTextField(20);
-        tphone = new JTextField(20);
+        tname = new JTextField(su.getName(), 20);
+        tlastname = new JTextField(su.getLastname(), 20);
+        taddress = new JTextField(su.getAddress(), 20);
+        tcity = new JTextField(su.getCity(), 20);
+        temail = new JTextField(su.getEmail(), 20);
+        tphone = new JTextField(su.getPhone(), 20);
         back = new JButton("Back");
+        save = new JButton("Save Changes");
         info0.setLayout(new FlowLayout());
         info1.setLayout(new FlowLayout());
         info2.setLayout(new FlowLayout());
@@ -87,6 +91,7 @@ public class EmployeeFrame extends JFrame {
         info5.add(temail);
         info6.add(phone);
         info6.add(tphone);
+        info7.add(save);
         info7.add(back);
         panel.add(info0);
         panel.add(info1);
