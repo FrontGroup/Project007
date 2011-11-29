@@ -28,14 +28,9 @@ public class SourceTeam implements SourceTeamInt {
         String[] teams = response.split(";");
         for (int i = 0; i < teams.length; i++) {
             String[] team = teams[i].split(" ");
-            data.put(Integer.valueOf(team[0]), new Team(Integer.valueOf(team[0]), null, team[1], team[2], team[3], team[4], team[5], team[6]));
+            data.put(Integer.valueOf(team[0]), new Team(Integer.valueOf(team[0]), team[1], team[2], team[3], team[4], team[5], team[6]));
         }
         return "OK";
-    }
-
-    @Override
-    public String updateData() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
@@ -44,12 +39,32 @@ public class SourceTeam implements SourceTeamInt {
     }
 
     @Override
-    public void addTeam(Team team) {
-        data.put(team.getId(), team);
+    public String addTeam(Team team) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("ADD_TEAM " + team.getPm() + " " + team.getName() + " " + team.getProject() + " " + team.getInfo() + " " + team.getGoal());
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
     }
 
     @Override
-    public void delTeam(int id) {
-        data.remove(id);
+    public String delTeam(int id) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("DEL_TEAM " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String updateTeam(int id, Team team) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("UPDATE_TEAM " + id + " " + team.getPm() + " " + team.getName() + " " + team.getProject() + " " + team.getInfo() + " " + team.getGoal());
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
     }
 }

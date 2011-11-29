@@ -9,7 +9,7 @@ public class Team {
     private int id;
     private String pm, name, goal, project, info;
     private User[] members = new User[0];
-    private boolean active, confirmed;
+    private boolean active;
 
     public Team(int id) {
         this.id = id;
@@ -24,7 +24,7 @@ public class Team {
     }
 
     public Team(int id, String pm, String name, String goal, String project, String info,
-            String active, String confirmed) {
+            String active) {
         super();
         this.id = id;
         this.pm = pm;
@@ -36,11 +36,6 @@ public class Team {
             this.active = false;
         } else {
             this.active = true;
-        }
-        if (confirmed.contains("false") || confirmed.contains("0")) {
-            this.confirmed = false;
-        } else {
-            this.confirmed = true;
         }
     }
 
@@ -62,14 +57,6 @@ public class Team {
 
     public void isActive(boolean active) {
         this.active = active;
-    }
-
-    public boolean isConfirmed() {
-        return confirmed;
-    }
-
-    public void isConfirmed(boolean confirmed) {
-        this.confirmed = confirmed;
     }
 
     public int getId() {

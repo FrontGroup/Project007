@@ -43,13 +43,39 @@ public abstract class Worker {
         if (msg.startsWith("GET_ITEMS")) {
             return new getItems();
         }
+        if (msg.startsWith("GET_TEAMS")) {
+            return new getTeams();
+        }
         if (msg.startsWith("ADD_ITEM")) {
             return new addItem();
+        }
+        if (msg.startsWith("ADD_TEAM")) {
+            return new addTeam();
+        }
+        if (msg.startsWith("DEL_TEAM")) {
+            return new delTeam();
         }
         if (msg.startsWith("UPDATE_USER")) {
             return new updateUser();
         }
-
+        if (msg.startsWith("GET_USER_ITEMS")) {
+            return new getUserItems();
+        }
+        if (msg.startsWith("GET_USER_TEAMS")) {
+            return new getUserTeams();
+        }
+        if (msg.startsWith("USER_IN_TEAM")) {
+            return new userInTeam();
+        }
+        if (msg.startsWith("USER_OUT_TEAM")) {
+            return new userOutTeam();
+        }
+        if (msg.startsWith("SET_TEAM_CONFIRMED")) {
+            return new setTeamConfirmed();
+        }
+        if (msg.startsWith("UPDATE_TEAM")) {
+            return new updateTeam();
+        }
         return null;
     }
 
@@ -123,10 +149,43 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != 1) {
+            if (split.length != 2) {
                 return "KO Wrong requirement!";
             }
             return dbc.getItems();
+        }
+    }
+
+    public static class getTeams extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.getTeams();
+        }
+    }
+
+    public static class getUserItems extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.getUserItems(split[1]);
+        }
+    }
+
+    public static class getUserTeams extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.getUserTeams(split[1]);
         }
     }
 
@@ -160,6 +219,72 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             return dbc.updateUser(split[1], split[2], split[3], split[4], split[5], split[6], split[7], split[8]);
+        }
+    }
+
+    public static class addTeam extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 5) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.addTeam(split[1], split[2], split[3], split[4]);
+        }
+    }
+
+    public static class updateTeam extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 6) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.updateTeam(split[1], split[2], split[3], split[4], split[5]);
+        }
+    }
+
+    public static class delTeam extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.delTeam(split[1]);
+        }
+    }
+
+    public static class userInTeam extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 3) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.userInTeam(split[1], split[2]);
+        }
+    }
+
+    public static class userOutTeam extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 3) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.userOutTeam(split[1], split[2]);
+        }
+    }
+
+    public static class setTeamConfirmed extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 3) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.setTeamConfirmed(split[1], split[2]);
         }
     }
 }

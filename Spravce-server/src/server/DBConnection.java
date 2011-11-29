@@ -253,4 +253,40 @@ public class DBConnection {
         //vraci OK nebo KO chyba
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    String addTeam(String string, String string0, String string1, String string2) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String delTeam(String string) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String getTeams() {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String getUserItems(String string) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String getUserTeams(String string) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String userInTeam(String string, String string0) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String userOutTeam(String string, String string0) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String setTeamConfirmed(String string, String string0) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String updateTeam(String string, String string0, String string1, String string2, String string3) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

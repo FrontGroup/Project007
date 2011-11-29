@@ -20,11 +20,17 @@ public interface SourceUserInt {
     //vraci OK nebo KO chyba
     public String updateData();
 
-    //metoda, ktera vrati pole id items uzivatele, ktere ma prirazene
-    public int[] getItems();
+    //metoda, ktera vrati HashMap s dovednostmi, ktere ma uzivatel prirazen
+    public HashMap<String, ItemStatus> getItems();
 
-    //metoda, ktera vrati pole id tymu, ve kterych je uzivatel
-    public int[] getTeams();
+    //metoda, ktera vrati HashMap s tymy ve kterych je uzivatel prirazen
+    public HashMap<String, TeamStatus> getTeams();
+
+    public String setTeam(int idTeam);
+
+    public String delTeam(int idTeam);
+
+    public String setTeamState(int idTeam, boolean confirmed);
 
     public String getName();
 
@@ -43,7 +49,7 @@ public interface SourceUserInt {
     public String getProfessia();
 
     public String getGroup();
-    
+
     public int getId();
 
     public void setName(String name);

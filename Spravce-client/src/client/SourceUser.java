@@ -13,8 +13,8 @@ import java.util.HashMap;
 public class SourceUser implements SourceUserInt {
 
     private HashMap<String, String> data = null;
-    private int[] items = null;
-    private int[] teams = null;
+    private HashMap<String, TeamStatus> teamsStatus = null;
+    private HashMap<String, ItemStatus> itemsStatus = null;
 
     public SourceUser() {
     }
@@ -41,18 +41,20 @@ public class SourceUser implements SourceUserInt {
             return response;
         }
         String[] split = response.split(";");
-        items = new int[split.length];
+        itemsStatus = new HashMap<String, ItemStatus>();
         for (int i = 0; i < split.length; i++) {
-            items[i] = Integer.valueOf(split[i]);
+            String[] s = split[i].split(" ");
+            itemsStatus.put(s[0], new ItemStatus(s[1], s[2]));
         }
         response = sc.sendMSG("GET_USER_TEAMS " + id);
         if (response.startsWith("KO")) {
             return response;
         }
         split = response.split(";");
-        teams = new int[split.length];
+        teamsStatus = new HashMap<String, TeamStatus>();
         for (int i = 0; i < split.length; i++) {
-            teams[i] = Integer.valueOf(split[i]);
+            String[] s = split[i].split(" ");
+            teamsStatus.put(s[0], new TeamStatus(s[1], s[2]));
         }
         return "OK";
     }
@@ -83,8 +85,8 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public int[] getItems() {
-        return items;
+    public HashMap<String, ItemStatus> getItems() {
+        return itemsStatus;
     }
 
     @Override
@@ -123,8 +125,8 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public int[] getTeams() {
-        return teams;
+    public HashMap<String, TeamStatus> getTeams() {
+        return teamsStatus;
     }
 
     @Override
@@ -165,5 +167,35 @@ public class SourceUser implements SourceUserInt {
     @Override
     public int getId() {
         return Integer.valueOf(data.get("id"));
+    }
+
+    @Override
+    public String setTeam(int idTeam) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("USER_IN_TEAM " + this.getId() + " " + idTeam);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String delTeam(int idTeam) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("USER_OUT_TEAM " + this.getId() + " " + idTeam);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String setTeamState(int idTeam, boolean confirmed) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("SET_TEAM_CONFIRMED " + teamsStatus.get("" + idTeam).getIdBind() + " " + confirmed);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
     }
 }
