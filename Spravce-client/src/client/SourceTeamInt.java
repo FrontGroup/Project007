@@ -10,7 +10,18 @@ package client;
  */
 public interface SourceTeamInt {
     
-    //metoda, ktera naplni tridu vsemi daty
-    public void loadData();
+    //metoda, ktera naplni tridu vsemi teamy
+    //vraci OK nebo KO chyba
+    public String loadData();
+    
+    //metoda, ktera aktualizuje data v databazi
+    //vraci OK nebo KO chyba
+    public String updateData();
+    
+    public Team getTeam(int id);
+    
+    public void addTeam(Team team);
+    
+    public void delTeam(int id);
     
 }

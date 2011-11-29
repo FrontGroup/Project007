@@ -13,7 +13,8 @@ import java.util.HashMap;
 public class SourceUser implements SourceUserInt {
 
     private HashMap<String, String> data = null;
-    private String[] allItems = null;
+    private int[] items = null;
+    private int[] teams = null;
 
     public SourceUser() {
     }
@@ -35,15 +36,31 @@ public class SourceUser implements SourceUserInt {
         data = new HashMap<String, String>();
         saveData(response);
         data.put("id", "" + id);
-        response = sc.sendMSG("ALLITEMS");
-        allItems = response.split(";");
+        response = sc.sendMSG("GET_USER_ITEMS " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        String[] split = response.split(";");
+        items = new int[split.length];
+        for (int i = 0; i < split.length; i++) {
+            items[i] = Integer.valueOf(split[i]);
+        }
+        response = sc.sendMSG("GET_USER_TEAMS " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        split = response.split(";");
+        teams = new int[split.length];
+        for (int i = 0; i < split.length; i++) {
+            teams[i] = Integer.valueOf(split[i]);
+        }
         return "OK";
     }
 
     @Override
     public String updateData() {
         ServerConnection sc = ServerConnection.getInstance();
-        String s = "UPDATE ";
+        String s = "UPDATE_USER ";
         s += data.get("id") + " ";
         s += data.get("name") + " ";
         s += data.get("lastname") + " ";
@@ -66,14 +83,8 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public HashMap<String, Item> getItems() {
-        HashMap<String, Item> map = new HashMap<String, Item>();
-        for (String s : allItems) {
-            if (data.get(s) != null) {
-                map.put(s, new Item(s, data.get(s)));
-            }
-        }
-        return map;
+    public int[] getItems() {
+        return items;
     }
 
     @Override
@@ -113,13 +124,7 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public int[] getTeams() {
-        String temp = data.get("team");
-        String[] split = temp.split(",");
-        int[] ret = new int[split.length];
-        for (int i = 0; i < split.length; i++) {
-            ret[i] = Integer.valueOf(split[i]);
-        }
-        return ret;
+        return teams;
     }
 
     @Override
@@ -158,7 +163,7 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public String getId() {
-        return data.get("id");
+    public int getId() {
+        return Integer.valueOf(data.get("id"));
     }
 }

@@ -13,15 +13,15 @@ import java.util.HashMap;
 public interface SourceUserInt {
 
     //metoda, ktera naplni tridu daty o uzivateli s id
-    ////vraci OK nebo KO chyba
+    //vraci OK nebo KO chyba
     public String loadData(int id);
 
     //metoda, ktera aktualizuje data v databazi
     //vraci OK nebo KO chyba
     public String updateData();
 
-    //metoda, ktera vrati HashMap items uzivatele, ktere ma prirazene
-    public HashMap<String, Item> getItems();
+    //metoda, ktera vrati pole id items uzivatele, ktere ma prirazene
+    public int[] getItems();
 
     //metoda, ktera vrati pole id tymu, ve kterych je uzivatel
     public int[] getTeams();
@@ -44,7 +44,7 @@ public interface SourceUserInt {
 
     public String getGroup();
     
-    public String getId();
+    public int getId();
 
     public void setName(String name);
 

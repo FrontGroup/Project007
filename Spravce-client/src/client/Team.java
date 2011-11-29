@@ -4,105 +4,132 @@ package client;
  * 
  * @author petr
  */
-
 public class Team {
 
-	private int id;
-	private String pm, name, goal, project, info;
-	private User[] members = new User[0];
-	private boolean active;
+    private int id;
+    private String pm, name, goal, project, info;
+    private User[] members = new User[0];
+    private boolean active, confirmed;
 
-	public Team(int id) {
-		this.id = id;
-	}
+    public Team(int id) {
+        this.id = id;
+    }
 
-	public Team(int id, String name, String goal, boolean active) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.goal = goal;
-		this.active = active;
-	}
+    public Team(int id, String name, String goal, boolean active) {
+        super();
+        this.id = id;
+        this.name = name;
+        this.goal = goal;
+        this.active = active;
+    }
 
-	public Team(int id, String pm, String name, String goal, String project, String info,
-			boolean active) {
-		super();
-		this.id = id;
-		this.pm = pm;
-		this.name = name;
-		this.goal = goal;
-		this.project = project;
-		this.info = info;
-		this.active = active;
-	}
+    public Team(int id, String pm, String name, String goal, String project, String info,
+            String active, String confirmed) {
+        super();
+        this.id = id;
+        this.pm = pm;
+        this.name = name;
+        this.goal = goal;
+        this.project = project;
+        this.info = info;
+        if (active.contains("false") || active.contains("0")) {
+            this.active = false;
+        } else {
+            this.active = true;
+        }
+        if (confirmed.contains("false") || confirmed.contains("0")) {
+            this.confirmed = false;
+        } else {
+            this.confirmed = true;
+        }
+    }
 
-	public boolean isActive() {
-		return active;
-	}
+    public Team(int id, String pm, String name, String goal, String project, String info,
+            boolean active) {
+        super();
+        this.id = id;
+        this.pm = pm;
+        this.name = name;
+        this.goal = goal;
+        this.project = project;
+        this.info = info;
+        this.active = active;
+    }
 
-	public void isActive(boolean active) {
-		this.active = active;
-	}
+    public boolean isActive() {
+        return active;
+    }
 
-	public int getId() {
-		return id;
-	}
+    public void isActive(boolean active) {
+        this.active = active;
+    }
 
-	public String getName() {
-		return name;
-	}
+    public boolean isConfirmed() {
+        return confirmed;
+    }
 
-	public void setName(String name) {
-		this.name = name;
-	}
+    public void isConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
 
-	public String getGoal() {
-		return goal;
-	}
+    public int getId() {
+        return id;
+    }
 
-	public void setGoal(String goal) {
-		this.goal = goal;
-	}
+    public String getName() {
+        return name;
+    }
 
-	public String getProject() {
-		return project;
-	}
+    public void setName(String name) {
+        this.name = name;
+    }
 
-	public void setProject(String project) {
-		this.project = project;
-	}
+    public String getGoal() {
+        return goal;
+    }
 
-	public String getInfo() {
-		return info;
-	}
+    public void setGoal(String goal) {
+        this.goal = goal;
+    }
 
-	public void setInfo(String info) {
-		this.info = info;
-	}
+    public String getProject() {
+        return project;
+    }
 
-	public User[] getMembers() {
-		return members;
-	}
+    public void setProject(String project) {
+        this.project = project;
+    }
 
-	public String getPm() {
-		return pm;
-	}
+    public String getInfo() {
+        return info;
+    }
 
-	public void setPm(String pm) {
-		this.pm = pm;
-	}
+    public void setInfo(String info) {
+        this.info = info;
+    }
 
-	public void addMember(User u) {
-		User[] tmpArray = new User[members.length + 1];
-		for (int i = 0; i < members.length; i++) {
-			tmpArray[i] = members[i];
-		}
-		members = tmpArray.clone();
-		members[members.length-1] = u;
-	}
-	
-	public void removeAllMembers() {
-		members = new User[0];
-	}
+    public User[] getMembers() {
+        return members;
+    }
 
+    public String getPm() {
+        return pm;
+    }
+
+    public void setPm(String pm) {
+        this.pm = pm;
+    }
+
+    public void addMember(User u) {
+        User[] tmpArray = new User[members.length + 1];
+        for (int i = 0; i < members.length; i++) {
+            tmpArray[i] = members[i];
+        }
+        members = tmpArray.clone();
+        members[members.length - 1] = u;
+    }
+
+    public void removeAllMembers() {
+        members = new User[0];
+    }
 }

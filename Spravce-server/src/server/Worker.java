@@ -46,8 +46,8 @@ public abstract class Worker {
         if (msg.startsWith("ADD_ITEM")) {
             return new addItem();
         }
-        if (msg.startsWith("UPDATE")) {
-            return new update();
+        if (msg.startsWith("UPDATE_USER")) {
+            return new updateUser();
         }
 
         return null;
@@ -152,7 +152,7 @@ public abstract class Worker {
         }
     }
 
-    public static class update extends Worker {
+    public static class updateUser extends Worker {
 
         @Override
         public String process() {
