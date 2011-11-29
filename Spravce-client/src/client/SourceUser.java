@@ -26,13 +26,33 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public void loadData(int id) {
+    public String loadData(int id) {
         ServerConnection sc = ServerConnection.getInstance();
         String response = sc.sendMSG("INFO " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
         data = new HashMap<String, String>();
         saveData(response);
+        data.put("id", "" + id);
         response = sc.sendMSG("ALLITEMS");
         allItems = response.split(";");
+        return "OK";
+    }
+
+    @Override
+    public String updateData() {
+        ServerConnection sc = ServerConnection.getInstance();
+        String s = "UPDATE ";
+        s += data.get("id") + " ";
+        s += data.get("name") + " ";
+        s += data.get("lastname") + " ";
+        s += data.get("address") + " ";
+        s += data.get("city") + " ";
+        s += data.get("email") + " ";
+        s += data.get("phone") + " ";
+        s += data.get("professia");
+        return sc.sendMSG(s);
     }
 
     @Override
@@ -77,8 +97,8 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public int getRole() {
-        return Integer.valueOf(data.get("role"));
+    public String getRole() {
+        return data.get("role");
     }
 
     @Override
@@ -87,8 +107,8 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public int getGroup() {
-        return Integer.valueOf(data.get("group"));
+    public String getGroup() {
+        return data.get("group");
     }
 
     @Override
@@ -100,5 +120,45 @@ public class SourceUser implements SourceUserInt {
             ret[i] = Integer.valueOf(split[i]);
         }
         return ret;
+    }
+
+    @Override
+    public void setName(String name) {
+        data.put("name", name);
+    }
+
+    @Override
+    public void setLastName(String lastName) {
+        data.put("lastname", lastName);
+    }
+
+    @Override
+    public void setAddress(String address) {
+        data.put("address", address);
+    }
+
+    @Override
+    public void setCity(String city) {
+        data.put("city", city);
+    }
+
+    @Override
+    public void setEmail(String email) {
+        data.put("email", email);
+    }
+
+    @Override
+    public void setPhone(String phone) {
+        data.put("phone", phone);
+    }
+
+    @Override
+    public void setProfessia(String professia) {
+        data.put("professia", professia);
+    }
+
+    @Override
+    public String getId() {
+        return data.get("id");
     }
 }

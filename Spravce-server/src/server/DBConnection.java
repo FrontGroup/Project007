@@ -248,4 +248,9 @@ public class DBConnection {
         //vraci OK nebo KO chyba
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
+        //vraci OK nebo KO chyba
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

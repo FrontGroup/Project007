@@ -46,6 +46,9 @@ public abstract class Worker {
         if (msg.startsWith("ADD_ITEM")) {
             return new addItem();
         }
+        if (msg.startsWith("UPDATE")) {
+            return new update();
+        }
 
         return null;
     }
@@ -146,6 +149,17 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             return dbc.addItem(split[1]);
+        }
+    }
+
+    public static class update extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 9) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.updateUser(split[1], split[2], split[3], split[4], split[5], split[6], split[7], split[8]);
         }
     }
 }

@@ -13,11 +13,16 @@ import java.util.HashMap;
 public interface SourceUserInt {
 
     //metoda, ktera naplni tridu daty o uzivateli s id
-    public void loadData(int id);
+    ////vraci OK nebo KO chyba
+    public String loadData(int id);
+
+    //metoda, ktera aktualizuje data v databazi
+    //vraci OK nebo KO chyba
+    public String updateData();
 
     //metoda, ktera vrati HashMap items uzivatele, ktere ma prirazene
     public HashMap<String, Item> getItems();
-    
+
     //metoda, ktera vrati pole id tymu, ve kterych je uzivatel
     public int[] getTeams();
 
@@ -33,11 +38,25 @@ public interface SourceUserInt {
 
     public String getPhone();
 
-    public int getRole();
+    public String getRole();
 
     public String getProfessia();
-    
-    public int getGroup();
-    
 
+    public String getGroup();
+    
+    public String getId();
+
+    public void setName(String name);
+
+    public void setLastName(String lastName);
+
+    public void setAddress(String address);
+
+    public void setCity(String city);
+
+    public void setEmail(String email);
+
+    public void setPhone(String phone);
+
+    public void setProfessia(String professia);
 }
