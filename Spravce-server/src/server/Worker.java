@@ -58,6 +58,15 @@ public abstract class Worker {
         if (msg.startsWith("UPDATE_USER")) {
             return new updateUser();
         }
+        if (msg.startsWith("ADD_GROUP")) {
+            return new addGroup();
+        }
+        if (msg.startsWith("DEL_GROUP")) {
+            return new delGroup();
+        }
+        if (msg.startsWith("UPDATE_GROUP")) {
+            return new updateGroup();
+        }
         if (msg.startsWith("GET_USER_ITEMS")) {
             return new getUserItems();
         }
@@ -299,6 +308,47 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             return dbc.setItemState(split[1], split[2], split[3]);
+        }
+    }
+
+    public static class addGroup extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != Integer.valueOf(split[2]) + 3) {
+                return "KO Wrong requirement!";
+            }
+            int[] items = new int[Integer.valueOf(split[2])];
+            for (int k = 0; k < items.length; k++) {
+                items[k] = Integer.valueOf(split[3 + k]);
+            }
+            return dbc.addGroup(split[1], items);
+        }
+    }
+
+    public static class updateGroup extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != Integer.valueOf(split[3]) + 3) {
+                return "KO Wrong requirement!";
+            }
+            int[] items = new int[Integer.valueOf(split[3])];
+            for (int k = 0; k < items.length; k++) {
+                items[k] = Integer.valueOf(split[4 + k]);
+            }
+            return dbc.updateGroup(split[1], split[2], items);
+        }
+    }
+
+    public static class delGroup extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.delGroup(split[1]);
         }
     }
 }

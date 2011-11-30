@@ -294,4 +294,16 @@ public class DBConnection {
     String setItemState(String string, String string0, String string1) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    String addGroup(String string, int[] items) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String updateGroup(String string, String string0, int[] items) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String delGroup(String string) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }
