@@ -33,7 +33,6 @@ public class SourceItem implements SourceItemInt {
         return "OK";
     }
 
-
     @Override
     public Item getItem(int id) {
         return data.get(id);
@@ -41,17 +40,36 @@ public class SourceItem implements SourceItemInt {
 
     @Override
     public String addItem(Item item) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("ADD_ITEM " + item.getName());
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
     }
 
     @Override
     public String delItem(int id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("DEL_ITEM " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
     }
 
     @Override
     public String updateItem(int id, Item item) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("UPDATE_ITEM " + id + " " + item.getName());
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
     }
 
+    @Override
+    public HashMap<Integer, Item> getAllItems() {
+        return data;
+    }
 }

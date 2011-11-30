@@ -67,4 +67,9 @@ public class SourceTeam implements SourceTeamInt {
         }
         return "OK";
     }
+
+    @Override
+    public HashMap<Integer, Team> getAllTeams() {
+        return data;
+    }
 }

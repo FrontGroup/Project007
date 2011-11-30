@@ -4,6 +4,8 @@
  */
 package client;
 
+import java.util.HashMap;
+
 /**
  *
  * @author lucas
@@ -21,4 +23,6 @@ public interface SourceTeamInt {
     public String delTeam(int id);
 
     public String updateTeam(int id, Team team);
+    
+    public HashMap<Integer,Team> getAllTeams();
 }

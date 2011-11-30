@@ -235,30 +235,10 @@ public class DBConnection {
     }
 
     public String getGroups() {
-        //vraci 1 zednik;2 truhlar;... nebo KO chyba
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
     String getItems() {
-        //vraci 1 rezani;2 flakani;...  nebo KO chyba
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String addItem(String name) {
-        //vraci OK nebo KO chyba
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
-        //vraci OK nebo KO chyba
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String addTeam(String string, String string0, String string1, String string2) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String delTeam(String string) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
@@ -266,52 +246,67 @@ public class DBConnection {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String getUserItems(String string) {
+    String getUserItems(String idUser) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String getUserTeams(String string) {
+    String getUserTeams(String idUser) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String userInTeam(String string, String string0) {
+    String addItem(String name) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String userOutTeam(String string, String string0) {
+    String addTeam(String pm, String name, String project, String info, String goal) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-
-    String updateTeam(String string, String string0, String string1, String string2, String string3) {
+    String addGroup(String name, int[] idItems) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String setTeamConfirmed(String string, String string0, String string1) {
+    String delTeam(String id) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String setItemState(String string, String string0, String string1) {
+    String delGroup(String id) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String addGroup(String string, int[] items) {
+    String delItem(String id) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String updateGroup(String string, String string0, int[] items) {
+    String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String delGroup(String string) {
+    String updateTeam(String id, String pm, String name, String project, String info, String goal) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String delItem(String string) {
+    String updateGroup(String id, String name, int[] idItems) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String updateItem(String string, String string0) {
+    String updateItem(String id, String name) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String userInTeam(String idUser, String idTeam) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String userOutTeam(String idUser, String idTeam) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String setTeamConfirmed(String idUser, String idTeam, boolean confirmed) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String setItemState(String idUser, String idItem, boolean state) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

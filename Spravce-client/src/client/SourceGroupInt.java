@@ -4,6 +4,8 @@
  */
 package client;
 
+import java.util.HashMap;
+
 /**
  *
  * @author lucas
@@ -13,6 +15,8 @@ public interface SourceGroupInt {
     //metoda, ktera naplni tridu vsemi dostupnymi skupinami
     //vraci OK nebo KO chyba
     public String loadData();
+    
+    public HashMap<Integer,Group> getAllGroups();
 
     public Group getGroup(int id);
 

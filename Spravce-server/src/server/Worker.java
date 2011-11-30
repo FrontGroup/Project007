@@ -266,10 +266,10 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != 5) {
+            if (split.length != 6) {
                 return "KO Wrong requirement!";
             }
-            return dbc.addTeam(split[1], split[2], split[3], split[4]);
+            return dbc.addTeam(split[1], split[2], split[3], split[4], split[5]);
         }
     }
 
@@ -277,10 +277,10 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != 6) {
+            if (split.length != 7) {
                 return "KO Wrong requirement!";
             }
-            return dbc.updateTeam(split[1], split[2], split[3], split[4], split[5]);
+            return dbc.updateTeam(split[1], split[2], split[3], split[4], split[5], split[6]);
         }
     }
 
@@ -324,7 +324,11 @@ public abstract class Worker {
             if (split.length != 4) {
                 return "KO Wrong requirement!";
             }
-            return dbc.setTeamConfirmed(split[1], split[2], split[3]);
+            boolean confirmed = true;
+            if (split[3].contains("false") || split[3].contains("0")) {
+                confirmed = false;
+            }
+            return dbc.setTeamConfirmed(split[1], split[2], confirmed);
         }
     }
 
@@ -335,7 +339,11 @@ public abstract class Worker {
             if (split.length != 4) {
                 return "KO Wrong requirement!";
             }
-            return dbc.setItemState(split[1], split[2], split[3]);
+            boolean state = true;
+            if (split[3].contains("false") || split[3].contains("0")) {
+                state = false;
+            }
+            return dbc.setItemState(split[1], split[2], state);
         }
     }
 

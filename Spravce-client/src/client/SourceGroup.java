@@ -71,4 +71,9 @@ public class SourceGroup implements SourceGroupInt {
         }
         return "OK";
     }
+
+    @Override
+    public HashMap<Integer, Group> getAllGroups() {
+        return data;
+    }
 }

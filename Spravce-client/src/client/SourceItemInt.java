@@ -4,6 +4,8 @@
  */
 package client;
 
+import java.util.HashMap;
+
 /**
  *
  * @author lucas
@@ -21,4 +23,6 @@ public interface SourceItemInt {
     public String delItem(int id);
 
     public String updateItem(int id, Item item);
+    
+    public HashMap<Integer,Item> getAllItems();
 }
