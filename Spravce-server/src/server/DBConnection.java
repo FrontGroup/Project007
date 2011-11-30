@@ -306,4 +306,12 @@ public class DBConnection {
     String delGroup(String string) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
+
+    String delItem(String string) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String updateItem(String string, String string0) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
 }

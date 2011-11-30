@@ -49,6 +49,12 @@ public abstract class Worker {
         if (msg.startsWith("ADD_ITEM")) {
             return new addItem();
         }
+        if (msg.startsWith("DEL_ITEM")) {
+            return new delItem();
+        }
+        if (msg.startsWith("UPDATE_ITEM")) {
+            return new updateItem();
+        }
         if (msg.startsWith("ADD_TEAM")) {
             return new addTeam();
         }
@@ -220,6 +226,28 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             return dbc.addItem(split[1]);
+        }
+    }
+
+    public static class delItem extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.delItem(split[1]);
+        }
+    }
+
+    public static class updateItem extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 3) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.updateItem(split[1], split[2]);
         }
     }
 
