@@ -44,7 +44,7 @@ public class SourceUser implements SourceUserInt {
         itemsStatus = new HashMap<String, ItemStatus>();
         for (int i = 0; i < split.length; i++) {
             String[] s = split[i].split(" ");
-            itemsStatus.put(s[0], new ItemStatus(s[1], s[2]));
+            itemsStatus.put(s[0], new ItemStatus(s[1]));
         }
         response = sc.sendMSG("GET_USER_TEAMS " + id);
         if (response.startsWith("KO")) {
@@ -54,7 +54,7 @@ public class SourceUser implements SourceUserInt {
         teamsStatus = new HashMap<String, TeamStatus>();
         for (int i = 0; i < split.length; i++) {
             String[] s = split[i].split(" ");
-            teamsStatus.put(s[0], new TeamStatus(s[1], s[2]));
+            teamsStatus.put(s[0], new TeamStatus(s[1]));
         }
         return "OK";
     }
@@ -170,9 +170,9 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public String setTeam(int idTeam) {
+    public String setTeam(int idUser, int idTeam) {
         ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("USER_IN_TEAM " + this.getId() + " " + idTeam);
+        String response = sc.sendMSG("USER_IN_TEAM " + idUser + " " + idTeam);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -180,9 +180,9 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public String delTeam(int idTeam) {
+    public String delTeam(int idUser, int idTeam) {
         ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("USER_OUT_TEAM " + this.getId() + " " + idTeam);
+        String response = sc.sendMSG("USER_OUT_TEAM " + idUser + " " + idTeam);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -190,9 +190,29 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public String setTeamState(int idTeam, boolean confirmed) {
+    public String setTeamConfirmed(int idTeam, boolean confirmed) {
         ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("SET_TEAM_CONFIRMED " + teamsStatus.get("" + idTeam).getIdBind() + " " + confirmed);
+        String response = sc.sendMSG("SET_TEAM_CONFIRMED " + this.getId() + " " + idTeam + " " + confirmed);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String setItemState(int idItem, boolean state) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("SET_ITEM_STATE " + this.getId() + " " + idItem + " " + state);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String setItemState(int idUser, int idItem, boolean state) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("SET_ITEM_STATE " + idUser + " " + idItem + " " + state);
         if (response.startsWith("KO")) {
             return response;
         }

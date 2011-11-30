@@ -10,20 +10,14 @@ package client;
  */
 public class ItemStatus {
 
-    private int idBind;
     private boolean state;
 
-    public ItemStatus(String idBind, String state) {
-        this.idBind = Integer.valueOf(idBind);
+    public ItemStatus(String state) {
         if (state.contains("false") || state.contains("0")) {
             this.state = false;
         } else {
             this.state = true;
         }
-    }
-
-    public int getIdBind() {
-        return idBind;
     }
 
     public boolean isState() {

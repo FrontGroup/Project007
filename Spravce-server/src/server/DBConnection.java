@@ -282,11 +282,16 @@ public class DBConnection {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String setTeamConfirmed(String string, String string0) {
+
+    String updateTeam(String string, String string0, String string1, String string2, String string3) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String updateTeam(String string, String string0, String string1, String string2, String string3) {
+    String setTeamConfirmed(String string, String string0, String string1) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    String setItemState(String string, String string0, String string1) {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 }

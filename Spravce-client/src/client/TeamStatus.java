@@ -10,11 +10,9 @@ package client;
  */
 public class TeamStatus {
 
-    private int idBind;
     private boolean confirmed;
 
-    public TeamStatus(String idBind, String confirmed) {
-        this.idBind = Integer.valueOf(idBind);
+    public TeamStatus(String confirmed) {
         if (confirmed.contains("false") || confirmed.contains("0")) {
             this.confirmed = false;
         } else {
@@ -28,9 +26,5 @@ public class TeamStatus {
 
     public void setConfirmed(boolean confirmed) {
         this.confirmed = confirmed;
-    }
-
-    public int getIdBind() {
-        return idBind;
     }
 }

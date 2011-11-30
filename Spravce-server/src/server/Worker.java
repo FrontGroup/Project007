@@ -76,6 +76,9 @@ public abstract class Worker {
         if (msg.startsWith("UPDATE_TEAM")) {
             return new updateTeam();
         }
+        if (msg.startsWith("SET_ITEM_STATE")) {
+            return new setItemState();
+        }
         return null;
     }
 
@@ -281,10 +284,21 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != 3) {
+            if (split.length != 4) {
                 return "KO Wrong requirement!";
             }
-            return dbc.setTeamConfirmed(split[1], split[2]);
+            return dbc.setTeamConfirmed(split[1], split[2], split[3]);
+        }
+    }
+
+    public static class setItemState extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 4) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.setItemState(split[1], split[2], split[3]);
         }
     }
 }

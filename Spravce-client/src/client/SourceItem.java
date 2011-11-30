@@ -33,10 +33,6 @@ public class SourceItem implements SourceItemInt {
         return "OK";
     }
 
-    @Override
-    public String updateData() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
 
     @Override
     public Item getItem(int id) {
@@ -44,12 +40,18 @@ public class SourceItem implements SourceItemInt {
     }
 
     @Override
-    public void addItem(Item item) {
-        data.put(item.getId(), item);
+    public String addItem(Item item) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     @Override
-    public void delItem(int id) {
-        data.remove(id);
+    public String delItem(int id) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+
+    @Override
+    public String updateItem(int id, Item item) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
 }

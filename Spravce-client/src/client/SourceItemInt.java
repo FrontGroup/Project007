@@ -14,13 +14,11 @@ public interface SourceItemInt {
     //vraci OK nebo KO chyba
     public String loadData(int id);
 
-    //metoda, ktera aktualizuje data v databazi
-    //vraci OK nebo KO chyba
-    public String updateData();
-
     public Item getItem(int id);
 
-    public void addItem(Item item);
+    public String addItem(Item item);
 
-    public void delItem(int id);
+    public String delItem(int id);
+
+    public String updateItem(int id, Item item);
 }

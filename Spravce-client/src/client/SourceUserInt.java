@@ -26,11 +26,15 @@ public interface SourceUserInt {
     //metoda, ktera vrati HashMap s tymy ve kterych je uzivatel prirazen
     public HashMap<String, TeamStatus> getTeams();
 
-    public String setTeam(int idTeam);
+    public String setTeam(int idUser,int idTeam);
 
-    public String delTeam(int idTeam);
+    public String delTeam(int idUser,int idTeam);
 
-    public String setTeamState(int idTeam, boolean confirmed);
+    public String setTeamConfirmed(int idTeam, boolean confirmed);
+    
+    public String setItemState(int idItem, boolean confirmed);
+    
+    public String setItemState(int idUser, int idItem, boolean state);
 
     public String getName();
 
