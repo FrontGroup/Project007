@@ -9,22 +9,16 @@ package client;
  * @author lucas
  */
 public interface SourceGroupInt {
-    
+
     //metoda, ktera naplni tridu vsemi dostupnymi skupinami
     //vraci OK nebo KO chyba
     public String loadData();
-    
-    //metoda, ktera aktualizuje data v databazi
-    //vraci OK nebo KO chyba
-    public String updateData();
-    
-    public String getName(int id);
-    
-    public void addGroup(String name);
-    
-    public void delGroup(int id);
-    
-    
-    
-    
+
+    public Group getGroup(int id);
+
+    public String addGroup(Group group);
+
+    public String delGroup(int id);
+
+    public String updateGroup(int id, Group group);
 }

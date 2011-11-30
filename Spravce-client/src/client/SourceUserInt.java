@@ -21,10 +21,10 @@ public interface SourceUserInt {
     public String updateData();
 
     //metoda, ktera vrati HashMap s dovednostmi, ktere ma uzivatel prirazen
-    public HashMap<String, ItemStatus> getItems();
+    public HashMap<Integer, ItemStatus> getItems();
 
     //metoda, ktera vrati HashMap s tymy ve kterych je uzivatel prirazen
-    public HashMap<String, TeamStatus> getTeams();
+    public HashMap<Integer, TeamStatus> getTeams();
 
     public String setTeam(int idUser,int idTeam);
 

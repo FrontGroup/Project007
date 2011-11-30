@@ -13,8 +13,8 @@ import java.util.HashMap;
 public class SourceUser implements SourceUserInt {
 
     private HashMap<String, String> data = null;
-    private HashMap<String, TeamStatus> teamsStatus = null;
-    private HashMap<String, ItemStatus> itemsStatus = null;
+    private HashMap<Integer, TeamStatus> teamsStatus = null;
+    private HashMap<Integer, ItemStatus> itemsStatus = null;
 
     public SourceUser() {
     }
@@ -41,20 +41,20 @@ public class SourceUser implements SourceUserInt {
             return response;
         }
         String[] split = response.split(";");
-        itemsStatus = new HashMap<String, ItemStatus>();
+        itemsStatus = new HashMap<Integer, ItemStatus>();
         for (int i = 0; i < split.length; i++) {
             String[] s = split[i].split(" ");
-            itemsStatus.put(s[0], new ItemStatus(s[1]));
+            itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
         }
         response = sc.sendMSG("GET_USER_TEAMS " + id);
         if (response.startsWith("KO")) {
             return response;
         }
         split = response.split(";");
-        teamsStatus = new HashMap<String, TeamStatus>();
+        teamsStatus = new HashMap<Integer, TeamStatus>();
         for (int i = 0; i < split.length; i++) {
             String[] s = split[i].split(" ");
-            teamsStatus.put(s[0], new TeamStatus(s[1]));
+            teamsStatus.put(Integer.valueOf(s[0]), new TeamStatus(s[1]));
         }
         return "OK";
     }
@@ -85,7 +85,7 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public HashMap<String, ItemStatus> getItems() {
+    public HashMap<Integer, ItemStatus> getItems() {
         return itemsStatus;
     }
 
@@ -125,7 +125,7 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public HashMap<String, TeamStatus> getTeams() {
+    public HashMap<Integer, TeamStatus> getTeams() {
         return teamsStatus;
     }
 
