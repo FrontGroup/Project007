@@ -2,50 +2,70 @@ package server;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author beretis
  */
-public class DBConnection {
+public class DBConnection
+{
 
     private Connection connect = null;
     private Statement statement = null;
     private ResultSet resultSet = null;
     String db_address;
     String[] arguments = null;
+    ResultSetMetaData meta = null;
+    int columncount;
+    String sql;
 
-    public DBConnection(String db_address) {
+    public DBConnection(String db_address)
+    {
         this.db_address = db_address;
     }
 
-    public String connect() {
-        try {
+    public String connect()
+    {
+        try
+        {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.err.println("Nepodarilo sa nacitat MySQL driver");
             return "MySQL driver failed!";
         }
-        try {
+        try
+        {
             connect = DriverManager.getConnection(db_address);
             System.out.println("PODARILO SA PRIPOJIT");
             return "OK";
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
             System.err.println("Pripojenie zlyhalo");
             return "Connect to DB failed!";
         }
     }
 
-    public void disConnect() {
-        try {
+    public void disConnect()
+    {
+        try
+        {
             connect.close();
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             System.err.println("Disconnect failed!");
         }
     }
 
-    public String login(String id, String pass) {
-        try {
+    public String login(String id, String pass)
+    {
+        try
+        {
             //metoda vraci ADMIN/MANAGER/HR/EMPLOYEE/KO
             int role = 0;
             String query = "SELECT role FROM Users WHERE id='" + id + "' and pass='" + pass + "'"; // vytviry SQL dotaz
@@ -59,87 +79,80 @@ public class DBConnection {
             {
                 System.out.println("Neplatne id nebo heslo");
             }
-            switch (role) {
-                case 0: {
+            switch (role)
+            {
+                case 0:
+                {
                     return "KO";
                 }
-                case 1: {
+                case 1:
+                {
                     return "ADMIN";
                 }
-                case 2: {
+                case 2:
+                {
                     return "MANAGER";
                 }
-                case 3: {
+                case 3:
+                {
                     return "HR";
                 }
                 default:
                     return "KO";
             }
-        } catch (SQLException ex) {
+        }
+        catch (SQLException ex)
+        {
             System.out.println("Chyba v metode login v DBConnect");
-            return "";
+            return "KO error in database";
         }
     }
 
-    public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
-    {
-        //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
-        String query = "Select * from komplex where id =" + id;
-        try {
-            ArrayList<String> list = new ArrayList<String>();
-            statement = connect.createStatement();
-            resultSet = statement.executeQuery(query);
-            ResultSetMetaData meta = resultSet.getMetaData(); //ziska metadata o vysledku aby bolo mozne
-            int columncount = meta.getColumnCount();        // urcit pocet stlpcov
-            String show_result = "";
-            while (resultSet.next())//pre vsetky radky
-            {
-                for (int i = 1; i < columncount; i++)//pre vsetky stlpce
-                {//redukcia identickych informacii
-                    if (!show_result.contains(meta.getColumnName(i) + ":" + resultSet.getString(i))) {
-                        show_result += meta.getColumnName(i) + ":" + resultSet.getString(i) + ";";
-                    }
-                }
-            }
-            return show_result;
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "";
-        }
-    }
 // metoda na pridavanie uzivatela ktore je pretazena, je mozne ju volat s menej parametrami
-
-    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email, String phone, int role) {
-        try {
+    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email, String phone, int role)
+    {
+        try
+        {
             String query = "INSERT into Users (Groups_idGroups, pass, name, lastname, address, city, email, phone, role)  VALUES ('" + Groups_idGroups + "', '" + pass + "', '" + name
                     + "', '" + lastname + "', '" + address + "', '" + city + "', '" + email
                     + "', '" + phone + "', '" + role + "')";
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
-            if (rows_effected != 0) {
+            if (rows_effected != 0)
+            {
                 return "OK";
-            } else {
+            }
+            else
+            {
                 return "KO nepodarilo sa pridat uzivatela";
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println("Chyba v metode addUser");
-            return "KO chyba v metode";
+            return "KO error in database";
         }
     }
 
 // metoda ktora meni heslo uzivatela identifikovaneho pomocou ID
-    public String changePass(String id, String oldpass, String newpass) {
+    public String changePass(String id, String oldpass, String newpass)
+    {
         String query = "UPDATE Users SET pass = '" + newpass + "' WHERE id ='" + id + "' and pass ='" + oldpass + "'";
-        try {
+        try
+        {
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
-            if (rows_effected != 0) {
+            if (rows_effected != 0)
+            {
                 return "OK";
-            } else {
+            }
+            else
+            {
                 return "KO id/heslo je nespravne";
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println("Chyba v metode addUser");
             return "KO chyba v metode";
         }
@@ -147,166 +160,443 @@ public class DBConnection {
     }
 // metoda ktora uzavre resultset
 
-    private void close() {
-        try {
-            if (resultSet != null) {
+    private void close()
+    {
+        try
+        {
+            if (resultSet != null)
+            {
                 resultSet.close();
             }
 
-            if (statement != null) {
+            if (statement != null)
+            {
                 statement.close();
             }
 
-            if (connect != null) {
+            if (connect != null)
+            {
                 connect.close();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e)
+        {
         }
     }
 // potrebujem si vyjasnit niektore veci v tabulke
 
-    public String deleteUser(String id) {
-        try {
+    public String deleteUser(String id)
+    {
+        try
+        {
             String query = "DELETE from Users WHERE id = '" + id + "'";
             statement = connect.createStatement();
             int delete = statement.executeUpdate(query);
-            if (delete == 0) {
+            if (delete == 0)
+            {
                 return "KO User s id" + id + "neexistuje";
             }
             query = "DELETE from Teams_has_Users WHERE Users_id = '" + id + "'";
             int delete2 = statement.executeUpdate(query);
-            if (delete2 == 0) {
+            if (delete2 == 0)
+            {
                 System.out.println("User nieje clenom ziadneho teamu");
             }
             query = "DELETE from Users_has_Items WHERE Users_id = '" + id + "'";
             int delete3 = statement.executeUpdate(query);
-            if (delete3 == 0) {
+            if (delete3 == 0)
+            {
                 System.out.println("User nema ziadne Itemi");
             }
             return "OK";
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println("chyba v metode deleteUser v triede DBConnection");
             return "KO";
         }
     }
 
-    public String[] getArguments() {
+    public String[] getArguments()
+    {
         return arguments;
     }
 
-    public Connection getConnect() {
+    public Connection getConnect()
+    {
         return connect;
     }
 
-    public String getDb_address() {
+    public String getDb_address()
+    {
         return db_address;
     }
 
-    public ResultSet getResultSet() {
+    public ResultSet getResultSet()
+    {
         return resultSet;
     }
 
-    public Statement getStatement() {
+    public Statement getStatement()
+    {
         return statement;
     }
 
-    public void setArguments(String[] arguments) {
+    public void setArguments(String[] arguments)
+    {
         this.arguments = arguments;
     }
 
-    public void setDb_address(String db_address) {
+    public void setDb_address(String db_address)
+    {
         this.db_address = db_address;
     }
 
-    public String adminChangePass(String id, String newpass) {
+    public String adminChangePass(String id, String newpass)
+    {
         String query = "UPDATE Users SET pass = '" + newpass + "' WHERE id ='" + id + "'";
-        try {
+        try
+        {
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
-            if (rows_effected != 0) {
+            if (rows_effected != 0)
+            {
                 return "OK";
-            } else {
+            }
+            else
+            {
                 return "KO id/heslo je nespravne";
             }
-        } catch (Exception ex) {
+        }
+        catch (Exception ex)
+        {
             System.out.println("Chyba v metode addUser");
             return "KO chyba v metode";
         }
     }
 
-    public String getGroups() {
+    public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
+    {
+        //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
+        String query = "Select * from komplex where id =" + id;
+        try
+        {
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(query);
+            meta = resultSet.getMetaData(); //ziska metadata o vysledku aby bolo mozne
+            columncount = meta.getColumnCount();        // urcit pocet stlpcov
+            String show_result = "";
+            while (resultSet.next())//pre vsetky radky
+            {
+                for (int i = 1; i < columncount; i++)//pre vsetky stlpce
+                {//redukcia identickych informacii
+                    if (!show_result.contains(meta.getColumnName(i) + ":" + resultSet.getString(i)))
+                    {
+                        show_result += meta.getColumnName(i) + ":" + resultSet.getString(i) + ";";
+                    }
+                }
+            }
+            return show_result;
+        }
+        catch (Exception e)
+        {
+            System.out.println(e.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
+    }
+
+    public String getGroups()
+    {
+        try
+        {
+            String result = "";
+            sql = "Select * from Groups";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            meta = resultSet.getMetaData();
+            columncount = meta.getColumnCount();
+            while (resultSet.next())
+            {
+                for (int i = 0; i < columncount; i++)
+                {
+                    result = meta.getColumnName(i) + ":" + resultSet.getNString(i) + ";";
+                }
+            }
+            return result;
+
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
+
+    }
+
+    String simpleShowAllFrom(String from)//metoda na vypisovanie celeho obsahu jednoduchych tabuliek
+    {
+        try
+        {
+            String result = "";
+            sql = "Select * from " + from;
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            meta = resultSet.getMetaData();
+            columncount = meta.getColumnCount();
+            while (resultSet.next())
+            {
+                for (int i = 0; i < columncount; i++)
+                {
+                    result = meta.getColumnName(i) + ":" + resultSet.getNString(i) + ";";
+                }
+            }
+            return result;
+
+        }
+        catch (SQLException ex)
+        {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
+
+    }
+
+    String executeSql(String sql) //metoda ktora vykona zadany SQL prikaz a vrati vysledok vo formate splnujucom protocol
+    {
+        String low_sql = sql.toLowerCase();
+        if (low_sql.startsWith("select"))
+        {
+            try
+            {
+                String result = "";
+                statement = connect.createStatement();
+                resultSet = statement.executeQuery(sql);
+                meta = resultSet.getMetaData();
+                columncount = meta.getColumnCount();
+                while (resultSet.next())
+                {
+                    for (int i = 0; i < columncount; i++)
+                    {
+                        result = meta.getColumnName(i) + ":" + resultSet.getNString(i) + ";";
+                    }
+                }
+                return result;
+            }
+            catch (SQLException ex)
+            {
+                System.out.println(ex.getMessage());
+                System.out.println("Chyba v metode execute_command");
+                return "KO error in database";
+            }
+        }
+        else if (low_sql.startsWith("delete"))
+        {
+            try
+            {
+                statement = connect.createStatement();
+                int delete = statement.executeUpdate(sql);
+                if (delete == 0)
+                {
+                    return "KO id does not exist in the database";
+                }
+                return "OK";
+            }
+            catch (Exception ex)
+            {
+                System.out.println("chyba v metode deleteUser v triede DBConnection");
+                return "KO error in database";
+            }
+        }
+        else if (low_sql.startsWith("insert") || low_sql.startsWith("replace"))
+        {
+            try
+            {
+                statement = connect.createStatement();
+                int rows_effected = statement.executeUpdate(sql);
+                if (rows_effected != 0)
+                {
+                    return "OK";
+                }
+                else
+                {
+                    return "KO wrong input";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Chyba v metode addUser");
+                return "KO error in database";
+            }
+        }
+        else if (low_sql.startsWith("update"))
+        {
+            try
+            {
+                statement = connect.createStatement();
+                int rows_effected = statement.executeUpdate(sql);
+                if (rows_effected != 0)
+                {
+                    return "OK";
+                }
+                else
+                {
+                    return "KO wrong input";
+                }
+            }
+            catch (Exception ex)
+            {
+                System.out.println("Chyba v metode addUser");
+                return "KO error in database";
+            }
+        }
+        else
+        {
+            System.out.println("Wrong sql");
+            return "KO error in sql exeption";
+        }
+    }
+
+    String getItems()
+    {
+        return simpleShowAllFrom("Items");
+    }
+
+    String getTeams()
+    {
+        return simpleShowAllFrom("Teams");
+    }
+
+    String getUserItems(String idUser)
+    {
+        sql = "Select * from Users_has_Items where id='" + idUser + "'";
+        return executeSql(sql);
+    }
+
+    String getUserTeams(String idUser)
+    {
+        sql = "Select * from Teams_has_Users where id='" + idUser + "'";
+        return executeSql(sql);
+    }
+
+    String addItem(String name)
+    {
+        sql = "Insert into Items (name) values('" + name + "')";
+        return executeSql(sql);
+    }
+
+    String addTeam(String pm, String name, String project, String info, String goal)//co to je pm??
+    {
+        sql = "Insert into Teams (name,project,info,goal) values('" + name + "','" + project + "','" + info + "','" + goal + "')";
+        return executeSql(sql);
+    }
+
+    String addGroup(String name, int[] idItems)// nebolo by lepsie vytvorit grupu len s nazvom a potom vkladat do tabulky Groups_has_Items?
+    {
+        sql = "Insert into Groups (name) values('" + name + "')";
+        if (!executeSql(sql).equals("OK"))//to same ako is_ok = executeSql(sql) == "OK" ? true : false;
+        {
+            return "KO error while adding Group";
+        }
+        sql = "Select id from Gropus where name='" + name + "')";
+        String id = executeSql(sql);
+        String[] tokens = id.split(":");
+        String input = "";
+        id = tokens[1];
+        id = id.substring(0, id.length() - 1);
+        for (int i = 0; i < idItems.length; i++)
+        {
+            sql = "Replace into Groups_has_Items (Items_id) values('" + idItems[i] + "')";
+            executeSql(sql);
+        }
+        return "OK";
+    }
+
+    String delTeam(String id)
+    {
+        sql = "Delete from Teams where id='" + id + "'";
+        if (!executeSql(sql).equals("OK"))
+        {
+            return "KO error while adding Group";
+        }
+        sql = "Delete from Teams_has_Users where id='" + id + "'";
+        if (!executeSql(sql).equals("OK"))
+        {
+            return "KO error while deleting Team";
+        }
+        return "OK";
+    }
+
+    String delGroup(String id)
+    {
+        sql = "Delete from Groups where id='" + id + "'";
+        if (!executeSql(sql).equals("OK"))
+        {
+            return "KO error while adding Group";
+        }
+        sql = "Delete from Groups_has_Items where id='" + id + "'";
+        if (!executeSql(sql).equals("OK"))
+        {
+            return "KO error while deleting Group";
+        }
+        return "OK";
+    }
+
+    String delItem(String id)
+    {
+        sql = "Delete from Items where id='" + id + "'";
+        return executeSql(sql);
+    }
+
+    String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia)
+    {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String getItems() {
+    String updateTeam(String id, String pm, String name, String project, String info, String goal)//
+    {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String getTeams() {
+    String updateGroup(String id, String name, int[] idItems) //spytat sa co to ma presne robit
+    {/*
+        for(int i = 0; i < idItems.length; i++)
+        {
+            sql = "Update Groups_has_Items set   values('" + name + "')";
+            
+        }
+        
+
+     * 
+     */
+        return "";
+    }
+
+    String updateItem(String id, String name)
+    {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String getUserItems(String idUser) {
+    String userInTeam(String idUser, String idTeam)
+    {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String getUserTeams(String idUser) {
+    String userOutTeam(String idUser, String idTeam)
+    {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String addItem(String name) {
+    String setTeamConfirmed(String idUser, String idTeam, boolean confirmed)
+    {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    String addTeam(String pm, String name, String project, String info, String goal) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String addGroup(String name, int[] idItems) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String delTeam(String id) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String delGroup(String id) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String delItem(String id) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String updateTeam(String id, String pm, String name, String project, String info, String goal) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String updateGroup(String id, String name, int[] idItems) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String updateItem(String id, String name) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String userInTeam(String idUser, String idTeam) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String userOutTeam(String idUser, String idTeam) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String setTeamConfirmed(String idUser, String idTeam, boolean confirmed) {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
-    String setItemState(String idUser, String idItem, boolean state) {
-        throw new UnsupportedOperationException("Not yet implemented");
+    String setItemState(String idUser, String idItem, boolean state)
+    {
+        sql = "Update Users_has_Items set state='" + state + "' WHERE users_id='" + idUser + "' and Items_id='" + idItem + "'";
+        return executeSql(sql);
     }
 }
