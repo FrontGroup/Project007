@@ -10,6 +10,7 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
@@ -20,40 +21,28 @@ import javax.swing.JTextField;
  */
 public class FrameEditGroup extends javax.swing.JFrame {
 
-    private static HashMap<String, Item> map = new HashMap<String, Item>();
-    private String id = null;
-    JButton save;
-    JLabel lName = new JLabel("Name:");
-    JTextField name;
+    private static HashMap<Integer, Item> items = new HashMap<Integer, Item>();
+    private JButton save;
+    private JLabel lName = new JLabel("Name:");
+    private JTextField name;
+    private Group group = null;
+    private SourceGroup sg = new SourceGroup();
+    private SourceItem si = new SourceItem();
 
-    public FrameEditGroup(String id) {
-        this.id = id;
+    public FrameEditGroup(Group group) {
+        this.group = group;
+        downloadItems();
         initComponents();
+        lookData();
     }
 
     public static void main(String[] args) {
-        map.put("Item 1", new Item("Item 1", "false"));
-        map.put("Item 2", new Item("Item 2", "false"));
-        map.put("Item 3", new Item("Item 3", "true"));
-        map.put("Item 4", new Item("Item 4", "false"));
-        map.put("Item 5", new Item("Item 5", "true"));
-        map.put("Item 6", new Item("Item 6", "false"));
-        map.put("Item 7", new Item("Item 7", "true"));
-        map.put("Item 8", new Item("Item 8", "false"));
-        map.put("Item 9", new Item("Item 9", "false"));
-        map.put("Item 10", new Item("Item 10", "false"));
-        map.put("Item 11", new Item("Item 5", "true"));
-        map.put("Item 12", new Item("Item 6", "false"));
-        map.put("Item 13", new Item("Item 7", "true"));
-        map.put("Item 14", new Item("Item 8", "false"));
-        map.put("Item 15", new Item("Item 9", "false"));
-        map.put("Item 16", new Item("Item 10", "false"));
         FrameEditGroup fg = new FrameEditGroup(null);
     }
 
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
-        if (id == null) {
+        if (group == null) {
             setTitle("NEW group");
         } else {
             setTitle("EDIT group");
@@ -61,6 +50,7 @@ public class FrameEditGroup extends javax.swing.JFrame {
         setSize(500, 300);
         save = new JButton("Save");
         name = new JTextField(10);
+        name.setText(group.getName());
         JPanel p1 = new JPanel();
         p1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
         JPanel p2 = new JPanel();
@@ -94,7 +84,7 @@ public class FrameEditGroup extends javax.swing.JFrame {
         constraint.fill = GridBagConstraints.HORIZONTAL;
         constraint.gridwidth = 1;
         int i = 0;
-        for (Item item : map.values()) {
+        for (Item item : items.values()) {
             constraint.gridx = 0;
             constraint.gridy = i;
             JCheckBox jCB = new JCheckBox(item.getName(), item.isState());
@@ -104,5 +94,32 @@ public class FrameEditGroup extends javax.swing.JFrame {
         }
         JScrollPane jsp = new JScrollPane(panel);
         return jsp;
+    }
+
+    private void downloadItems() {
+        String response = si.loadData();
+        if (response.startsWith("KO")) {
+            JOptionPane.showMessageDialog(null, response.substring(3),
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            this.dispose();
+        }
+        items = si.getAllItems();
+        if (group == null) {
+            response = sg.loadData();
+            if (response.startsWith("KO")) {
+                JOptionPane.showMessageDialog(null, response.substring(3),
+                        "ERROR", JOptionPane.ERROR_MESSAGE);
+                this.dispose();
+            }
+            int[] idItems = group.getIdItems();
+            for (int i : idItems) {
+                Item temp = items.get(i);
+                temp.setState(true);
+                items.put(i, temp);
+            }
+        }
+    }
+
+    private void lookData() {
     }
 }
