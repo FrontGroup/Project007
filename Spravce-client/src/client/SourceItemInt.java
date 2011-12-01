@@ -14,7 +14,7 @@ public interface SourceItemInt {
 
     //metoda, ktera naplni tridu vsemi items
     //vraci OK nebo KO chyba
-    public String loadData(int id);
+    public String loadData();
 
     public Item getItem(int id);
 

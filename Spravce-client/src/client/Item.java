@@ -23,6 +23,11 @@ public class Item {
         }
     }
 
+    public Item(String name) {
+        this.name = name;
+        this.state = false;
+    }
+
     public int getId() {
         return id;
     }
@@ -41,5 +46,10 @@ public class Item {
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }

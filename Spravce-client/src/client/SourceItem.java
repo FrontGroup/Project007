@@ -18,7 +18,7 @@ public class SourceItem implements SourceItemInt {
     }
 
     @Override
-    public String loadData(int id) {
+    public String loadData() {
         ServerConnection sc = ServerConnection.getInstance();
         String response = sc.sendMSG("GET_ITEMS");
         if (response.startsWith("KO")) {
