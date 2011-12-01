@@ -70,7 +70,10 @@ public class ServerConnection {
             return response;
         } catch (IOException ex) {
             System.err.println("IO-Exception by running!");
-            return null;
+            return "KO IO-Exception by running!";
+        }catch (NullPointerException ex){
+            System.err.println("Non-existent connection to server!");
+            return "KO Non-existent connection to server!";
         }
     }
 

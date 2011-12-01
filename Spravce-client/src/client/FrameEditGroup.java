@@ -97,7 +97,7 @@ public class FrameEditGroup extends javax.swing.JFrame {
         for (Item item : map.values()) {
             constraint.gridx = 0;
             constraint.gridy = i;
-            JCheckBox jCB = new JCheckBox(item.name, item.state);
+            JCheckBox jCB = new JCheckBox(item.getName(), item.isState());
             gridbag.setConstraints(jCB, constraint);
             panel.add(jCB);
             i++;

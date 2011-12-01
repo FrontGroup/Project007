@@ -6,9 +6,11 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 /**
@@ -17,18 +19,21 @@ import javax.swing.JPanel;
  */
 public class FrameGroups extends javax.swing.JFrame {
 
-    HashMap<String, String> map = new HashMap<String, String>();
-    JButton groups;
-    JButton edit;
-    JButton delete;
-    JComboBox box;
+    private JButton groups;
+    private JButton edit;
+    private JButton delete;
+    private JComboBox box;
+    private SourceGroup sg = new SourceGroup();
+    private HashMap<Integer, Group> allGroups;
 
     public FrameGroups() {
         initComponents();
+        lookData();
     }
 
     public static void main(String[] args) {
         FrameGroups fg = new FrameGroups();
+
     }
 
     private void initComponents() {
@@ -69,5 +74,38 @@ public class FrameGroups extends javax.swing.JFrame {
                 new FrameEditGroup(null);
             }
         });
+        delete.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                deleteGroup();
+            }
+        });
+    }
+
+    private void lookData() {
+        String response = sg.loadData();
+        if (response.startsWith("KO")) {
+            JOptionPane.showMessageDialog(null, response.substring(3),
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        allGroups = sg.getAllGroups();
+        box.removeAllItems();
+        box.addItem("                          ");
+        Collection<Group> values = allGroups.values();
+        for (Group g : values) {
+            box.addItem(g);
+        }
+    }
+
+    private void deleteGroup() {
+        Group temp = (Group) box.getSelectedItem();
+        String response = sg.delGroup(temp.getId());
+        if (response.startsWith("KO")) {
+            JOptionPane.showMessageDialog(null, response.substring(3),
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
     }
 }

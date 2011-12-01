@@ -89,8 +89,8 @@ public class FrameItems extends javax.swing.JFrame {
     private void lookData() {
         String response = si.loadData();
         if (response.startsWith("KO")) {
-            JOptionPane.showMessageDialog(null, "SERVER: " + response,
-                    "Server error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, response.substring(3),
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
         allItems = si.getAllItems();
@@ -107,16 +107,16 @@ public class FrameItems extends javax.swing.JFrame {
             Item temp = new Item(lName.getText());
             String response = si.addItem(temp);
             if (response.startsWith("KO")) {
-                JOptionPane.showMessageDialog(null, "SERVER: " + response,
-                        "Server error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, response.substring(3),
+                        "ERROR", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         } else {
             Item temp = (Item) box.getSelectedItem();
             String response = si.updateItem(temp.getId(), temp);
             if (response.startsWith("KO")) {
-                JOptionPane.showMessageDialog(null, "SERVER: " + response,
-                        "Server error", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(null, response.substring(3),
+                        "ERROR", JOptionPane.ERROR_MESSAGE);
                 return;
             }
         }
@@ -126,8 +126,8 @@ public class FrameItems extends javax.swing.JFrame {
         Item temp = (Item) box.getSelectedItem();
         String response = si.delItem(temp.getId());
         if (response.startsWith("KO")) {
-            JOptionPane.showMessageDialog(null, "SERVER: " + response,
-                    "Server error", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(null, response.substring(3),
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
     }
