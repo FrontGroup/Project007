@@ -64,7 +64,7 @@ public class FrameGroups extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                new FrameEditGroup((String) box.getSelectedItem());
+                new FrameEditGroup((Group) box.getSelectedItem());
             }
         });
         groups.addActionListener(new ActionListener() {

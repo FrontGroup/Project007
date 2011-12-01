@@ -6,6 +6,9 @@ package client;
 
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.util.Collection;
 import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -33,7 +36,6 @@ public class FrameEditGroup extends javax.swing.JFrame {
         this.group = group;
         downloadItems();
         initComponents();
-        lookData();
     }
 
     public static void main(String[] args) {
@@ -50,7 +52,9 @@ public class FrameEditGroup extends javax.swing.JFrame {
         setSize(500, 300);
         save = new JButton("Save");
         name = new JTextField(10);
-        name.setText(group.getName());
+        if (group != null) {
+            name.setText(group.getName());
+        }
         JPanel p1 = new JPanel();
         p1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
         JPanel p2 = new JPanel();
@@ -73,7 +77,14 @@ public class FrameEditGroup extends javax.swing.JFrame {
         getContentPane().add(getScrollpane());
         getContentPane().add(p4);
         setVisible(true);
-        //pack();
+
+        save.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                saveGroup();
+            }
+        });
     }
 
     public JScrollPane getScrollpane() {
@@ -88,6 +99,17 @@ public class FrameEditGroup extends javax.swing.JFrame {
             constraint.gridx = 0;
             constraint.gridy = i;
             JCheckBox jCB = new JCheckBox(item.getName(), item.isState());
+            jCB.setName("" + item.getId());
+            jCB.addActionListener(new ActionListener() {
+
+                @Override
+                public void actionPerformed(ActionEvent arg0) {
+                    JCheckBox source = (JCheckBox) arg0.getSource();
+                    Item temp = items.get(Integer.valueOf(source.getName()));
+                    temp.setState(source.isSelected());
+                    items.put(temp.getId(), temp);
+                }
+            });
             gridbag.setConstraints(jCB, constraint);
             panel.add(jCB);
             i++;
@@ -120,6 +142,29 @@ public class FrameEditGroup extends javax.swing.JFrame {
         }
     }
 
-    private void lookData() {
+    private void saveGroup() {
+        String s = "";
+        Collection<Item> values = items.values();
+        for (Item i : values) {
+            s += i.getId() + " ";
+        }
+        String[] split = s.split(" ");
+        int[] idItems = new int[split.length];
+        for (int k = 0; k < idItems.length; k++) {
+            idItems[k] = Integer.valueOf(split[k]);
+        }
+        String response;
+        if (group == null) {
+            group = new Group(name.getText(), idItems);
+            response = sg.addGroup(group);
+        } else {
+            group.setName(name.getText());
+            group.setIdItems(idItems);
+            response = sg.updateGroup(group.getId(), group);
+        }
+        if (response.startsWith("KO")) {
+            JOptionPane.showMessageDialog(null, response.substring(3),
+                    "ERROR", JOptionPane.ERROR_MESSAGE);
+        }
     }
 }

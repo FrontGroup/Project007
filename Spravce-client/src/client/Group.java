@@ -20,6 +20,11 @@ public class Group {
         this.idItems = idItems;
     }
 
+    public Group(String name, int[] idItems) {
+        this.name = name;
+        this.idItems = idItems;
+    }
+
     public int[] getIdItems() {
         return idItems;
     }
