@@ -41,7 +41,7 @@ public class Protocol {
         }
         worker = Worker.getWorker(msg, dbc);
 
-        dbc.disConnect();
+     //   dbc.disConnect(); toto je ten bug
 
         return worker.process();
     }
