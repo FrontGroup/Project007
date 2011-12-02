@@ -107,6 +107,7 @@ public class DBConnection
         }
         catch (SQLException ex)
         {
+            ex.printStackTrace();
             System.out.println("Chyba v metode login v DBConnect");
             return "KO error in database";
         }
