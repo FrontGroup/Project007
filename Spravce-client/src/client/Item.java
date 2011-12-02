@@ -14,13 +14,15 @@ public class Item {
     private String name;
     private boolean state;
 
-    public Item(String name, String s) {
+    public Item(int id, String name) {
+        this.id = id;
         this.name = name;
-        if (s.contains("false") || s.contains("0")) {
-            state = false;
-        } else {
-            state = true;
-        }
+        this.state = false;
+    }
+
+    public Item(String name) {
+        this.name = name;
+        this.state = false;
     }
 
     public int getId() {
@@ -41,5 +43,10 @@ public class Item {
 
     public void setState(boolean state) {
         this.state = state;
+    }
+
+    @Override
+    public String toString() {
+        return this.getName();
     }
 }

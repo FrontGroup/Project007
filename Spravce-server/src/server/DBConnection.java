@@ -612,4 +612,5 @@ public class DBConnection
         sql = "Update Users_has_Items set state='" + state + "' WHERE Users_id='" + idUser + "' and Items_id='" + idItem + "'";
         return executeSql(sql);
     }
+
 }
