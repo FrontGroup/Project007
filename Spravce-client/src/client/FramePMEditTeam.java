@@ -22,9 +22,9 @@ public class FramePMEditTeam extends JFrame {
 
 	private boolean editing, newTeam;
 
-	private User PM;
+	private SourceUser PM;
 	private Team team;
-	private static HashMap<Integer, User> members = new HashMap();
+	private static HashMap<Integer, SourceUser> members = new HashMap();
 
 	private JLabel teamLeader = new JLabel("");
 	private JTextField JTFTeamName = new JTextField();
@@ -35,18 +35,18 @@ public class FramePMEditTeam extends JFrame {
 	private static DefaultListModel listModel = new DefaultListModel();
 	private static JList JLMembers = new JList();
 
-	public FramePMEditTeam(User pm) {
+	public FramePMEditTeam(SourceUser pm) {
 		this.PM = pm;
-		teamLeader.setText(PM.getFullName());
+		teamLeader.setText(PM.getName() + PM.getLastname());
 		this.editing = true;
 		this.newTeam = true;
 		team = new Team(pm.getId());
 		initComponents();
 	}
 
-	public FramePMEditTeam(User pm, Team team, boolean editing) {
+	public FramePMEditTeam(SourceUser pm, Team team, boolean editing) {
 		this.PM = pm;
-		teamLeader.setText(PM.getFullName());
+		teamLeader.setText(PM.getName() + PM.getLastname());
 		if (team == null) {
 			JOptionPane.showMessageDialog(null,
 					"Error in concstructor FramePMEditTeam", "Error",
@@ -63,9 +63,13 @@ public class FramePMEditTeam extends JFrame {
 	}
 
 	private void takeMembers() {
-		for (int i = 0; i < team.getMembers().length; i++) {
-			members.put(team.getMembers()[i].getId(), team.getMembers()[i]);
+		for (SourceUser member : team.getMembers().values()) {
+			members.put(member.getId(), member);
 		}
+		/*
+		 * for (int i = 0; i < team.getMembers().length; i++) {
+		 * members.put(team.getMembers()[i].getId(), team.getMembers()[i]); }
+		 */
 	}
 
 	private void initComponents() {
@@ -87,7 +91,7 @@ public class FramePMEditTeam extends JFrame {
 		JTFProject.setText(team.getProject());
 		JTFTeamInfo.setText(team.getProject());
 		listModel.removeAllElements();
-		for (User member : team.getMembers()) {
+		for (SourceUser member : team.getMembers().values()) {
 			addMember(member);
 		}
 	}
@@ -143,10 +147,6 @@ public class FramePMEditTeam extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Need displaying window for looking users
-				// test implementation
-				Random r = new Random();
-				int i = r.nextInt();
-				addMember(new User(i, 1, "bla", "Jmeno1", "Prijmeni1" + ""));
 			}
 		});
 		JButton JBRmMembers = new JButton("Remove selected members");
@@ -181,7 +181,8 @@ public class FramePMEditTeam extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Need consultation
-				JOptionPane.showMessageDialog(null, "Not implemented yet.",
+				JOptionPane.showMessageDialog(null,
+						"Not implemented yet. Nice to have feature.",
 						"IMPLEMENTATION MISSING",
 						JOptionPane.INFORMATION_MESSAGE);
 			}
@@ -211,7 +212,7 @@ public class FramePMEditTeam extends JFrame {
 						team.setInfo(JTFProject.getText());
 					}
 					team.removeAllMembers();
-					for (User member : members.values()) {
+					for (SourceUser member : members.values()) {
 						team.addMember(member);
 					}
 					// TODO Need working database
@@ -253,8 +254,8 @@ public class FramePMEditTeam extends JFrame {
 		});
 
 		if (editing) {
-			setTitle("Editing team " + team.getName() + " ("
-					+ this.PM.getFullName() + ")");
+			setTitle("Editing team " + team.getName() + " (" + PM.getName()
+					+ PM.getLastname() + ")");
 			panel.add(JBAddMembers);
 			panel.add(JBRmMembers);
 			panel.add(JBShowDetail);
@@ -263,7 +264,7 @@ public class FramePMEditTeam extends JFrame {
 			panel.add(new JLabel(" "));
 			panel.add(JBSaveChanges);
 			if (newTeam) {
-				setTitle("New team (" + this.PM.getFullName() + ")");
+				setTitle("New team (" + PM.getName() + PM.getLastname() + ")");
 				panel.add(new JLabel(" "));
 				panel.add(new JLabel(" "));
 				panel.add(new JLabel(" "));
@@ -289,8 +290,8 @@ public class FramePMEditTeam extends JFrame {
 				}
 			}
 		} else {
-			setTitle("Showing team " + team.getName() + " (" + PM.getFullName()
-					+ ")");
+			setTitle("Showing team " + team.getName() + " (" + PM.getName()
+					+ PM.getLastname() + ")");
 			JTFTeamName.setEditable(false);
 			JTFTeamGoal.setEditable(false);
 			JTFProject.setEditable(false);
@@ -304,7 +305,7 @@ public class FramePMEditTeam extends JFrame {
 			JBArchiveTeam.setEnabled(false);
 			if (!team.isActive()) {
 				setTitle("Showing archived team " + team.getName() + " ("
-						+ PM.getFullName() + ")");
+						+ PM.getName() + PM.getLastname() + ")");
 			}
 			panel.add(JBAddMembers);
 			panel.add(JBRmMembers);
@@ -323,34 +324,41 @@ public class FramePMEditTeam extends JFrame {
 		return panel;
 	}
 
-	public void addMember(User member) {
-		listModel.addElement(member.getId() + ", " + member.getFullName()
-				+ ", " + member.getProfession());
+	private void addMember(SourceUser member) {
+		listModel.addElement(member.getId() + ", " + member.getName()
+				+ member.getLastname() + ", " + member.getProfessia());
 		members.put(member.getId(), member);
 	}
 
-	public void removeMember(int[] row) {
+	private void removeMember(int[] row) {
 		for (int i = 0; i < row.length; i++) {
-			String tmp = listModel.getElementAt(row[i]).toString();
-			String p = "";
-			int o = 0;
-			while (tmp.charAt(o) != ',') {
-				p += tmp.charAt(o);
-				o++;
-			}
-			int memId = Integer.parseInt(p);
+			members.remove(whatIsSelectedId(row[i]));
 			listModel.removeElementAt(row[i]);
-			members.remove(memId);
 			for (int j = i; j < row.length; j++) {
 				row[j]--;
 			}
 		}
 	}
 
+	private int whatIsSelectedId(int row) {
+		String tmp = listModel.getElementAt(row).toString();
+		String p = "";
+		int o = 0;
+		while (tmp.charAt(o) != ',') {
+			p += tmp.charAt(o);
+			o++;
+		}
+		return Integer.parseInt(p);
+	}
+
 	public static void main(String[] args) {
 		// testing data
-		FramePMEditTeam fst = new FramePMEditTeam(new User(01, 3, "pass",
-				"Jmeno", "Prijmeni"), new Team(11, "Team 1", "Goal 1", true), true);
+		SourceUser u = new SourceUser();
+		u.loadData(12);
+		SourceTeam tmp = new SourceTeam();
+		tmp.loadData();
+		Team t = tmp.getTeam(3);
+		FramePMEditTeam fst = new FramePMEditTeam(u, t, true);
 		fst.setVisible(true);
 	}
 }

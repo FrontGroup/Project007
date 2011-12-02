@@ -26,7 +26,7 @@ public class FramePMShowTeams extends JFrame {
 	private static HashMap<String, Team> activeTeams = new HashMap();
 	private static HashMap<String, Team> archivedTeams = new HashMap();
 
-	private User PM = null;
+	private SourceUser PM = null;
 	private Font headline = new Font("Arial", 0, 30);
 	private JButton[] viewButtons;
 	private JButton[] editButtons;
@@ -35,14 +35,14 @@ public class FramePMShowTeams extends JFrame {
 	final Object[] tableHeaderData = { "ID", "Name", "Goal",
 			"Number of members" };
 
-	public FramePMShowTeams(User pm) {
+	public FramePMShowTeams(SourceUser pm) {
 		this.PM = pm;
 		initComponents();
 	}
 
 	private void initComponents() {
 		setDefaultCloseOperation(2);
-		setTitle("Teams - " + PM.getFullName());
+		setTitle("Teams - " + PM.getName() + PM.getLastname());
 		setSize(640, 450);
 		setMinimumSize(new Dimension(640, 450));
 
@@ -118,7 +118,7 @@ public class FramePMShowTeams extends JFrame {
 				JLabel id = new JLabel(team.getId() + "");
 				JLabel name = new JLabel(team.getName());
 				JLabel goal = new JLabel(team.getGoal());
-				JLabel numMembers = new JLabel(team.getMembers().length + "");
+				JLabel numMembers = new JLabel(team.getMembers().size() + "");
 
 				constraint.gridx = 0;
 				constraint.gridy = i;
@@ -180,7 +180,7 @@ public class FramePMShowTeams extends JFrame {
 				tableData[tmp][0] = Integer.valueOf(team.getId());
 				tableData[tmp][1] = team.getName();
 				tableData[tmp][2] = team.getGoal();
-				tableData[tmp][3] = Integer.valueOf(team.getMembers().length);
+				tableData[tmp][3] = Integer.valueOf(team.getMembers().size());
 				tmp++;
 			}
 		}
@@ -225,7 +225,7 @@ public class FramePMShowTeams extends JFrame {
 
 	public static void main(String[] args) {
 		// testing data
-		Team team1 = new Team(1);
+		/*Team team1 = new Team(1);
 		team1.setName("Team 1");
 		team1.setGoal("Goal 1");
 		team1.addMember(new User(111, 1));
@@ -271,10 +271,11 @@ public class FramePMShowTeams extends JFrame {
 		archivedTeams.put("Team21", team1);
 		archivedTeams.put("Team22", team2);
 		archivedTeams.put("Team23", team3);
-		archivedTeams.put("Team24", team4);
+		archivedTeams.put("Team24", team4);*/
 
-		FramePMShowTeams fst = new FramePMShowTeams(new User(01, 3, "pass",
-				"Jmeno", "Prijmeni"));
+		SourceUser u = new SourceUser();
+		u.loadData(12);
+		FramePMShowTeams fst = new FramePMShowTeams(u);
 		fst.setVisible(true);
 	}
 }

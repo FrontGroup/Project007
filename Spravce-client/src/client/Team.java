@@ -1,5 +1,7 @@
 package client;
 
+import java.util.HashMap;
+
 /**
  * 
  * @author petr
@@ -8,7 +10,7 @@ public class Team {
 
     private int id;
     private String pm, name, goal, project, info;
-    private User[] members = new User[0];
+    private static HashMap<Integer, SourceUser> members = new HashMap();
     private boolean active;
 
     public Team(int id) {
@@ -95,7 +97,7 @@ public class Team {
         this.info = info;
     }
 
-    public User[] getMembers() {
+    public HashMap<Integer, SourceUser> getMembers() {
         return members;
     }
 
@@ -107,16 +109,17 @@ public class Team {
         this.pm = pm;
     }
 
-    public void addMember(User u) {
-        User[] tmpArray = new User[members.length + 1];
+    public void addMember(SourceUser u) {
+        /*User[] tmpArray = new User[members.length + 1];
         for (int i = 0; i < members.length; i++) {
             tmpArray[i] = members[i];
         }
         members = tmpArray.clone();
-        members[members.length - 1] = u;
+        members[members.length - 1] = u;*/
+    	members.put(u.getId(), u);
     }
 
     public void removeAllMembers() {
-        members = new User[0];
+        members.clear();
     }
 }

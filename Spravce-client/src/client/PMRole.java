@@ -10,9 +10,9 @@ import client.AdminRole.CreateUserDialog;
 
 public class PMRole implements Role {
 	
-	private User user;
+	private SourceUser user;
 
-	public PMRole(User user) {
+	public PMRole(SourceUser user) {
 		super();
 		this.user = user;
 	}
