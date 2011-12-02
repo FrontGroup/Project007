@@ -97,6 +97,10 @@ public class DBConnection
                 {
                     return "HR";
                 }
+                case 4:
+                {
+                    return "EMPLOYEE";
+                }
                 default:
                     return "KO";
             }
@@ -278,7 +282,7 @@ public class DBConnection
     public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
     {
         //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
-        String query = "Select * from komplex where id =" + id;
+        String query = "Select pass,name,lastname,address,city,email,phone,role,professia from Users where id =" + id;
         try
         {
             statement = connect.createStatement();
@@ -289,11 +293,8 @@ public class DBConnection
             while (resultSet.next())//pre vsetky radky
             {
                 for (int i = 1; i < columncount; i++)//pre vsetky stlpce
-                {//redukcia identickych informacii
-                    if (!show_result.contains(meta.getColumnName(i) + ":" + resultSet.getString(i)))
-                    {
-                        show_result += meta.getColumnName(i) + ":" + resultSet.getString(i) + ";";
-                    }
+                {
+                    show_result += meta.getColumnName(i) + ":" + resultSet.getString(i) + ";";
                 }
             }
             return show_result;
@@ -552,51 +553,63 @@ public class DBConnection
 
     String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        String query = "Update Users set id = '" + id + "'," + "name = '" + name + "'," + "lastname = '" + lastname + "'," + "address = '" + address + "',"
+                + "city = '" + city + "'," + "email = '" + email + "'," + "phone = '" + phone + "'," + "professia = '" + professia + "'";
+        return executeSql(sql);
     }
 
     String updateTeam(String id, String pm, String name, String project, String info, String goal)//
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        String query = "Update Teams set id = '" + id + "'," + "pm = '" + pm + "'," + "name = '" + name + "'," + "project = '" + project + "',"
+                + "info = '" + info + "'," + "goal = '" + goal + "'";
+        return executeSql(sql);
     }
 
     String updateGroup(String id, String name, int[] idItems) //spytat sa co to ma presne robit
-    {/*
-        for(int i = 0; i < idItems.length; i++)
+    {
+        sql = "Update Groups set name='" + name + "' where idGroups='" + id + "'";
+        if (!executeSql(sql).equals("OK"))
         {
-            sql = "Update Groups_has_Items set   values('" + name + "')";
-            
+            return "KO error while updating Group's name";
         }
-        
-
-     * 
-     */
-        return "";
+        for (int i = 0; i < idItems.length; i++)
+        {
+            sql = "Replace Groups_has_Items (Items_id) values ('" + idItems[i] + "')";
+            if (!executeSql(sql).equals("OK"))
+            {
+                return "KO error while updating Group's Items";
+            }
+        }
+        return "OK";
     }
 
     String updateItem(String id, String name)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        sql = "Update Items set name='" + name + "' WHERE id='" + id + "'";
+        return executeSql(sql);
     }
 
     String userInTeam(String idUser, String idTeam)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        sql = "Replace into Teams_has_Users (Teams_id, Users_id) values('" + idTeam + "', '" + idUser + "')";
+        return executeSql(sql);
     }
 
     String userOutTeam(String idUser, String idTeam)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        sql = "Delete Teams_has_Users where Teams_id = '" + idTeam + "' and Users_id = '" + idUser + "'";
+        return executeSql(sql);
     }
 
     String setTeamConfirmed(String idUser, String idTeam, boolean confirmed)
     {
-        throw new UnsupportedOperationException("Not yet implemented");
+        sql = "Update Teams_has_Users set confirmed='" + confirmed + "' WHERE Users_id='" + idUser + "' and Teams_id='" + idTeam + "'";
+        return executeSql(sql);
     }
 
     String setItemState(String idUser, String idItem, boolean state)
     {
-        sql = "Update Users_has_Items set state='" + state + "' WHERE users_id='" + idUser + "' and Items_id='" + idItem + "'";
+        sql = "Update Users_has_Items set state='" + state + "' WHERE Users_id='" + idUser + "' and Items_id='" + idItem + "'";
         return executeSql(sql);
     }
 }
