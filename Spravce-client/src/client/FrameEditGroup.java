@@ -124,6 +124,7 @@ public class FrameEditGroup extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, response.substring(3),
                     "ERROR", JOptionPane.ERROR_MESSAGE);
             this.dispose();
+            return;
         }
         items = si.getAllItems();
         if (group == null) {
@@ -132,6 +133,7 @@ public class FrameEditGroup extends javax.swing.JFrame {
                 JOptionPane.showMessageDialog(null, response.substring(3),
                         "ERROR", JOptionPane.ERROR_MESSAGE);
                 this.dispose();
+                return;
             }
             int[] idItems = group.getIdItems();
             for (int i : idItems) {

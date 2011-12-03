@@ -64,14 +64,26 @@ public class FrameGroups extends javax.swing.JFrame {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                new FrameEditGroup((Group) box.getSelectedItem());
+                java.awt.EventQueue.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        new FrameEditGroup((Group) box.getSelectedItem()).setVisible(true);
+                    }
+                });
             }
         });
         groups.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent arg0) {
-                new FrameEditGroup(null);
+                java.awt.EventQueue.invokeLater(new Runnable() {
+
+                    @Override
+                    public void run() {
+                        new FrameEditGroup(null).setVisible(true);
+                    }
+                });
             }
         });
         delete.addActionListener(new ActionListener() {

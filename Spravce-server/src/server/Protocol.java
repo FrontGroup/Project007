@@ -39,10 +39,13 @@ public class Protocol {
         if (!dbc.connect().contains("OK")) {
             return "KO Connection to DB failed!";
         }
+
         worker = Worker.getWorker(msg, dbc);
 
-     //   dbc.disConnect(); toto je ten bug
+        String response = worker.process();
 
-        return worker.process();
+        dbc.disConnect();
+
+        return response;
     }
 }

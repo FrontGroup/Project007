@@ -41,6 +41,7 @@ public class ProtocolTest {
      */
     @Test
     public void testProcess1() {
+        System.out.println("test testing connection");
         String msg = "TEST";
         Protocol instance = Protocol.getInstance();
         String expResult = "OK";
@@ -50,6 +51,7 @@ public class ProtocolTest {
 
     @Test
     public void testProcess2() {
+        System.out.println("test wrong requirement");
         String msg = "LOGIN 666";
         Protocol instance = Protocol.getInstance();
         String expResult = "KO Wrong requirement!";
@@ -59,6 +61,7 @@ public class ProtocolTest {
 
     @Test
     public void testProcess3() {
+        System.out.println("test login ADMIN");
         String msg = "LOGIN 666 admin";
         Protocol instance = Protocol.getInstance();
         String expResult = "ADMIN";

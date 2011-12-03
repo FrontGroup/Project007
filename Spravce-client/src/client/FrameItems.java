@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  * @author lucas
  */
 public class FrameItems extends javax.swing.JFrame {
-    
+
     private JButton save;
     private JButton delete;
     private JComboBox box;
@@ -29,16 +29,16 @@ public class FrameItems extends javax.swing.JFrame {
     private JLabel lName = new JLabel("Name:");
     private SourceItem si = new SourceItem();
     private HashMap<Integer, Item> allItems;
-    
+
     public FrameItems() {
         initComponents();
         lookData();
     }
-    
+
     public static void main(String[] args) {
         FrameItems fi = new FrameItems();
     }
-    
+
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Global items");
@@ -66,26 +66,26 @@ public class FrameItems extends javax.swing.JFrame {
         getContentPane().add(p2);
         getContentPane().add(p3);
         getContentPane().add(new JPanel());
-        
+
         save.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 saveItem();
             }
         });
-        
+
         delete.addActionListener(new ActionListener() {
-            
+
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 deleteItem();
             }
         });
-        
+
         setVisible(true);
     }
-    
+
     private void lookData() {
         String response = si.loadData();
         if (response.startsWith("KO")) {
@@ -101,7 +101,7 @@ public class FrameItems extends javax.swing.JFrame {
             box.addItem(i);
         }
     }
-    
+
     private void saveItem() {
         if (box.getSelectedIndex() == 0) {
             Item temp = new Item(name.getText());
@@ -122,7 +122,7 @@ public class FrameItems extends javax.swing.JFrame {
             }
         }
     }
-    
+
     private void deleteItem() {
         Item temp = (Item) box.getSelectedItem();
         String response = si.delItem(temp.getId());
