@@ -9,6 +9,7 @@ import java.awt.FlowLayout;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.Arrays;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JMenu;
@@ -101,11 +102,18 @@ public class LoginFrame extends javax.swing.JFrame {
                     warn.setText(ret);
                 } else { // show new frame based on user role
                     Role r = null;
-                    // TODO dalsi role
                     if (ret.equals("ADMIN")) { // starts with?
-                        r = new AdminRole(); // TODO pass ID
+                        r = new AdminRole();
                     } else if (ret.equals("MANAGER")) {
                         r = new PMRole(userId);
+                    } else if (ret.equals("EMPLOYEE")) {
+                        r = new Role() { // TODO mockup - implement role here
+
+                            @Override
+                            public Iterable<JMenuItem> getMenuItems() {
+                                return Arrays.asList();
+                            }
+                        };
                     } else { // vypsat chybu
                         clearForm();
                         warn.setText("Unknown role " + ret);
