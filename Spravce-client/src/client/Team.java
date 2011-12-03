@@ -108,18 +108,4 @@ public class Team {
     public void setPm(String pm) {
         this.pm = pm;
     }
-
-    public void addMember(SourceUser u) {
-        /*User[] tmpArray = new User[members.length + 1];
-        for (int i = 0; i < members.length; i++) {
-            tmpArray[i] = members[i];
-        }
-        members = tmpArray.clone();
-        members[members.length - 1] = u;*/
-    	members.put(u.getId(), u);
-    }
-
-    public void removeAllMembers() {
-        members.clear();
-    }
 }
