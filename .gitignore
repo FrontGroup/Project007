@@ -9,3 +9,6 @@ Spravce-server/.classpath
 Spravce-server/.project
 Spravce-client/bin
 Spravce-server/bin
+*~
+Spravce-client/dist
+Spravce-server/dist
