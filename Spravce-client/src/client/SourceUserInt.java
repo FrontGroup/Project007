@@ -14,8 +14,6 @@ public interface SourceUserInt {
     //vraci OK nebo KO chyba
     public String loadData();
 
-    public User getUser(int id);
-
     public String addUser(User user);
 
     public String delUser(int idUser);

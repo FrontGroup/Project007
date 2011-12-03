@@ -19,14 +19,10 @@ public class CommonFrame extends JFrame {
     JLabel phone;
     JLabel tphone;
     SourceUser su;
-    private int idUser;
-    private User user;
 
     public CommonFrame(int idUser) {
-        this.idUser = idUser;
         su = new SourceUser();
-        su.loadData();
-        user = su.getUser(idUser);
+        su.loadData(idUser);
         initComponents();
     }
 
@@ -41,12 +37,12 @@ public class CommonFrame extends JFrame {
         city = new JLabel("City:");
         email = new JLabel("E-mail:");
         phone = new JLabel("Phone:");
-        tname = new JLabel(user.getName());
-        tlastname = new JLabel(user.getLastName());
-        taddress = new JLabel(user.getAddress());
-        tcity = new JLabel(user.getCity());
-        temail = new JLabel(user.getEmail());
-        tphone = new JLabel(user.getPhone());
+        tname = new JLabel(su.getName());
+        tlastname = new JLabel(su.getLastname());
+        taddress = new JLabel(su.getAddress());
+        tcity = new JLabel(su.getCity());
+        temail = new JLabel(su.getEmail());
+        tphone = new JLabel(su.getPhone());
         info0.setLayout(new FlowLayout());
         info1.setLayout(new FlowLayout());
         info2.setLayout(new FlowLayout());
