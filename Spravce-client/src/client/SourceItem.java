@@ -25,12 +25,10 @@ public class SourceItem implements SourceItemInt {
             return response;
         }
         data = new HashMap<Integer, Item>();
-        if (!response.contains("")) {
-            String[] items = response.split(";");
-            for (int i = 0; i < items.length; i++) {
-                String[] item = items[i].split(" ");
-                data.put(Integer.valueOf(item[0]), new Item(Integer.valueOf(item[1]), item[2]));
-            }
+        String[] items = response.split(";");
+        for (int i = 0; i < items.length; i++) {
+            String[] item = items[i].split(" ");
+            data.put(Integer.valueOf(item[0]), new Item(Integer.valueOf(item[1]), item[2]));
         }
         return "OK";
     }

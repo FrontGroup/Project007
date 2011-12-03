@@ -56,8 +56,8 @@ public class MainFrame extends JFrame {
         // TODO David - Add employee profile panel
         panel = new JPanel();
         getContentPane().add(panel);
-        //CommonFrame info = new CommonFrame(idUser);
-        //panel.add(info);
+        CommonFrame info = new CommonFrame(idUser);
+        panel.add(info);
         pack();
         // UI event handling
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

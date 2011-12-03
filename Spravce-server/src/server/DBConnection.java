@@ -614,8 +614,4 @@ public class DBConnection
         return executeSql(sql);
     }
 
-    String getUsers() {
-        throw new UnsupportedOperationException("Not yet implemented");
-    }
-
 }

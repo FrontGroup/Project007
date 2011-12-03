@@ -35,6 +35,10 @@ public class FrameItems extends javax.swing.JFrame {
         lookData();
     }
 
+    public static void main(String[] args) {
+        FrameItems fi = new FrameItems();
+    }
+
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Global items");
