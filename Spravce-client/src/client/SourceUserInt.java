@@ -4,69 +4,27 @@
  */
 package client;
 
-import java.util.HashMap;
-
 /**
  *
  * @author lucas
  */
 public interface SourceUserInt {
 
-    //metoda, ktera naplni tridu daty o uzivateli s id
+    //metoda, ktera naplni tridu vsemi uzivateli
     //vraci OK nebo KO chyba
-    public String loadData(int id);
+    public String loadData();
 
-    //metoda, ktera aktualizuje data v databazi
-    //vraci OK nebo KO chyba
-    public String updateData();
+    public String addUser(User user);
 
-    //metoda, ktera vrati HashMap s dovednostmi, ktere ma uzivatel prirazen
-    public HashMap<Integer, ItemStatus> getItems();
+    public String delUser(int idUser);
 
-    //metoda, ktera vrati HashMap s tymy ve kterych je uzivatel prirazen
-    public HashMap<Integer, TeamStatus> getTeams();
+    public String updateUser(int idUser, User user);
 
-    public String setTeam(int idUser,int idTeam);
+    public String setTeam(int idUser, int idTeam);
 
-    public String delTeam(int idUser,int idTeam);
+    public String delTeam(int idUser, int idTeam);
 
-    public String setTeamConfirmed(int idTeam, boolean confirmed);
-    
-    public String setItemState(int idItem, boolean confirmed);
-    
+    public String setTeamConfirmed(int idUser, int idTeam, boolean confirmed);
+
     public String setItemState(int idUser, int idItem, boolean state);
-
-    public String getName();
-
-    public String getLastname();
-
-    public String getAddress();
-
-    public String getCity();
-
-    public String getEmail();
-
-    public String getPhone();
-
-    public String getRole();
-
-    public String getProfessia();
-
-    public String getGroup();
-
-    public int getId();
-
-    public void setName(String name);
-
-    public void setLastName(String lastName);
-
-    public void setAddress(String address);
-
-    public void setCity(String city);
-
-    public void setEmail(String email);
-
-    public void setPhone(String phone);
-
-    public void setProfessia(String professia);
 }

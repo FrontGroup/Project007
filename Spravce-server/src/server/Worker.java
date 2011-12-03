@@ -18,18 +18,20 @@ public abstract class Worker {
     public static Worker getWorker(String msg, DBConnection dbc) {
         Worker.split = msg.split(" ");
         Worker.dbc = dbc;
-
         if (msg.startsWith("LOGIN")) {
             return new login();
         }
-        if (msg.startsWith("INFO")) {
-            return new info();
+        if (msg.startsWith("GET_USERS")) {
+            return new getUsers();
         }
-        if (msg.startsWith("ADD")) {
-            return new add();
+        if (msg.startsWith("GET_INFO")) {
+            return new getInfo();
         }
-        if (msg.startsWith("DEL")) {
-            return new del();
+        if (msg.startsWith("ADD_USER")) {
+            return new addUser();
+        }
+        if (msg.startsWith("DEL_USER")) {
+            return new delUser();
         }
         if (msg.startsWith("CHANGE_PASS")) {
             return new changePass();
@@ -108,7 +110,7 @@ public abstract class Worker {
         }
     }
 
-    public static class info extends Worker {
+    public static class getInfo extends Worker {
 
         @Override
         public String process() {
@@ -119,7 +121,18 @@ public abstract class Worker {
         }
     }
 
-    public static class add extends Worker {
+    public static class getUsers extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 1) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.getUsers();
+        }
+    }
+
+    public static class addUser extends Worker {
 
         @Override
         public String process() {
@@ -130,7 +143,7 @@ public abstract class Worker {
         }
     }
 
-    public static class del extends Worker {
+    public static class delUser extends Worker {
 
         @Override
         public String process() {
@@ -167,7 +180,7 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != 2) {
+            if (split.length != 1) {
                 return "KO Wrong requirement!";
             }
             return dbc.getItems();
@@ -178,7 +191,7 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != 2) {
+            if (split.length != 1) {
                 return "KO Wrong requirement!";
             }
             return dbc.getTeams();

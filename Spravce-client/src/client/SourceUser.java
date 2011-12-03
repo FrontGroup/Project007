@@ -12,161 +12,66 @@ import java.util.HashMap;
  */
 public class SourceUser implements SourceUserInt {
 
-    private HashMap<String, String> data = null;
-    private HashMap<Integer, TeamStatus> teamsStatus = null;
-    private HashMap<Integer, ItemStatus> itemsStatus = null;
+    private HashMap<Integer, User> data = new HashMap<Integer, User>();
+    private HashMap<Integer, TeamStatus> teamsStatus = new HashMap<Integer, TeamStatus>();
+    private HashMap<Integer, ItemStatus> itemsStatus = new HashMap<Integer, ItemStatus>();
+    private int[] idUsers = null;
 
     public SourceUser() {
     }
 
-    private void saveData(String response) {
+    private void saveData(String response, int id) {
         String[] split = response.split(";");
-        for (String s : split) {
-            data.put(s.substring(1), s.substring(2));
-        }
+        User user = new User(id, Integer.valueOf(split[1]), Integer.valueOf(split[0]), split[2], split[3], split[4], split[5],
+                split[6], split[7], split[8]);
+        data.put(id, user);
     }
 
     @Override
-    public String loadData(int id) {
+    public String loadData() {
         ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("INFO " + id);
+        String response = sc.sendMSG("GET_USERS");
         if (response.startsWith("KO")) {
             return response;
         }
-        data = new HashMap<String, String>();
-        saveData(response);
-        data.put("id", "" + id);
-        response = sc.sendMSG("GET_USER_ITEMS " + id);
-        if (response.startsWith("KO")) {
-            return response;
+        String[] users = response.split(";");
+        idUsers = new int[users.length];
+        for (int i = 0; i < users.length; i++) {
+            idUsers[i] = Integer.valueOf(users[i]);
         }
-        String[] split = response.split(";");
-        itemsStatus = new HashMap<Integer, ItemStatus>();
-        for (int i = 0; i < split.length; i++) {
-            String[] s = split[i].split(" ");
-            itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
-        }
-        response = sc.sendMSG("GET_USER_TEAMS " + id);
-        if (response.startsWith("KO")) {
-            return response;
-        }
-        split = response.split(";");
-        teamsStatus = new HashMap<Integer, TeamStatus>();
-        for (int i = 0; i < split.length; i++) {
-            String[] s = split[i].split(" ");
-            teamsStatus.put(Integer.valueOf(s[0]), new TeamStatus(s[1]));
+
+        for (int id : idUsers) {
+            response = sc.sendMSG("INFO_USER " + id);
+            if (response.startsWith("KO")) {
+                return response;
+            }
+            saveData(response, id);
+
+            response = sc.sendMSG("GET_USER_ITEMS " + id);
+            if (response.startsWith("KO")) {
+                return response;
+            }
+            String[] split = response.split(";");
+            for (int i = 0; i < split.length; i++) {
+                String[] s = split[i].split(" ");
+                itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
+            }
+
+            response = sc.sendMSG("GET_USER_TEAMS " + id);
+            if (response.startsWith("KO")) {
+                return response;
+            }
+            split = response.split(";");
+            for (int i = 0; i < split.length; i++) {
+                String[] s = split[i].split(" ");
+                teamsStatus.put(Integer.valueOf(s[0]), new TeamStatus(s[1]));
+            }
+            User get = data.get(id);
+            get.setItems(itemsStatus);
+            get.setTeams(teamsStatus);
+            data.put(id, get);
         }
         return "OK";
-    }
-
-    @Override
-    public String updateData() {
-        ServerConnection sc = ServerConnection.getInstance();
-        String s = "UPDATE_USER ";
-        s += data.get("id") + " ";
-        s += data.get("name") + " ";
-        s += data.get("lastname") + " ";
-        s += data.get("address") + " ";
-        s += data.get("city") + " ";
-        s += data.get("email") + " ";
-        s += data.get("phone") + " ";
-        s += data.get("professia");
-        return sc.sendMSG(s);
-    }
-
-    @Override
-    public String getName() {
-        return data.get("name");
-    }
-
-    @Override
-    public String getLastname() {
-        return data.get("lastname");
-    }
-
-    @Override
-    public HashMap<Integer, ItemStatus> getItems() {
-        return itemsStatus;
-    }
-
-    @Override
-    public String getAddress() {
-        return data.get("address");
-    }
-
-    @Override
-    public String getCity() {
-        return data.get("city");
-    }
-
-    @Override
-    public String getEmail() {
-        return data.get("email");
-    }
-
-    @Override
-    public String getPhone() {
-        return data.get("phone");
-    }
-
-    @Override
-    public String getRole() {
-        return data.get("role");
-    }
-
-    @Override
-    public String getProfessia() {
-        return data.get("professia");
-    }
-
-    @Override
-    public String getGroup() {
-        return data.get("group");
-    }
-
-    @Override
-    public HashMap<Integer, TeamStatus> getTeams() {
-        return teamsStatus;
-    }
-
-    @Override
-    public void setName(String name) {
-        data.put("name", name);
-    }
-
-    @Override
-    public void setLastName(String lastName) {
-        data.put("lastname", lastName);
-    }
-
-    @Override
-    public void setAddress(String address) {
-        data.put("address", address);
-    }
-
-    @Override
-    public void setCity(String city) {
-        data.put("city", city);
-    }
-
-    @Override
-    public void setEmail(String email) {
-        data.put("email", email);
-    }
-
-    @Override
-    public void setPhone(String phone) {
-        data.put("phone", phone);
-    }
-
-    @Override
-    public void setProfessia(String professia) {
-        data.put("professia", professia);
-    }
-
-    @Override
-    public int getId() {
-        return Integer.valueOf(data.get("id"));
     }
 
     @Override
@@ -190,19 +95,9 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
-    public String setTeamConfirmed(int idTeam, boolean confirmed) {
+    public String setTeamConfirmed(int idUser, int idTeam, boolean confirmed) {
         ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("SET_TEAM_CONFIRMED " + this.getId() + " " + idTeam + " " + confirmed);
-        if (response.startsWith("KO")) {
-            return response;
-        }
-        return "OK";
-    }
-
-    @Override
-    public String setItemState(int idItem, boolean state) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("SET_ITEM_STATE " + this.getId() + " " + idItem + " " + state);
+        String response = sc.sendMSG("SET_TEAM_CONFIRMED " + idUser + " " + idTeam + " " + confirmed);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -213,6 +108,49 @@ public class SourceUser implements SourceUserInt {
     public String setItemState(int idUser, int idItem, boolean state) {
         ServerConnection sc = ServerConnection.getInstance();
         String response = sc.sendMSG("SET_ITEM_STATE " + idUser + " " + idItem + " " + state);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String addUser(User user) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String s = "ADD_USER ";
+        s += user.getRole() + " ";
+        s += user.getGroup() + " ";
+        s += user.getPass();
+        String response = sc.sendMSG(s);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String delUser(int idUser) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("DEL_USER " + idUser);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        return "OK";
+    }
+
+    @Override
+    public String updateUser(int idUser, User user) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String s = "UPDATE_USER ";
+        s += idUser + " ";
+        s += user.getName() + " ";
+        s += user.getLastName() + " ";
+        s += user.getAddress() + " ";
+        s += user.getCity() + " ";
+        s += user.getEmail() + " ";
+        s += user.getPhone() + " ";
+        s += user.getProfession();
+        String response = sc.sendMSG(s);
         if (response.startsWith("KO")) {
             return response;
         }
