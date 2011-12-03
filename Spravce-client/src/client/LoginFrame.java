@@ -107,13 +107,13 @@ public class LoginFrame extends javax.swing.JFrame {
                     } else if (ret.equals("MANAGER")) {
                         r = new PMRole(userId);
                     } else if (ret.equals("EMPLOYEE")) {
-                        r = new Role() { // TODO mockup - implement role here
+                        r = new ViewProfile(userId);/*Role() { // TODO mockup - implement role here
 
                             @Override
                             public Iterable<JMenuItem> getMenuItems() {
                                 return Arrays.asList();
                             }
-                        };
+                        };*/
                     } else { // vypsat chybu
                         clearForm();
                         warn.setText("Unknown role " + ret);
