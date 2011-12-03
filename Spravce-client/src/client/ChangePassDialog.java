@@ -25,8 +25,10 @@ public class ChangePassDialog extends JDialog {
     JPasswordField current, newpass, againpass;
     JButton change, cancel;
     JLabel warn;
+    int userId;
 
-    public ChangePassDialog() {
+    public ChangePassDialog(int id) {
+        userId = id;
         setTitle("Change password");
         setModalityType(ModalityType.APPLICATION_MODAL);
         current = new JPasswordField(20);
@@ -84,14 +86,15 @@ public class ChangePassDialog extends JDialog {
                     return;
                 }
                 ServerConnection sc = ServerConnection.getInstance();
-                String ret = sc.sendMSG("CHANGE_PASS " + new String(current.getPassword()) + " " + new String(newpass.getPassword()));
+                String ret = sc.sendMSG("CHANGE_PASS " + Integer.toString(userId) + " " + new String(current.getPassword()) + " " + new String(newpass.getPassword()));
                 if (ret == null) {
                     warn.setText("Error changing password.");
                 } else if (ret.startsWith("KO")) {
                     warn.setText(ret);
+                } else {
+                    setVisible(false);
+                    dispose();
                 }
-                setVisible(false);
-                dispose();
             }
         });
         cancel.addActionListener(new ActionListener() {
@@ -107,7 +110,8 @@ public class ChangePassDialog extends JDialog {
     }
 
     public static void main(String[] args) {
-        JDialog j = new ChangePassDialog();
+        ServerConnection.getInstance().connect("666", "admin");
+        JDialog j = new ChangePassDialog(666);
         j.setVisible(true);
     }
 }

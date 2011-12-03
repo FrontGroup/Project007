@@ -23,8 +23,10 @@ public class MainFrame extends JFrame {
 
     JMenuBar menubar;
     JPanel panel;
+    int userId;
 
-    public MainFrame(Role r, int idUser) {
+    public MainFrame(Role r, int id) {
+        userId = id;
         // UI design&layout
         setTitle("Systém SPRÁVCE");
 
@@ -89,7 +91,7 @@ public class MainFrame extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new ChangePassDialog().setVisible(true);
+                new ChangePassDialog(userId).setVisible(true);
             }
         });
     }
