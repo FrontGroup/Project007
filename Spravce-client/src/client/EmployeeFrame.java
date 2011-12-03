@@ -22,14 +22,14 @@ public class EmployeeFrame extends JFrame {
     JButton back;
     JButton save;
     SourceUser su;
+    private User user;
 
-    public EmployeeFrame() {
+    public EmployeeFrame(int idUser) {
+        su = new SourceUser();
+        su.loadData();
+        user = su.getUser(idUser);
         initComponents();
-    }
-
-    public static void main(String[] args) {
-        EmployeeFrame ef = new EmployeeFrame();
-    }
+    }    
 
     private void initComponents() {
 
@@ -62,12 +62,12 @@ public class EmployeeFrame extends JFrame {
         city = new JLabel("City:");
         email = new JLabel("E-mail:");
         phone = new JLabel("Phone:");
-        tname = new JTextField(su.getName(), 20);
-        tlastname = new JTextField(su.getLastname(), 20);
-        taddress = new JTextField(su.getAddress(), 20);
-        tcity = new JTextField(su.getCity(), 20);
-        temail = new JTextField(su.getEmail(), 20);
-        tphone = new JTextField(su.getPhone(), 20);
+        tname = new JTextField(user.getName(), 20);
+        tlastname = new JTextField(user.getLastName(), 20);
+        taddress = new JTextField(user.getAddress(), 20);
+        tcity = new JTextField(user.getCity(), 20);
+        temail = new JTextField(user.getEmail(), 20);
+        tphone = new JTextField(user.getPhone(), 20);
         back = new JButton("Back");
         save = new JButton("Save Changes");
         info0.setLayout(new FlowLayout());

@@ -2,8 +2,10 @@ package client;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.Arrays;
+import java.awt.event.*;
 
-public class CommonFrame extends JFrame {
+public class ViewProfile extends JPanel implements Role {
 
     JLabel id;
     JLabel name;
@@ -22,7 +24,7 @@ public class CommonFrame extends JFrame {
     private int idUser;
     private User user;
 
-    public CommonFrame(int idUser) {
+    public ViewProfile(int idUser) {
         this.idUser = idUser;
         su = new SourceUser();
         su.loadData();
@@ -75,7 +77,20 @@ public class CommonFrame extends JFrame {
         this.add(info4);
         this.add(info5);
         this.add(info6);
-        this.add(info7);
-        pack();
+        this.add(info7);        
+    }
+
+    @Override
+    public Iterable<JMenuItem> getMenuItems() {
+        JMenuItem edit = new JMenuItem("Edit Profile");
+        ActionListener akce = new ActionListener(){
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new EmployeeFrame(idUser);
+            }
+        };
+        edit.addActionListener(akce);
+        return Arrays.asList(edit);
     }
 }
