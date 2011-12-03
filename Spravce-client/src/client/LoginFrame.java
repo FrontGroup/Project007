@@ -90,6 +90,8 @@ public class LoginFrame extends javax.swing.JFrame {
                     warn.setText("User ID must be a number.");
                     return;
                 }
+                int userId = Integer.valueOf(tuser.getText());
+
                 if (tpass.getPassword().length < 1) {
                     warn.setText("You must specify a password.");
                     return;
@@ -102,12 +104,14 @@ public class LoginFrame extends javax.swing.JFrame {
                     // TODO dalsi role
                     if (ret.equals("ADMIN")) { // starts with?
                         r = new AdminRole(); // TODO pass ID
+                    } else if (ret.equals("MANAGER")) {
+                        r = new PMRole(userId);
                     } else { // vypsat chybu
                         clearForm();
                         warn.setText("Unknown role " + ret);
                         return;
                     }
-                    new MainFrame(r, Integer.valueOf(tuser.getText())).setVisible(true);
+                    new MainFrame(r, userId).setVisible(true);
                     setVisible(false);
                     dispose();
                 }
