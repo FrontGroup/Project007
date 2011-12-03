@@ -349,10 +349,7 @@ public class DBConnection
             columncount = meta.getColumnCount();
             while (resultSet.next())
             {
-                for (int i = 0; i < columncount; i++)
-                {
-                    result = meta.getColumnName(i) + ":" + resultSet.getNString(i) + ";";
-                }
+                result+=resultSet.getInt(1)+" "+resultSet.getString(2) +";";
             }
             return result;
 

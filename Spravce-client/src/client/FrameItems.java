@@ -20,7 +20,7 @@ import javax.swing.JTextField;
  * @author lucas
  */
 public class FrameItems extends javax.swing.JFrame {
-
+    
     private JButton save;
     private JButton delete;
     private JComboBox box;
@@ -29,12 +29,13 @@ public class FrameItems extends javax.swing.JFrame {
     private JLabel lName = new JLabel("Name:");
     private SourceItem si = new SourceItem();
     private HashMap<Integer, Item> allItems;
-
+    private ActionListener al;
+    
     public FrameItems() {
         initComponents();
         lookData();
     }
-
+    
     private void initComponents() {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Global items");
@@ -63,24 +64,24 @@ public class FrameItems extends javax.swing.JFrame {
         getContentPane().add(p2);
         getContentPane().add(p3);
         getContentPane().add(new JPanel());
-
+        
         save.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 saveItem();
             }
         });
-
+        
         delete.addActionListener(new ActionListener() {
-
+            
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 deleteItem();
             }
         });
-        box.addActionListener(new ActionListener() {
-
+        al = new ActionListener() {
+            
             @Override
             public void actionPerformed(ActionEvent arg0) {
                 if (box.getSelectedIndex() != 0) {
@@ -91,10 +92,10 @@ public class FrameItems extends javax.swing.JFrame {
                     delete.setEnabled(false);
                 }
             }
-        });
+        };
         setVisible(true);
     }
-
+    
     private void lookData() {
         String response = si.loadData();
         if (response.startsWith("KO")) {
@@ -103,14 +104,17 @@ public class FrameItems extends javax.swing.JFrame {
             return;
         }
         allItems = si.getAllItems();
+        System.out.println("all:" + allItems.size());
+        box.removeActionListener(al);
         box.removeAllItems();
         box.addItem("     ..insert new..       ");
         Collection<Item> values = allItems.values();
         for (Item i : values) {
             box.addItem(i);
         }
+        box.addActionListener(al);
     }
-
+    
     private void saveItem() {
         if (box.getSelectedIndex() == 0) {
             Item temp = new Item(name.getText());
@@ -130,8 +134,9 @@ public class FrameItems extends javax.swing.JFrame {
                 return;
             }
         }
+        lookData();
     }
-
+    
     private void deleteItem() {
         Item temp = (Item) box.getSelectedItem();
         String response = si.delItem(temp.getId());
@@ -140,5 +145,7 @@ public class FrameItems extends javax.swing.JFrame {
                     "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        name.setText("");
+        lookData();
     }
 }
