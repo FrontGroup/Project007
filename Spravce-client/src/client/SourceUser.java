@@ -13,8 +13,8 @@ import java.util.HashMap;
 public class SourceUser implements SourceUserInt {
 
     private HashMap<Integer, User> data = new HashMap<Integer, User>();
-    private HashMap<Integer, TeamStatus> teamsStatus = null;
-    private HashMap<Integer, ItemStatus> itemsStatus = null;
+    private HashMap<Integer, TeamStatus> teamsStatus = new HashMap<Integer, TeamStatus>();
+    private HashMap<Integer, ItemStatus> itemsStatus = new HashMap<Integer, ItemStatus>();
     private int[] idUsers = null;
 
     public SourceUser() {
@@ -46,7 +46,7 @@ public class SourceUser implements SourceUserInt {
                 return response;
             }
             saveData(response, id);
-            itemsStatus = new HashMap<Integer, ItemStatus>();
+
             response = sc.sendMSG("GET_USER_ITEMS " + id);
             if (response.startsWith("KO")) {
                 return response;
@@ -56,7 +56,7 @@ public class SourceUser implements SourceUserInt {
                 String[] s = split[i].split(" ");
                 itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
             }
-            teamsStatus = new HashMap<Integer, TeamStatus>();
+
             response = sc.sendMSG("GET_USER_TEAMS " + id);
             if (response.startsWith("KO")) {
                 return response;
