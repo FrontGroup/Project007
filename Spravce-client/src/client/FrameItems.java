@@ -41,6 +41,7 @@ public class FrameItems extends javax.swing.JFrame {
         setSize(300, 300);
         save = new JButton("Save");
         delete = new JButton("Delete");
+        delete.setEnabled(false);
         box = new JComboBox();
         box.addItem("     ..insert new..       ");
         name = new JTextField(10);
@@ -78,7 +79,19 @@ public class FrameItems extends javax.swing.JFrame {
                 deleteItem();
             }
         });
+        box.addActionListener(new ActionListener() {
 
+            @Override
+            public void actionPerformed(ActionEvent arg0) {
+                if (box.getSelectedIndex() != 0) {
+                    name.setText(((Item) box.getSelectedItem()).getName());
+                    delete.setEnabled(true);
+                } else {
+                    name.setText("");
+                    delete.setEnabled(false);
+                }
+            }
+        });
         setVisible(true);
     }
 

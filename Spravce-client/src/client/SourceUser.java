@@ -156,4 +156,9 @@ public class SourceUser implements SourceUserInt {
         }
         return "OK";
     }
+
+    @Override
+    public User getUser(int id) {
+        return data.get(id);
+    }
 }
