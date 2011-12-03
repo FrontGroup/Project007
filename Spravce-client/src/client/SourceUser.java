@@ -41,7 +41,7 @@ public class SourceUser implements SourceUserInt {
         }
 
         for (int id : idUsers) {
-            response = sc.sendMSG("GET_INFO " + id);
+            response = sc.sendMSG("INFO_USER " + id);
             if (response.startsWith("KO")) {
                 return response;
             }
