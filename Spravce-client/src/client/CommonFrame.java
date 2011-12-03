@@ -1,4 +1,5 @@
 package client;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -16,15 +17,17 @@ public class CommonFrame extends JFrame {
     JLabel email;
     JLabel temail;
     JLabel phone;
-    JLabel tphone;    
+    JLabel tphone;
     SourceUser su;
 
-    public CommonFrame() {
+    public CommonFrame(int idUser) {
+        su = new SourceUser();
+        su.loadData(idUser);
         initComponents();
-    }    
+    }
 
     private void initComponents() {
-                        
+
         JPanel info0 = new JPanel(), info1 = new JPanel(), info2 = new JPanel(), info3 = new JPanel(), info4 = new JPanel(), info5 = new JPanel(), info6 = new JPanel(), info7 = new JPanel();
         this.setLayout(new GridLayout(8, 1));
         id = new JLabel("ID:");

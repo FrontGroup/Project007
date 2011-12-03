@@ -107,7 +107,7 @@ public class LoginFrame extends javax.swing.JFrame {
                         warn.setText("Unknown role " + ret);
                         return;
                     }
-                    new MainFrame(r).setVisible(true);
+                    new MainFrame(r, Integer.valueOf(tuser.getText())).setVisible(true);
                     setVisible(false);
                     dispose();
                 }

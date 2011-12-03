@@ -24,7 +24,7 @@ public class MainFrame extends JFrame {
     JMenuBar menubar;
     JPanel panel;
 
-    public MainFrame(Role r) {
+    public MainFrame(Role r, int idUser) {
         // UI design&layout
         setTitle("Systém SPRÁVCE");
 
@@ -56,7 +56,7 @@ public class MainFrame extends JFrame {
         // TODO David - Add employee profile panel
         panel = new JPanel();
         getContentPane().add(panel);
-        CommonFrame info = new CommonFrame();
+        CommonFrame info = new CommonFrame(idUser);
         panel.add(info);
         pack();
         // UI event handling
@@ -104,15 +104,5 @@ public class MainFrame extends JFrame {
 
     private void logout() {
         ServerConnection.getInstance().close();
-    }
-
-    public static void main(String[] args) {
-        java.awt.EventQueue.invokeLater(new Runnable() {
-
-            @Override
-            public void run() {
-                new MainFrame(new AdminRole()).setVisible(true);
-            }
-        });
     }
 }
