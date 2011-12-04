@@ -222,21 +222,23 @@ public class DBConnection {
     public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
     {
         //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
-        String query = "Select pass,name,lastname,address,city,email,phone,role,professia from Users where id =" + id;
+        String query = "Select * from Users where id=" + id;
         try {
             statement = connect.createStatement();
             resultSet = statement.executeQuery(query);
-            meta = resultSet.getMetaData(); //ziska metadata o vysledku aby bolo mozne
-            columncount = meta.getColumnCount();        // urcit pocet stlpcov
-            String show_result = "";
-            while (resultSet.next())//pre vsetky radky
-            {
-                for (int i = 1; i < columncount; i++)//pre vsetky stlpce
-                {
-                    show_result += meta.getColumnName(i) + ":" + resultSet.getString(i) + ";";
-                }
+            String result = "";
+            while (resultSet.next()) {
+                result = resultSet.getInt(10) + ";"
+                        + resultSet.getInt(2) + ";"
+                        + resultSet.getString(4) + ";"
+                        + resultSet.getString(5) + ";"
+                        + resultSet.getString(6) + ";"
+                        + resultSet.getString(7) + ";"
+                        + resultSet.getString(8) + ";"
+                        + resultSet.getString(9) + ";"
+                        + resultSet.getString(11);
             }
-            return show_result;
+            return result;
         } catch (Exception e) {
             System.out.println(e.getMessage());
             System.out.println("Chyba v metode execute_command");
@@ -368,13 +370,39 @@ public class DBConnection {
     }
 
     String getUserItems(String idUser) {
-        sql = "Select * from Users_has_Items where id='" + idUser + "'";
-        return executeSql(sql);
+        try {
+            String result = "";
+            sql = "Select * from Users_has_Items where Users_id=" + idUser;
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result += resultSet.getInt(2) + " " + resultSet.getInt(3) + ";";
+            }
+            return result;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
     }
 
     String getUserTeams(String idUser) {
-        sql = "Select * from Teams_has_Users where id='" + idUser + "'";
-        return executeSql(sql);
+        try {
+            String result = "";
+            sql = "Select * from Teams_has_Users where Users_id=" + idUser;
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result += resultSet.getInt(1) + " " + resultSet.getInt(3) + ";";
+            }
+            return result;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
     }
 
     String addItem(String name) {
@@ -491,7 +519,20 @@ public class DBConnection {
     }
 
     String getUsers() {
-        return "2;3;4;5;6;7;8;9;10;11;12;13;666;";
-        //throw new UnsupportedOperationException("Not yet implemented");
+        try {
+            String result = "";
+            sql = "Select id from Users";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result += resultSet.getInt(1) + ";";
+            }
+            return result;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
     }
 }
