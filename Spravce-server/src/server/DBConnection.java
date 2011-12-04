@@ -519,7 +519,7 @@ public class DBConnection {
             return "KO error while updating Group's name";
         }
         for (int i = 0; i < idItems.length; i++) {
-            sql = "Replace Groups_has_Items (Items_id) values ('" + idItems[i] + "')";
+            sql = "Replace into Groups_has_Items (Items_id) values ('" + idItems[i] + "')";
             if (!executeSql(sql).equals("OK")) {
                 return "KO error while updating Group's Items";
             }

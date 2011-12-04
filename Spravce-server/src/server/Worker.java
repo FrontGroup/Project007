@@ -385,7 +385,7 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != Integer.valueOf(split[3]) + 3) {
+            if (split.length != Integer.valueOf(split[3]) + 4) {
                 return "KO Wrong requirement!";
             }
             int[] items = new int[Integer.valueOf(split[3])];

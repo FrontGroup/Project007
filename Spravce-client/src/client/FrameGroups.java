@@ -44,7 +44,6 @@ public class FrameGroups extends javax.swing.JFrame {
         edit = new JButton("Edit");
         delete = new JButton("Delete");
         box = new JComboBox();
-        box.addItem("                          ");
         JPanel p1 = new JPanel();
         p1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
         JPanel p2 = new JPanel();
@@ -104,7 +103,6 @@ public class FrameGroups extends javax.swing.JFrame {
         }
         allGroups = sg.getAllGroups();
         box.removeAllItems();
-        box.addItem("                          ");
         Collection<Group> values = allGroups.values();
         for (Group g : values) {
             box.addItem(g);
