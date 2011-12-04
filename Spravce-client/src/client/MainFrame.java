@@ -55,10 +55,10 @@ public class MainFrame extends JFrame {
         help.add(Main.getAboutMenuItem());
 
         // TODO get user information from server        
-        panel = new JPanel();
+        /*panel = new JPanel();
         getContentPane().add(panel);
         ViewProfile info = new ViewProfile(userId);
-        panel.add(info);
+        panel.add(info);*/
         pack();
         // UI event handling
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
