@@ -95,11 +95,18 @@ public class DBConnection {
                     + "', '" + phone + "', '" + role + "')";
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
-            if (rows_effected != 0) {
-                return "OK";
-            } else {
+            if (rows_effected == 0) {
                 return "KO nepodarilo sa pridat uzivatela";
             }
+            query = "SELECT LAST_INSERT_ID()";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(query);
+            if (!resultSet.next()) {
+                return "KO Can't get user ID.";
+            }
+
+            return resultSet.getString(1);
+
         } catch (Exception ex) {
             System.out.println("Chyba v metode addUser");
             return "KO error in database";

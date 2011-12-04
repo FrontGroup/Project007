@@ -125,7 +125,7 @@ public class SourceUser implements SourceUserInt {
         if (response.startsWith("KO")) {
             return response;
         }
-        return "OK";
+        return response;
     }
 
     @Override
