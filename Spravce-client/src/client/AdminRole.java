@@ -14,6 +14,7 @@ import javax.swing.JComboBox;
 import javax.swing.JDialog;
 import javax.swing.JLabel;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
@@ -207,11 +208,12 @@ class AdminRole implements Role {
                         return;
                     }
                     ret = su.addUser(u);
-                    if (!ret.equals("OK")) {
+                    if (ret.startsWith("KO")) {
                         System.out.println("CreateUserDialog - SourceUser.addUser error: " + ret);
                         warn.setText(ret);
                         return;
                     }
+                    JOptionPane.showMessageDialog(null, "New user ID is " + ret);
                     setVisible(false);
                     dispose();
                 }
