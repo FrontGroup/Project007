@@ -1,7 +1,7 @@
 /*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+* To change this template, choose Tools | Templates
+* and open the template in the editor.
+*/
 package client;
 
 import java.awt.event.ActionEvent;
@@ -16,9 +16,9 @@ import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 
 /**
- *
- * @author radim
- */
+*
+* @author radim
+*/
 public class MainFrame extends JFrame {
 
     JMenuBar menubar;
@@ -54,11 +54,11 @@ public class MainFrame extends JFrame {
 
         help.add(Main.getAboutMenuItem());
 
-        // TODO get user information from server        
-        panel = new JPanel();
-        getContentPane().add(panel);
-        ViewProfile info = new ViewProfile(userId);
-        panel.add(info);
+        // TODO get user information from server
+        /*panel = new JPanel();
+getContentPane().add(panel);
+ViewProfile info = new ViewProfile(userId);
+panel.add(info);*/
         pack();
         // UI event handling
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);

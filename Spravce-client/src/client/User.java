@@ -16,6 +16,12 @@ public class User {
         this.role = role;
     }
 
+    public User(int crole, int cgroup, String cpass) {
+        group = cgroup;
+        role = crole;
+        pass = cpass;
+    }
+
     public User(int id, int group, int role, String name,
             String lastName, String address, String city, String email,
             String phone, String profession) {
