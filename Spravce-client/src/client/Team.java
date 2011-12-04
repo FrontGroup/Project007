@@ -10,7 +10,7 @@ public class Team {
 
     private int id;
     private String pm, name, goal, project, info;
-    private static HashMap<Integer, SourceUser> members = new HashMap();
+    private static HashMap<Integer, User> members = new HashMap();
     private boolean active;
 
     public Team(int id) {
@@ -97,7 +97,7 @@ public class Team {
         this.info = info;
     }
 
-    public HashMap<Integer, SourceUser> getMembers() {
+    public HashMap<Integer, User> getMembers() {
         return members;
     }
 
@@ -108,4 +108,14 @@ public class Team {
     public void setPm(String pm) {
         this.pm = pm;
     }
+
+	public void removeAllMembers() {
+		members.clear();
+		
+	}
+
+	public void addMember(User member) {
+		members.put(member.getId(), member);
+		
+	}
 }

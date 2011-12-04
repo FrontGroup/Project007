@@ -9,16 +9,12 @@ import javax.swing.JMenuItem;
 import client.AdminRole.CreateUserDialog;
 
 public class PMRole implements Role {
-
-    private SourceUser user;
-
-    public PMRole(SourceUser user) {
-        super();
-        this.user = user;
-    }
+	
+	int id;
 
     public PMRole(int userId) {
-        //TODO implement this - called from LoginFrame
+        super();
+        id = userId;
     }
 
     @Override
@@ -28,7 +24,7 @@ public class PMRole implements Role {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FramePMShowTeams(user).setVisible(true);
+                new FramePMShowTeams(id).setVisible(true);
             }
         });
         JMenuItem create = new JMenuItem("Create new team");
@@ -36,7 +32,7 @@ public class PMRole implements Role {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FramePMEditTeam(user);
+                new FramePMEditTeam(id);
 
             }
         });
