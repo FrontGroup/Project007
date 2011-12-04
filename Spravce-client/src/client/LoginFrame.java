@@ -103,7 +103,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 } else { // show new frame based on user role
                     Role r = null;
                     if (ret.equals("ADMIN")) { // starts with?
-                        r = new AdminRole();
+                        r = new AdminRole(userId);
                     } else if (ret.equals("MANAGER")) {
                         r = new PMRole(userId);
                     } else if (ret.equals("EMPLOYEE")) {

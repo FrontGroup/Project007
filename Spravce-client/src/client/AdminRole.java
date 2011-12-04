@@ -7,8 +7,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
 import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.LinkedList;
+import java.util.List;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
@@ -19,12 +19,13 @@ import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.WindowConstants;
 
-class AdminRole implements Role {
-
-    AdminRole(ServerConnection s) {
-    }
+class AdminRole extends ViewProfile /*implements Role*/ {
 
     AdminRole() {
+    }
+
+    AdminRole(int id) {
+        super(id);
     }
 
     @Override
@@ -57,7 +58,14 @@ class AdminRole implements Role {
                 new FrameGroups();
             }
         });
-        return Arrays.asList(add, /*new JMenuItem("Delete user"), new JMenuItem("Edit user"),*/ manageItems, manageGroups);
+        List<JMenuItem> m = new LinkedList<JMenuItem>();
+        for(JMenuItem i: super.getMenuItems()) {
+            m.add(i);
+        }
+        m.add(add);
+        m.add(manageItems);
+        m.add(manageGroups);
+        return m; //Arrays.asList(add, /*new JMenuItem("Delete user"), new JMenuItem("Edit user"),*/ manageItems, manageGroups);
     }
 
     static class DeleteUserDialog extends JDialog {
@@ -201,13 +209,13 @@ class AdminRole implements Role {
                     String p = new String(pass.getPassword());
                     User u = new User(r, g, p);
                     SourceUser su = new SourceUser();
-                    String ret = su.loadData();
+                    /*String ret = su.loadData();
                     if (!ret.equals("OK")) {
-                        System.out.println("CreateUserDialog - SourceUser.loadData error: " + ret);
-                        warn.setText(ret);
-                        return;
-                    }
-                    ret = su.addUser(u);
+                    System.out.println("CreateUserDialog - SourceUser.loadData error: " + ret);
+                    warn.setText(ret);
+                    return;
+                    }*/
+                    String ret = su.addUser(u);
                     if (ret.startsWith("KO")) {
                         System.out.println("CreateUserDialog - SourceUser.addUser error: " + ret);
                         warn.setText(ret);

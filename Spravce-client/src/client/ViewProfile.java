@@ -24,6 +24,10 @@ public class ViewProfile extends JPanel implements Role {
     private int idUser;
     private User user;
 
+    /* empty constructor for children */
+    protected ViewProfile() {
+    }
+
     public ViewProfile(int idUser) {
         this.idUser = idUser;
         su = new SourceUser();
