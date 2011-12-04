@@ -1,6 +1,8 @@
 package client;
+
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.*;
 
 public class EmployeeFrame extends JFrame {
 
@@ -23,13 +25,15 @@ public class EmployeeFrame extends JFrame {
     JButton save;
     SourceUser su;
     private User user;
+    private int userId;
 
     public EmployeeFrame(int idUser) {
+        userId = idUser;
         su = new SourceUser();
         su.loadData();
         user = su.getUser(idUser);
         initComponents();
-    }    
+    }
 
     private void initComponents() {
 
@@ -70,6 +74,29 @@ public class EmployeeFrame extends JFrame {
         tphone = new JTextField(user.getPhone(), 20);
         back = new JButton("Back");
         save = new JButton("Save Changes");
+        back.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                setVisible(false);
+                dispose();
+            }
+        });
+        save.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                user.setName(tname.getText());
+                user.setLastName(tlastname.getText());
+                user.setAddress(taddress.getText());
+                user.setCity(tcity.getText());
+                user.setEmail(temail.getText());
+                user.setPhone(tphone.getText());
+                su.updateUser(userId, user);
+                setVisible(false);
+                dispose();
+            }
+        });
         info0.setLayout(new FlowLayout());
         info1.setLayout(new FlowLayout());
         info2.setLayout(new FlowLayout());

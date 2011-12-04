@@ -26,7 +26,8 @@ public class FramePMShowTeams extends JFrame {
 	private static HashMap<String, Team> activeTeams = new HashMap();
 	private static HashMap<String, Team> archivedTeams = new HashMap();
 
-	private SourceUser PM = null;
+	private User PM;
+	private Team team;
 	private Font headline = new Font("Arial", 0, 30);
 	private JButton[] viewButtons;
 	private JButton[] editButtons;
@@ -34,15 +35,17 @@ public class FramePMShowTeams extends JFrame {
 	private ActionListener[] editListeners;
 	final Object[] tableHeaderData = { "ID", "Name", "Goal",
 			"Number of members" };
-
-	public FramePMShowTeams(SourceUser pm) {
-		this.PM = pm;
+	
+	public FramePMShowTeams(int id) {
+		SourceUser su = new SourceUser();
+		su.loadData();
+		this.PM = su.getUser(id);
 		initComponents();
 	}
 
 	private void initComponents() {
 		setDefaultCloseOperation(2);
-		setTitle("Teams - " + PM.getName() + PM.getLastname());
+		setTitle("Teams - " + PM.getFullName());
 		setSize(640, 450);
 		setMinimumSize(new Dimension(640, 450));
 
@@ -273,9 +276,7 @@ public class FramePMShowTeams extends JFrame {
 		archivedTeams.put("Team23", team3);
 		archivedTeams.put("Team24", team4);*/
 
-		SourceUser u = new SourceUser();
-		u.loadData(12);
-		FramePMShowTeams fst = new FramePMShowTeams(u);
+		FramePMShowTeams fst = new FramePMShowTeams(12);
 		fst.setVisible(true);
 	}
 }
