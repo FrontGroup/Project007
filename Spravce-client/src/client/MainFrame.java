@@ -58,8 +58,8 @@ public class MainFrame extends JFrame {
         // TODO David - Add employee profile panel
         panel = new JPanel();
         getContentPane().add(panel);
-        ViewProfile info = new ViewProfile(userId);
-        panel.add(info);
+        //ViewProfile info = new ViewProfile(userId);
+       // panel.add(info);
         pack();
         // UI event handling
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
