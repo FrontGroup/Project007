@@ -2,18 +2,17 @@ package client;
 
 import java.awt.Color;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.GridLayout;
-import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Set;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JDialog;
-import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JMenu;
 import javax.swing.JMenuItem;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
@@ -119,20 +118,26 @@ class AdminRole implements Role {
             setModalityType(ModalityType.APPLICATION_MODAL);
             warn = new JLabel();
             warn.setForeground(Color.red);
+            create = new JButton("Create user");
 
             role = new JComboBox(new Object[]{new Pair(Role.EMPLOYEE, "Employee"), new Pair(Role.MANAGER, "Project Manager")});
-            String ret = ServerConnection.getInstance().sendMSG("GET_GROUPS"); // TODO mockupize for demos sake
-            Pair[] groups = null;
-            if (ret == null || ret.startsWith("KO")) {
-                System.out.println("GET_GROUPS: error: " + ret);
+            SourceGroup sg = new SourceGroup();
+            String ret = sg.loadData();
+            Object[] groups = null;
+            if (!ret.equals("OK")) {
+                System.out.println("SourceGroup.loadData() error: " + ret);
+                warn.setText(ret);
+                create.setEnabled(false);
             } else {
-                groups = processGetGroupsResponse(ret);
+                HashMap<Integer, Group> hg = sg.getAllGroups();
+                groups = hg.values().toArray(); // Since Group implements toString, JComboBox can handle it all by itself.
             }
-            group = new JComboBox(groups); // TODO enable based on role
+
+            group = new JComboBox(groups); // TODO enable based on role, fill from server
             // new Object[]{new Pair(1, "Zednik"), new Pair(2, "Pridavac")}
             pass = new JPasswordField(10);
             pass2 = new JPasswordField(10);
-            create = new JButton("Create user");
+
             cancel = new JButton("Cancel");
 
             setLayout(new GridLayout(7, 1));
@@ -185,8 +190,30 @@ class AdminRole implements Role {
 
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    System.out.println("ADD " + ((Pair) group.getSelectedItem()).id);
-                    // TODO ADD
+                    warn.setText("");
+                    if (!Arrays.equals(pass.getPassword(), pass2.getPassword())) {
+                        warn.setText("Please enter password again correctly.");
+                        return;
+                    }
+                    int r = ((Pair) role.getSelectedItem()).id;
+                    int g = ((Group) group.getSelectedItem()).getId();
+                    String p = new String(pass.getPassword());
+                    User u = new User(r, g, p);
+                    SourceUser su = new SourceUser();
+                    String ret = su.loadData();
+                    if (!ret.equals("OK")) {
+                        System.out.println("CreateUserDialog - SourceUser.loadData error: " + ret);
+                        warn.setText(ret);
+                        return;
+                    }
+                    ret = su.addUser(u);
+                    if (!ret.equals("OK")) {
+                        System.out.println("CreateUserDialog - SourceUser.addUser error: " + ret);
+                        warn.setText(ret);
+                        return;
+                    }
+                    setVisible(false);
+                    dispose();
                 }
             });
             // TODO create handler possibly outside view
