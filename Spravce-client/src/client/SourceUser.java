@@ -51,20 +51,24 @@ public class SourceUser implements SourceUserInt {
             if (response.startsWith("KO")) {
                 return response;
             }
-            String[] split = response.split(";");
-            for (int i = 0; i < split.length; i++) {
-                String[] s = split[i].split(" ");
-                itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
+            if (!response.isEmpty()) {
+                String[] split = response.split(";");
+                for (int i = 0; i < split.length; i++) {
+                    String[] s = split[i].split(" ");
+                    itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
+                }
             }
             teamsStatus = new HashMap<Integer, TeamStatus>();
             response = sc.sendMSG("GET_USER_TEAMS " + id);
             if (response.startsWith("KO")) {
                 return response;
             }
-            split = response.split(";");
-            for (int i = 0; i < split.length; i++) {
-                String[] s = split[i].split(" ");
-                teamsStatus.put(Integer.valueOf(s[0]), new TeamStatus(s[1]));
+            if (!response.isEmpty()) {
+                String[] split = response.split(";");
+                for (int i = 0; i < split.length; i++) {
+                    String[] s = split[i].split(" ");
+                    teamsStatus.put(Integer.valueOf(s[0]), new TeamStatus(s[1]));
+                }
             }
             User get = data.get(id);
             get.setItems(itemsStatus);
