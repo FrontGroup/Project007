@@ -14,6 +14,10 @@ public interface SourceUserInt {
     //vraci OK nebo KO chyba
     public String loadData();
 
+    //metoda, ktera naplni tridu uzivatelem s idUser
+    //vraci OK nebo KO chyba
+    public String loadData(int idUser);
+
     public User getUser(int id);
 
     public String addUser(User user);

@@ -28,6 +28,45 @@ public class SourceUser implements SourceUserInt {
     }
 
     @Override
+    public String loadData(int id) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("GET_INFO " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        saveData(response, id);
+        itemsStatus = new HashMap<Integer, ItemStatus>();
+        response = sc.sendMSG("GET_USER_ITEMS " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        if (!response.isEmpty()) {
+            String[] split = response.split(";");
+            for (int i = 0; i < split.length; i++) {
+                String[] s = split[i].split(" ");
+                itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
+            }
+        }
+        teamsStatus = new HashMap<Integer, TeamStatus>();
+        response = sc.sendMSG("GET_USER_TEAMS " + id);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        if (!response.isEmpty()) {
+            String[] split = response.split(";");
+            for (int i = 0; i < split.length; i++) {
+                String[] s = split[i].split(" ");
+                teamsStatus.put(Integer.valueOf(s[0]), new TeamStatus(s[1]));
+            }
+        }
+        User get = data.get(id);
+        get.setItems(itemsStatus);
+        get.setTeams(teamsStatus);
+        data.put(id, get);
+        return "OK";
+    }
+
+    @Override
     public String loadData() {
         ServerConnection sc = ServerConnection.getInstance();
         String response = sc.sendMSG("GET_USERS");
@@ -39,41 +78,11 @@ public class SourceUser implements SourceUserInt {
         for (int i = 0; i < users.length; i++) {
             idUsers[i] = Integer.valueOf(users[i]);
         }
-
         for (int id : idUsers) {
-            response = sc.sendMSG("GET_INFO " + id);
-            if (response.startsWith("KO")) {
-                return response;
+            String info = loadData(id);
+            if (info.startsWith("KO")) {
+                return info;
             }
-            saveData(response, id);
-            itemsStatus = new HashMap<Integer, ItemStatus>();
-            response = sc.sendMSG("GET_USER_ITEMS " + id);
-            if (response.startsWith("KO")) {
-                return response;
-            }
-            if (!response.isEmpty()) {
-                String[] split = response.split(";");
-                for (int i = 0; i < split.length; i++) {
-                    String[] s = split[i].split(" ");
-                    itemsStatus.put(Integer.valueOf(s[0]), new ItemStatus(s[1]));
-                }
-            }
-            teamsStatus = new HashMap<Integer, TeamStatus>();
-            response = sc.sendMSG("GET_USER_TEAMS " + id);
-            if (response.startsWith("KO")) {
-                return response;
-            }
-            if (!response.isEmpty()) {
-                String[] split = response.split(";");
-                for (int i = 0; i < split.length; i++) {
-                    String[] s = split[i].split(" ");
-                    teamsStatus.put(Integer.valueOf(s[0]), new TeamStatus(s[1]));
-                }
-            }
-            User get = data.get(id);
-            get.setItems(itemsStatus);
-            get.setTeams(teamsStatus);
-            data.put(id, get);
         }
         return "OK";
     }
