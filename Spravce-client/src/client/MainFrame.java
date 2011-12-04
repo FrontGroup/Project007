@@ -58,6 +58,7 @@ public class MainFrame extends JFrame {
         panel = new JPanel();
         getContentPane().add(panel);
         ViewProfile info = new ViewProfile(userId);
+
         panel.add(info);
         pack();
         // UI event handling

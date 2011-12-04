@@ -32,7 +32,7 @@ public class AdminRoleTest {
 
     @Test
     public void testAdminRole() {
-        Role r = new AdminRole((ServerConnection) null);
+        Role r = new AdminRole();
         Iterable<JMenuItem> is = r.getMenuItems();
         assertEquals("Add user", is.iterator().next().getText());
     }
