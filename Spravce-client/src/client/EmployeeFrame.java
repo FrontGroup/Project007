@@ -78,7 +78,8 @@ public class EmployeeFrame extends JFrame {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.exit(0);
+                setVisible(false);
+                dispose();
             }
         });
         save.addActionListener(new ActionListener() {
@@ -92,7 +93,8 @@ public class EmployeeFrame extends JFrame {
                 user.setEmail(temail.getText());
                 user.setPhone(tphone.getText());
                 su.updateUser(userId, user);
-                System.exit(0);
+                setVisible(false);
+                dispose();
             }
         });
         info0.setLayout(new FlowLayout());
