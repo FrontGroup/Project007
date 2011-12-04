@@ -8,6 +8,7 @@ import java.awt.event.*;
 public class ViewProfile extends JPanel implements Role {
 
     JLabel id;
+    JLabel tid;
     JLabel name;
     JLabel tname;
     JLabel lastname;
@@ -47,6 +48,7 @@ public class ViewProfile extends JPanel implements Role {
         city = new JLabel("City:");
         email = new JLabel("E-mail:");
         phone = new JLabel("Phone:");
+        tid = new JLabel(""+user.getId());
         tname = new JLabel(user.getName());
         tlastname = new JLabel(user.getLastName());
         taddress = new JLabel(user.getAddress());
@@ -62,6 +64,7 @@ public class ViewProfile extends JPanel implements Role {
         info6.setLayout(new FlowLayout());
         info7.setLayout(new FlowLayout());
         info0.add(id);
+        info0.add(tid);
         info1.add(name);
         info1.add(tname);
         info2.add(lastname);
