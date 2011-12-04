@@ -35,21 +35,6 @@ public class FramePMEditTeam extends JFrame {
 	private static DefaultListModel listModel = new DefaultListModel();
 	private static JList JLMembers = new JList();
 
-	private User loadUser(int id) {
-		SourceUser su = new SourceUser();
-		String r = su.loadData();
-		System.out.println(r);
-		User u = su.getUser(id);
-		return u;
-	}
-
-	private Team loadTeam(int id) {
-		SourceTeam st = new SourceTeam();
-		st.loadData();
-		Team t = st.getTeam(id);
-		return t;
-	}
-
 	public FramePMEditTeam(int id) {
 		this.PM = loadUser(id);
 		teamLeader.setText(PM.getFullName());
@@ -71,10 +56,21 @@ public class FramePMEditTeam extends JFrame {
 		this.team = loadTeam(teamId);
 		// }
 		initComponents();
-		if (team != null) {
-			fillInForm();
-			takeMembers();
-		}
+		fillInForm();
+		takeMembers();
+	}
+
+	private User loadUser(int id) {
+		SourceUser su = new SourceUser();
+		su.loadData();
+		return su.getUser(id);
+	}
+
+	private Team loadTeam(int id) {
+		SourceTeam st = new SourceTeam();
+		st.loadData();
+		Team t = st.getTeam(id);
+		return t;
 	}
 
 	private void takeMembers() {
@@ -101,7 +97,7 @@ public class FramePMEditTeam extends JFrame {
 
 	private void fillInForm() {
 		JTFTeamName.setText(team.getName());
-		teamLeader.setText(team.getPm());
+		teamLeader.setText(loadUser(team.getPm()).getFullName());
 		JTFTeamGoal.setText(team.getGoal());
 		JTFProject.setText(team.getProject());
 		JTFTeamInfo.setText(team.getProject());
@@ -305,7 +301,8 @@ public class FramePMEditTeam extends JFrame {
 				}
 			}
 		} else {
-			setTitle("Showing team " + team.getName() + " (" + PM.getFullName() + ")");
+			setTitle("Showing team " + team.getName() + " (" + PM.getFullName()
+					+ ")");
 			JTFTeamName.setEditable(false);
 			JTFTeamGoal.setEditable(false);
 			JTFProject.setEditable(false);

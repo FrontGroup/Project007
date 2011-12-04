@@ -32,7 +32,7 @@ public class PMRole implements Role {
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new FramePMEditTeam(id);
+                new FramePMEditTeam(id).setVisible(true);
 
             }
         });

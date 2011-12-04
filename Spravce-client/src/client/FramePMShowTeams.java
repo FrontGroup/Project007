@@ -23,11 +23,10 @@ import javax.swing.event.ListSelectionListener;
 import javax.swing.table.DefaultTableModel;
 
 public class FramePMShowTeams extends JFrame {
-	private static HashMap<String, Team> activeTeams = new HashMap();
-	private static HashMap<String, Team> archivedTeams = new HashMap();
+	private static HashMap<Integer, Team> activeTeams = new HashMap();
+	private static HashMap<Integer, Team> archivedTeams = new HashMap();
 
 	private User PM;
-	private Team team;
 	private Font headline = new Font("Arial", 0, 30);
 	private JButton[] viewButtons;
 	private JButton[] editButtons;
@@ -35,11 +34,22 @@ public class FramePMShowTeams extends JFrame {
 	private ActionListener[] editListeners;
 	final Object[] tableHeaderData = { "ID", "Name", "Goal",
 			"Number of members" };
-	
+
 	public FramePMShowTeams(int id) {
 		SourceUser su = new SourceUser();
 		su.loadData();
+		SourceTeam st = new SourceTeam();
+		st.loadDataFromPM(id);
+
 		this.PM = su.getUser(id);
+		for (Team t : st.getAllTeams().values()) {
+			if (t.isActive()) {
+				activeTeams.put(t.getId(), t);
+			} else {
+				archivedTeams.put(t.getId(), t);
+			}
+		}
+
 		initComponents();
 	}
 
@@ -82,10 +92,13 @@ public class FramePMShowTeams extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					System.out.println("Button View team ID="
-							+ arg0.toString().charAt(
-									arg0.toString().length() - 1));
+					new FramePMEditTeam(PM.getId(), arg0.toString().charAt(
+							arg0.toString().length() - 1), false)
+							.setVisible(true);
+					/*
+					 * System.out.println("Button View team ID=" +
+					 * arg0.toString().charAt( arg0.toString().length() - 1));
+					 */
 				}
 			};
 			viewButtons[i].addActionListener(viewListeners[i]);
@@ -99,10 +112,13 @@ public class FramePMShowTeams extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					// TODO Auto-generated method stub
-					System.out.println("Button Edit team ID="
-							+ arg0.toString().charAt(
-									arg0.toString().length() - 1));
+					new FramePMEditTeam(PM.getId(), arg0.toString().charAt(
+							arg0.toString().length() - 1), true)
+							.setVisible(true);
+					/*
+					 * System.out.println("Button Edit team ID=" +
+					 * arg0.toString().charAt( arg0.toString().length() - 1));
+					 */
 				}
 			};
 			editButtons[i].addActionListener(editListeners[i]);
@@ -214,69 +230,18 @@ public class FramePMShowTeams extends JFrame {
 
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
-						// TODO Auto-generated method stub
 						if (e.getValueIsAdjusting()) {
-							System.out.println("Selected row: "
-									+ table.getSelectedRow());
+							/*
+							 * System.out.println("Selected row: " +
+							 * table.getSelectedRow());
+							 */
+							new FramePMEditTeam(PM.getId(), table
+									.getSelectedRow(), false);
 						}
 					}
 				});
 
 		JScrollPane jsp = new JScrollPane(panel);
 		return (JScrollPane) jsp;
-	}
-
-	public static void main(String[] args) {
-		// testing data
-		/*Team team1 = new Team(1);
-		team1.setName("Team 1");
-		team1.setGoal("Goal 1");
-		team1.addMember(new User(111, 1));
-		team1.isActive(true);
-		Team team2 = new Team(2);
-		team2.setName("Team 2");
-		team2.setGoal("Goal 2");
-		team2.addMember(new User(112, 1));
-		team2.addMember(new User(113, 1));
-		team2.addMember(new User(114, 1));
-		team2.isActive(false);
-		Team team3 = new Team(3);
-		team3.setName("Team 3");
-		team3.setGoal("Goal 3");
-		team3.isActive(true);
-		Team team4 = new Team(4);
-		team4.setName("Team 4");
-		team4.setGoal("Goal 4");
-		team4.addMember(new User(121, 1));
-		team4.isActive(false);
-		team4.addMember(new User(122, 1));
-		team4.addMember(new User(123, 1));
-		team4.addMember(new User(124, 1));
-
-		activeTeams.put("Team1", team1);
-		activeTeams.put("Team2", team2);
-		activeTeams.put("Team3", team3);
-		activeTeams.put("Team11", team1);
-		activeTeams.put("Team12", team2);
-		activeTeams.put("Team13", team3);
-		activeTeams.put("Team21", team1);
-		activeTeams.put("Team22", team2);
-		activeTeams.put("Team23", team3);
-
-		archivedTeams.put("Team1", team1);
-		archivedTeams.put("Team2", team2);
-		archivedTeams.put("Team3", team3);
-		archivedTeams.put("Team4", team4);
-		archivedTeams.put("Team12", team2);
-		archivedTeams.put("Team11", team1);
-		archivedTeams.put("Team13", team3);
-		archivedTeams.put("Team14", team4);
-		archivedTeams.put("Team21", team1);
-		archivedTeams.put("Team22", team2);
-		archivedTeams.put("Team23", team3);
-		archivedTeams.put("Team24", team4);*/
-
-		FramePMShowTeams fst = new FramePMShowTeams(12);
-		fst.setVisible(true);
 	}
 }

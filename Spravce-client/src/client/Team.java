@@ -8,8 +8,8 @@ import java.util.HashMap;
  */
 public class Team {
 
-    private int id;
-    private String pm, name, goal, project, info;
+    private int id, pm;
+    private String name, goal, project, info;
     private static HashMap<Integer, User> members = new HashMap();
     private boolean active;
 
@@ -25,7 +25,7 @@ public class Team {
         this.active = active;
     }
 
-    public Team(int id, String pm, String name, String goal, String project, String info,
+    public Team(int id, int pm, String name, String goal, String project, String info,
             String active) {
         super();
         this.id = id;
@@ -41,7 +41,7 @@ public class Team {
         }
     }
 
-    public Team(int id, String pm, String name, String goal, String project, String info,
+    public Team(int id, int pm, String name, String goal, String project, String info,
             boolean active) {
         super();
         this.id = id;
@@ -101,11 +101,11 @@ public class Team {
         return members;
     }
 
-    public String getPm() {
+    public int getPm() {
         return pm;
     }
 
-    public void setPm(String pm) {
+    public void setPm(int pm) {
         this.pm = pm;
     }
 
