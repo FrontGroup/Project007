@@ -54,8 +54,7 @@ public class MainFrame extends JFrame {
 
         help.add(Main.getAboutMenuItem());
 
-        // TODO get user information from server
-        // TODO David - Add employee profile panel
+        // TODO get user information from server        
         panel = new JPanel();
         getContentPane().add(panel);
         ViewProfile info = new ViewProfile(userId);
