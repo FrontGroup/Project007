@@ -84,6 +84,9 @@ public abstract class Worker {
         if (split[0].contains("GET_PM_TEAMS")) {
             return new getPMTeams();
         }
+        if (split[0].contains("GET_TEAM_USERS")) {
+            return new getTeamUsers();
+        }
         if (split[0].contains("USER_IN_TEAM")) {
             return new userInTeam();
         }
@@ -412,6 +415,17 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             return dbc.getPMTeams(split[1]);
+        }
+    }
+
+    public static class getTeamUsers extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.getTeamUsers(split[1]);
         }
     }
 }

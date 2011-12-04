@@ -19,6 +19,12 @@ public interface SourceTeamInt {
     //metoda, ktera naplni tridu vsemi teamy ktera maji urciteho PM
     //vraci OK nebo KO chyba
     public String loadDataFromPM(int idPM);
+    
+    //metoda, ktera naplni tridu uzivateli v tymu s idTeam
+    //vraci OK nebo KO chyba
+    public String loadUserStatusInTeam(int idTeam);
+    
+    public HashMap<Integer, TeamStatus> getUserStatusInTeam();
 
     public Team getTeam(int id);
 

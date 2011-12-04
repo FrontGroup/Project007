@@ -593,4 +593,22 @@ public class DBConnection {
             return "KO error in database";
         }
     }
+
+    String getTeamUsers(String idTeam) {
+        try {
+            String result = "";
+            sql = "Select * from Teams_has_Users where Teams_id=" + idTeam;
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result += resultSet.getInt(2) + " " + resultSet.getInt(3) + ";";
+            }
+            return result;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
+    }
 }
