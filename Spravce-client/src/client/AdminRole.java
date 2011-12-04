@@ -32,7 +32,6 @@ class AdminRole implements Role {
         // TODO bind specific action handlers to these menu items
         JMenuItem add = new JMenuItem("Add user");
 
-        JMenuItem del = new JMenuItem("Delete user");
         JMenuItem manageItems = new JMenuItem("Manage items");
         JMenuItem manageGroups = new JMenuItem("Manage groups");
 
@@ -58,7 +57,7 @@ class AdminRole implements Role {
                 new FrameGroups();
             }
         });
-        return Arrays.asList(add, del, new JMenuItem("Edit user"), manageItems, manageGroups);
+        return Arrays.asList(add, /*new JMenuItem("Delete user"), new JMenuItem("Edit user"),*/ manageItems, manageGroups);
     }
 
     static class DeleteUserDialog extends JDialog {
