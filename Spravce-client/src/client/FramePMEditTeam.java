@@ -53,7 +53,7 @@ public class FramePMEditTeam extends JFrame {
 		 * JOptionPane.ERROR_MESSAGE); } else {
 		 */
 		this.editing = editing;
-		this.team = loadTeam(teamId);
+		team = loadTeam(teamId);
 		// }
 		initComponents();
 		fillInForm();
@@ -301,7 +301,7 @@ public class FramePMEditTeam extends JFrame {
 				}
 			}
 		} else {
-			setTitle("Showing team " + team.getName() + " (" + PM.getFullName()
+			setTitle("Showing team " + loadTeam(2).getName() + " (" + PM.getFullName()
 					+ ")");
 			JTFTeamName.setEditable(false);
 			JTFTeamGoal.setEditable(false);

@@ -15,6 +15,7 @@ import java.util.HashMap;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -85,43 +86,51 @@ public class FramePMShowTeams extends JFrame {
 
 		viewButtons = new JButton[activeTeams.values().size()];
 		viewListeners = new ActionListener[activeTeams.values().size()];
-		for (int i = 0; i < viewButtons.length; i++) {
-			viewButtons[i] = new JButton("View team");
-			viewButtons[i].setName("btnView" + i);
-			viewListeners[i] = new ActionListener() {
+		int tmpV = 0;
+		for (Team tV : activeTeams.values()) {
+			viewButtons[tmpV] = new JButton("View team");
+			viewButtons[tmpV].setName("btnView" + tV.getId());
+			viewListeners[tmpV] = new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					new FramePMEditTeam(PM.getId(), arg0.toString().charAt(
-							arg0.toString().length() - 1), false)
-							.setVisible(true);
-					/*
-					 * System.out.println("Button View team ID=" +
-					 * arg0.toString().charAt( arg0.toString().length() - 1));
-					 */
+					int a = 1;
+					String idV = "";
+					while (arg0.toString().charAt(arg0.toString().length() - a) != 'w') {
+						idV += arg0.toString().charAt(
+								arg0.toString().length() - a);
+						a++;
+					}
+					new FramePMEditTeam(PM.getId(), Integer.parseInt(idV),
+							false).setVisible(true);
 				}
 			};
-			viewButtons[i].addActionListener(viewListeners[i]);
+			viewButtons[tmpV].addActionListener(viewListeners[tmpV]);
+			tmpV++;
 		}
 		editButtons = new JButton[activeTeams.values().size()];
 		editListeners = new ActionListener[activeTeams.values().size()];
-		for (int i = 0; i < editButtons.length; i++) {
-			editButtons[i] = new JButton("Edit team");
-			editButtons[i].setName("btnEdit" + i);
-			editListeners[i] = new ActionListener() {
+		int tmpE = 0;
+		for (Team tE : activeTeams.values()) {
+			editButtons[tmpE] = new JButton("Edit team");
+			editButtons[tmpE].setName("btnEdit" + tE.getId());
+			editListeners[tmpE] = new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent arg0) {
-					new FramePMEditTeam(PM.getId(), arg0.toString().charAt(
-							arg0.toString().length() - 1), true)
+					int b = 1;
+					String idE = "";
+					while (arg0.toString().charAt(arg0.toString().length() - b) != 't') {
+						idE += arg0.toString().charAt(
+								arg0.toString().length() - b);
+						b++;
+					}
+					new FramePMEditTeam(PM.getId(), Integer.parseInt(idE), true)
 							.setVisible(true);
-					/*
-					 * System.out.println("Button Edit team ID=" +
-					 * arg0.toString().charAt( arg0.toString().length() - 1));
-					 */
 				}
 			};
-			editButtons[i].addActionListener(editListeners[i]);
+			editButtons[tmpE].addActionListener(editListeners[tmpE]);
+			tmpE++;
 		}
 
 		int i = 1;
@@ -231,12 +240,10 @@ public class FramePMShowTeams extends JFrame {
 					@Override
 					public void valueChanged(ListSelectionEvent e) {
 						if (e.getValueIsAdjusting()) {
-							/*
-							 * System.out.println("Selected row: " +
-							 * table.getSelectedRow());
-							 */
-							new FramePMEditTeam(PM.getId(), table
-									.getSelectedRow(), false);
+							Object o = table.getValueAt(
+									table.getSelectedRow(), 0);
+							int id = Integer.valueOf(o.toString());
+							new FramePMEditTeam(PM.getId(), id, false).setVisible(true);
 						}
 					}
 				});
