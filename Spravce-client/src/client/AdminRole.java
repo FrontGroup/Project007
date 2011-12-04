@@ -201,13 +201,13 @@ class AdminRole implements Role {
                     String p = new String(pass.getPassword());
                     User u = new User(r, g, p);
                     SourceUser su = new SourceUser();
-                    String ret = su.loadData();
+                    /*String ret = su.loadData();
                     if (!ret.equals("OK")) {
                         System.out.println("CreateUserDialog - SourceUser.loadData error: " + ret);
                         warn.setText(ret);
                         return;
-                    }
-                    ret = su.addUser(u);
+                    }*/
+                    String ret = su.addUser(u);
                     if (ret.startsWith("KO")) {
                         System.out.println("CreateUserDialog - SourceUser.addUser error: " + ret);
                         warn.setText(ret);
