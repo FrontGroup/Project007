@@ -18,82 +18,85 @@ public abstract class Worker {
     public static Worker getWorker(String msg, DBConnection dbc) {
         Worker.split = msg.split(" ");
         Worker.dbc = dbc;
-        if (msg.startsWith("LOGIN")) {
+        if (split[0].contains("LOGIN")) {
             return new login();
         }
-        if (msg.startsWith("GET_USERS")) {
+        if (split[0].contains("GET_USERS")) {
             return new getUsers();
         }
-        if (msg.startsWith("GET_INFO")) {
+        if (split[0].contains("GET_INFO")) {
             return new getInfo();
         }
-        if (msg.startsWith("ADD_USER")) {
+        if (split[0].contains("ADD_USER")) {
             return new addUser();
         }
-        if (msg.startsWith("DEL_USER")) {
+        if (split[0].contains("DEL_USER")) {
             return new delUser();
         }
-        if (msg.startsWith("CHANGE_PASS")) {
+        if (split[0].contains("CHANGE_PASS")) {
             return new changePass();
         }
-        if (msg.startsWith("ADMIN_CHANGE_PASS")) {
+        if (split[0].contains("ADMIN_CHANGE_PASS")) {
             return new adminChangePass();
         }
-        if (msg.startsWith("GET_GROUPS")) {
+        if (split[0].contains("GET_GROUPS")) {
             return new getGroups();
         }
-        if (msg.startsWith("GET_ITEMS")) {
+        if (split[0].contains("GET_ITEMS")) {
             return new getItems();
         }
-        if (msg.startsWith("GET_TEAMS")) {
+        if (split[0].contains("GET_TEAMS")) {
             return new getTeams();
         }
-        if (msg.startsWith("ADD_ITEM")) {
+        if (split[0].contains("ADD_ITEM")) {
             return new addItem();
         }
-        if (msg.startsWith("DEL_ITEM")) {
+        if (split[0].contains("DEL_ITEM")) {
             return new delItem();
         }
-        if (msg.startsWith("UPDATE_ITEM")) {
+        if (split[0].contains("UPDATE_ITEM")) {
             return new updateItem();
         }
-        if (msg.startsWith("ADD_TEAM")) {
+        if (split[0].contains("ADD_TEAM")) {
             return new addTeam();
         }
-        if (msg.startsWith("DEL_TEAM")) {
+        if (split[0].contains("DEL_TEAM")) {
             return new delTeam();
         }
-        if (msg.startsWith("UPDATE_USER")) {
+        if (split[0].contains("UPDATE_USER")) {
             return new updateUser();
         }
-        if (msg.startsWith("ADD_GROUP")) {
+        if (split[0].contains("ADD_GROUP")) {
             return new addGroup();
         }
-        if (msg.startsWith("DEL_GROUP")) {
+        if (split[0].contains("DEL_GROUP")) {
             return new delGroup();
         }
-        if (msg.startsWith("UPDATE_GROUP")) {
+        if (split[0].contains("UPDATE_GROUP")) {
             return new updateGroup();
         }
-        if (msg.startsWith("GET_USER_ITEMS")) {
+        if (split[0].contains("GET_USER_ITEMS")) {
             return new getUserItems();
         }
-        if (msg.startsWith("GET_USER_TEAMS")) {
+        if (split[0].contains("GET_USER_TEAMS")) {
             return new getUserTeams();
         }
-        if (msg.startsWith("USER_IN_TEAM")) {
+        if (split[0].contains("GET_PM_TEAMS")) {
+            return new getPMTeams();
+        }
+        if (split[0].contains("USER_IN_TEAM")) {
             return new userInTeam();
         }
-        if (msg.startsWith("USER_OUT_TEAM")) {
+        if (split[0].contains("USER_OUT_TEAM")) {
             return new userOutTeam();
         }
-        if (msg.startsWith("SET_TEAM_CONFIRMED")) {
+        if (split[0].contains("SET_TEAM_CONFIRMED")) {
             return new setTeamConfirmed();
         }
-        if (msg.startsWith("UPDATE_TEAM")) {
+        if (split[0].contains("UPDATE_TEAM")) {
             return new updateTeam();
         }
-        if (msg.startsWith("SET_ITEM_STATE")) {
+        if (split[0].contains("SET_ITEM_STATE")) {
             return new setItemState();
         }
         return null;
@@ -398,6 +401,17 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             return dbc.delGroup(split[1]);
+        }
+    }
+
+    public static class getPMTeams extends Worker {
+
+        @Override
+        public String process() {
+            if (split.length != 2) {
+                return "KO Wrong requirement!";
+            }
+            return dbc.getPMTeams(split[1]);
         }
     }
 }

@@ -18,6 +18,22 @@ public class SourceTeam implements SourceTeamInt {
     }
 
     @Override
+    public String loadDataFromPM(int idPM) {
+        ServerConnection sc = ServerConnection.getInstance();
+        String response = sc.sendMSG("GET_PM_TEAMS " + idPM);
+        if (response.startsWith("KO")) {
+            return response;
+        }
+        data = new HashMap<Integer, Team>();
+        String[] teams = response.split(";");
+        for (int i = 0; i < teams.length; i++) {
+            String[] team = teams[i].split(" ");
+            data.put(Integer.valueOf(team[0]), new Team(Integer.valueOf(team[0]), team[1], team[2], team[3], team[4], team[5], team[6]));
+        }
+        return "OK";
+    }
+
+    @Override
     public String loadData() {
         ServerConnection sc = ServerConnection.getInstance();
         String response = sc.sendMSG("GET_TEAMS");

@@ -15,6 +15,10 @@ public interface SourceTeamInt {
     //metoda, ktera naplni tridu vsemi teamy
     //vraci OK nebo KO chyba
     public String loadData();
+    
+    //metoda, ktera naplni tridu vsemi teamy ktera maji urciteho PM
+    //vraci OK nebo KO chyba
+    public String loadDataFromPM(int idPM);
 
     public Team getTeam(int id);
 
@@ -23,6 +27,6 @@ public interface SourceTeamInt {
     public String delTeam(int id);
 
     public String updateTeam(int id, Team team);
-    
-    public HashMap<Integer,Team> getAllTeams();
+
+    public HashMap<Integer, Team> getAllTeams();
 }

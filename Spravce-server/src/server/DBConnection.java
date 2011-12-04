@@ -362,11 +362,45 @@ public class DBConnection {
     }
 
     String getItems() {
-        return simpleShowAllFrom("Items");
+        try {
+            String result = "";
+            sql = "Select * from Items";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result += resultSet.getInt(1) + " " + resultSet.getString(2) + ";";
+            }
+            return result;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
     }
 
     String getTeams() {
-        return simpleShowAllFrom("Teams");
+        try {
+            String result = "";
+            sql = "Select * from Teams";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result += resultSet.getInt(1) + " "
+                        + resultSet.getString(7) + " "
+                        + resultSet.getString(2) + " "
+                        + resultSet.getString(6) + " "
+                        + resultSet.getString(3) + " "
+                        + resultSet.getString(4) + " "
+                        + resultSet.getString(5) + ";";
+            }
+            return result;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
     }
 
     String getUserItems(String idUser) {
@@ -526,6 +560,30 @@ public class DBConnection {
             resultSet = statement.executeQuery(sql);
             while (resultSet.next()) {
                 result += resultSet.getInt(1) + ";";
+            }
+            return result;
+
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+            System.out.println("Chyba v metode execute_command");
+            return "KO error in database";
+        }
+    }
+
+    String getPMTeams(String idPM) {
+        try {
+            String result = "";
+            sql = "Select * from Teams where pm=" + idPM;
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(sql);
+            while (resultSet.next()) {
+                result += resultSet.getInt(1) + " "
+                        + resultSet.getString(7) + " "
+                        + resultSet.getString(2) + " "
+                        + resultSet.getString(6) + " "
+                        + resultSet.getString(3) + " "
+                        + resultSet.getString(4) + " "
+                        + resultSet.getString(5) + ";";
             }
             return result;
 
