@@ -66,8 +66,7 @@ public class EmployeeFrame extends JFrame {
         address = new JLabel("Address:");
         city = new JLabel("City:");
         email = new JLabel("E-mail:");
-        phone = new JLabel("Phone:");
-        view.updateData();
+        phone = new JLabel("Phone:");        
 //        tname = new JTextField(20);
 //        tlastname = new JTextField(user.getLastName(), 20);
 //        taddress = new JTextField(user.getAddress(), 20);
@@ -94,7 +93,8 @@ public class EmployeeFrame extends JFrame {
                 user.setCity(tcity.getText());
                 user.setEmail(temail.getText());
                 user.setPhone(tphone.getText());
-                su.updateUser(userId, user);                
+                su.updateUser(userId, user);
+                view.updateData();
                 setVisible(false);
                 dispose();
             }
