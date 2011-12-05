@@ -40,7 +40,7 @@ public class SourceUser implements SourceUserInt {
         if (response.startsWith("KO")) {
             return response;
         }
-        if (!response.isEmpty()) {
+        if (response.length()>0) {
             String[] split = response.split(";");
             for (int i = 0; i < split.length; i++) {
                 String[] s = split[i].split(" ");
@@ -52,7 +52,7 @@ public class SourceUser implements SourceUserInt {
         if (response.startsWith("KO")) {
             return response;
         }
-        if (!response.isEmpty()) {
+        if (response.length()>0) {
             String[] split = response.split(";");
             for (int i = 0; i < split.length; i++) {
                 String[] s = split[i].split(" ");

@@ -24,17 +24,16 @@ public class DBConnection {
     public String connect() {
         try {
             Class.forName("com.mysql.jdbc.Driver");
-        } catch (Exception e) {
-            System.err.println("Nepodarilo sa nacitat MySQL driver");
-            return "MySQL driver failed!";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return "KO MySQL driver failed!";
         }
         try {
             connect = DriverManager.getConnection(db_address);
-            System.out.println("PODARILO SA PRIPOJIT");
             return "OK";
-        } catch (Exception e) {
-            System.err.println("Pripojenie zlyhalo");
-            return "Connect to DB failed!";
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
+            return "KO Connect to DB failed!";
         }
     }
 
@@ -42,28 +41,22 @@ public class DBConnection {
         try {
             connect.close();
         } catch (SQLException ex) {
-            System.err.println("Disconnect failed!");
+            System.out.println(ex.getMessage());
         }
     }
 
     public String login(String id, String pass) {
         try {
-            //metoda vraci ADMIN/MANAGER/HR/EMPLOYEE/KO
             int role = 0;
             String query = "SELECT role FROM Users WHERE id='" + id + "' and pass='" + pass + "'"; // vytviry SQL dotaz
             statement = connect.createStatement();
             resultSet = statement.executeQuery(query);
-            while (resultSet.next()) //Vypise vysledok dotazu
-            {
+            while (resultSet.next()) {
                 role = resultSet.getInt("role");
-            }
-            if (role == 0) //jestli je role prazdna, v tabulke neexistuje uzivatel so zadanym id a heslom
-            {
-                System.out.println("Neplatne id nebo heslo");
             }
             switch (role) {
                 case 0: {
-                    return "KO";
+                    return "KO WRONG ID!";
                 }
                 case 1: {
                     return "ADMIN";
@@ -81,13 +74,11 @@ public class DBConnection {
                     return "KO";
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
-            System.out.println("Chyba v metode login v DBConnect");
-            return "KO error in database";
+            System.out.println(ex.getMessage());
+            return "KO Error in database!";
         }
     }
 
-// metoda na pridavanie uzivatela ktore je pretazena, je mozne ju volat s menej parametrami
     public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email, String phone, int role) {
         try {
             String query = "INSERT into Users (Groups_idGroups, pass, name, lastname, address, city, email, phone, role)  VALUES ('" + Groups_idGroups + "', '" + pass + "', '" + name
@@ -96,7 +87,7 @@ public class DBConnection {
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
             if (rows_effected == 0) {
-                return "KO nepodarilo sa pridat uzivatela";
+                return "KO NEW USER didn't save!";
             }
             query = "SELECT LAST_INSERT_ID()";
             statement = connect.createStatement();
@@ -104,16 +95,13 @@ public class DBConnection {
             if (!resultSet.next()) {
                 return "KO Can't get user ID.";
             }
-
             return resultSet.getString(1);
-
         } catch (Exception ex) {
-            System.out.println("Chyba v metode addUser");
-            return "KO error in database";
+            System.out.println(ex.getMessage());
+            return "KO Error in database!";
         }
     }
 
-// metoda ktora meni heslo uzivatela identifikovaneho pomocou ID
     public String changePass(String id, String oldpass, String newpass) {
         String query = "UPDATE Users SET pass = '" + newpass + "' WHERE id ='" + id + "' and pass ='" + oldpass + "'";
         try {
@@ -122,30 +110,28 @@ public class DBConnection {
             if (rows_effected != 0) {
                 return "OK";
             } else {
-                return "KO id/heslo je nespravne";
+                return "KO ID/PASS is wrong!";
             }
         } catch (Exception ex) {
-            System.out.println("Chyba v metode addUser");
-            return "KO chyba v metode";
+            System.out.println(ex.getMessage());
+            return "KO Error in database!";
         }
 
     }
-// metoda ktora uzavre resultset
 
     private void close() {
         try {
             if (resultSet != null) {
                 resultSet.close();
             }
-
             if (statement != null) {
                 statement.close();
             }
-
             if (connect != null) {
                 connect.close();
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
+            System.out.println(ex.getMessage());
         }
     }
 
@@ -155,22 +141,16 @@ public class DBConnection {
             statement = connect.createStatement();
             int delete = statement.executeUpdate(query);
             if (delete == 0) {
-                return "KO User s id" + id + "neexistuje";
+                return "KO User's ID non-existent!";
             }
             query = "DELETE from Teams_has_Users WHERE Users_id = '" + id + "'";
-            int delete2 = statement.executeUpdate(query);
-            if (delete2 == 0) {
-                System.out.println("User nieje clenom ziadneho teamu");
-            }
+            statement.executeUpdate(query);
             query = "DELETE from Users_has_Items WHERE Users_id = '" + id + "'";
-            int delete3 = statement.executeUpdate(query);
-            if (delete3 == 0) {
-                System.out.println("User nema ziadne Itemi");
-            }
+            statement.executeUpdate(query);
             return "OK";
         } catch (Exception ex) {
-            System.out.println("chyba v metode deleteUser v triede DBConnection");
-            return "KO";
+            System.out.println(ex.getMessage());
+            return "KO Error in database!";
         }
     }
 
@@ -210,11 +190,11 @@ public class DBConnection {
             if (rows_effected != 0) {
                 return "OK";
             } else {
-                return "KO id/heslo je nespravne";
+                return "KO ID/PASS IS WRONG!";
             }
         } catch (Exception ex) {
-            System.out.println("Chyba v metode addUser");
-            return "KO chyba v metode";
+            System.out.println(ex.getMessage());
+            return "KO Error in database!";
         }
     }
 
@@ -238,8 +218,7 @@ public class DBConnection {
             return result;
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 
@@ -264,17 +243,13 @@ public class DBConnection {
                 result += " " + size + s + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
-
     }
 
-    String simpleShowAllFrom(String from)//metoda na vypisovanie celeho obsahu jednoduchych tabuliek
-    {
+    public String simpleShowAllFrom(String from) {
         try {
             String result = "";
             sql = "Select * from " + from;
@@ -286,16 +261,13 @@ public class DBConnection {
                 result += resultSet.getInt(1) + " " + resultSet.getString(2) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
-
     }
 
-    String executeSql(String sql) {
+    public String executeSql(String sql) {
         String low_sql = sql.toLowerCase();
         if (low_sql.startsWith("select")) {
             try {
@@ -312,7 +284,6 @@ public class DBConnection {
                 return result;
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
-                System.out.println("Chyba v metode execute_command!");
                 return "KO Error in database!";
             }
         } else if (low_sql.startsWith("delete")) {
@@ -321,7 +292,7 @@ public class DBConnection {
                 statement.executeUpdate(sql);
                 return "OK";
             } catch (Exception ex) {
-                System.out.println("Chyba v metode execute_command!");
+                System.out.println(ex.getMessage());
                 return "KO Error in database!";
             }
         } else if (low_sql.startsWith("insert") || low_sql.startsWith("replace")) {
@@ -334,7 +305,7 @@ public class DBConnection {
                     return "KO Wrong input!";
                 }
             } catch (Exception ex) {
-                System.out.println("Chyba v metode addUser");
+                System.out.println(ex.getMessage());
                 return "KO Error in database!";
             }
         } else if (low_sql.startsWith("update")) {
@@ -347,7 +318,7 @@ public class DBConnection {
                     return "KO Wrong input!";
                 }
             } catch (Exception ex) {
-                System.out.println("Chyba v metode addUser");
+                System.out.println(ex.getMessage());
                 return "KO Error in database!";
             }
         } else {
@@ -356,7 +327,7 @@ public class DBConnection {
         }
     }
 
-    String getItems() {
+    public String getItems() {
         try {
             String result = "";
             sql = "Select * from Items";
@@ -366,15 +337,13 @@ public class DBConnection {
                 result += resultSet.getInt(1) + " " + resultSet.getString(2) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 
-    String getTeams() {
+    public String getTeams() {
         try {
             String result = "";
             sql = "Select * from Teams";
@@ -390,15 +359,13 @@ public class DBConnection {
                         + resultSet.getString(5) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 
-    String getUserItems(String idUser) {
+    public String getUserItems(String idUser) {
         try {
             String result = "";
             sql = "Select * from Users_has_Items where Users_id=" + idUser;
@@ -408,11 +375,9 @@ public class DBConnection {
                 result += resultSet.getInt(2) + " " + resultSet.getInt(3) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 
@@ -426,50 +391,46 @@ public class DBConnection {
                 result += resultSet.getInt(1) + " " + resultSet.getInt(3) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 
-    String addItem(String name) {
+    public String addItem(String name) {
         sql = "Insert into Items (name) values('" + name + "')";
         return executeSql(sql);
     }
 
-    String addTeam(String pm, String name, String project, String info, String goal)//co to je pm??
-    {
+    public String addTeam(String pm, String name, String project, String info, String goal) {
         sql = "Insert into Teams (name,project,info,goal) values('" + name + "','" + project + "','" + info + "','" + goal + "')";
         return executeSql(sql);
     }
 
-    String addGroup(String name, int[] idItems) {
+    public String addGroup(String name, int[] idItems) {
         try {
             sql = "Insert into Groups (name) values('" + name + "')";
             if (!executeSql(sql).equals("OK")) {
-                return "KO error while adding Group";
+                return "KO Error while adding group!";
             }
             String query = "SELECT LAST_INSERT_ID()";
             statement = connect.createStatement();
             resultSet = statement.executeQuery(query);
             if (!resultSet.next()) {
-                return "KO Can't get user ID.";
+                return "KO Can't get group ID!";
             }
             String idNew = resultSet.getString(1);
             if (!updateGroup(idNew, name, idItems).equals("OK")) {
-                return "KO error while updating Group";
+                return "KO Error while updating group!";
             }
         } catch (Exception ex) {
-            System.out.println("Chyba v metode addUser");
-            return "KO error in database";
+            System.out.println(ex.getMessage());
+            return "KO Error in database!";
         }
-
         return "OK";
     }
 
-    String delTeam(String id) {
+    public String delTeam(String id) {
         sql = "Delete from Teams_has_Users where Teams_id='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
             return "KO Error while deleting team's binding!";
@@ -481,7 +442,7 @@ public class DBConnection {
         return "OK";
     }
 
-    String delGroup(String id) {
+    public String delGroup(String id) {
         sql = "Delete from Groups_has_Items where Groups_idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
             return "KO Error while deleting group's binding!";
@@ -493,68 +454,68 @@ public class DBConnection {
         return "OK";
     }
 
-    String delItem(String id) {
+    public String delItem(String id) {
         sql = "Delete from Items where id='" + id + "'";
         return executeSql(sql);
     }
 
-    String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
+    public String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
         String query = "Update Users set name = '" + name + "'," + "lastname = '" + lastname + "'," + "address = '" + address + "',"
                 + "city = '" + city + "'," + "email = '" + email + "'," + "phone = '" + phone + "'," + "professia = '" + professia + "' where id = '" + id + "'";
         return executeSql(query);
     }
 
-    String updateTeam(String id, String pm, String name, String project, String info, String goal)//
+    public String updateTeam(String id, String pm, String name, String project, String info, String goal)//
     {
         String query = "Update Teams set id = '" + id + "'," + "pm = '" + pm + "'," + "name = '" + name + "'," + "project = '" + project + "',"
                 + "info = '" + info + "'," + "goal = '" + goal + "'";
         return executeSql(query);
     }
 
-    String updateGroup(String id, String name, int[] idItems) {
+    public String updateGroup(String id, String name, int[] idItems) {
         sql = "Update Groups set name='" + name + "' where idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
-            return "KO error while updating Group's name";
+            return "KO Error while updating Group's name!";
         }
         sql = "Delete FROM Groups_has_Items where Groups_idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
-            return "KO error while deleting Group's Items";
+            return "KO Error while deleting Group's Items!";
         }
         for (int i = 0; i < idItems.length; i++) {
             sql = "Insert into Groups_has_Items values ('" + id + "','" + idItems[i] + "')";
             if (!executeSql(sql).equals("OK")) {
-                return "KO error while updating Group's Items";
+                return "KO Error while updating Group's Items!";
             }
         }
         return "OK";
     }
 
-    String updateItem(String id, String name) {
+    public String updateItem(String id, String name) {
         sql = "Update Items set name='" + name + "' WHERE id='" + id + "'";
         return executeSql(sql);
     }
 
-    String userInTeam(String idUser, String idTeam) {
+    public String userInTeam(String idUser, String idTeam) {
         sql = "Replace into Teams_has_Users (Teams_id, Users_id) values('" + idTeam + "', '" + idUser + "')";
         return executeSql(sql);
     }
 
-    String userOutTeam(String idUser, String idTeam) {
+    public String userOutTeam(String idUser, String idTeam) {
         sql = "Delete Teams_has_Users where Teams_id = '" + idTeam + "' and Users_id = '" + idUser + "'";
         return executeSql(sql);
     }
 
-    String setTeamConfirmed(String idUser, String idTeam, boolean confirmed) {
+    public String setTeamConfirmed(String idUser, String idTeam, boolean confirmed) {
         sql = "Update Teams_has_Users set confirmed='" + confirmed + "' WHERE Users_id='" + idUser + "' and Teams_id='" + idTeam + "'";
         return executeSql(sql);
     }
 
-    String setItemState(String idUser, String idItem, boolean state) {
+    public String setItemState(String idUser, String idItem, boolean state) {
         sql = "Update Users_has_Items set state='" + state + "' WHERE Users_id='" + idUser + "' and Items_id='" + idItem + "'";
         return executeSql(sql);
     }
 
-    String getUsers() {
+    public String getUsers() {
         try {
             String result = "";
             sql = "Select id from Users";
@@ -564,15 +525,13 @@ public class DBConnection {
                 result += resultSet.getInt(1) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 
-    String getPMTeams(String idPM) {
+    public String getPMTeams(String idPM) {
         try {
             String result = "";
             sql = "Select * from Teams where pm=" + idPM;
@@ -588,15 +547,13 @@ public class DBConnection {
                         + resultSet.getString(5) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 
-    String getTeamUsers(String idTeam) {
+    public String getTeamUsers(String idTeam) {
         try {
             String result = "";
             sql = "Select * from Teams_has_Users where Teams_id=" + idTeam;
@@ -606,11 +563,9 @@ public class DBConnection {
                 result += resultSet.getInt(2) + " " + resultSet.getInt(3) + ";";
             }
             return result;
-
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
-            System.out.println("Chyba v metode execute_command");
-            return "KO error in database";
+            return "KO Error in database!";
         }
     }
 }
