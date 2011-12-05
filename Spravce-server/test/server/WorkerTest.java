@@ -44,8 +44,8 @@ public class WorkerTest {
         System.out.println("getWorker ADD_USER");
         String msg = "ADD_USER";
         DBConnection dbc = null;
-        Worker expResult = Worker;
+        Worker expResult = new Worker.addUser();
         Worker result = Worker.getWorker(msg, dbc);
-        assertEquals(expResult, result);
+        assertTrue("NO",result instanceof Worker.addUser);
     }
 }

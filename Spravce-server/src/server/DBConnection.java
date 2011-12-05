@@ -148,7 +148,6 @@ public class DBConnection {
         } catch (Exception e) {
         }
     }
-// potrebujem si vyjasnit niektore veci v tabulke
 
     public String deleteUser(String id) {
         try {
@@ -219,9 +218,7 @@ public class DBConnection {
         }
     }
 
-    public String getInfo(String id) //1. verzia bez filtru vracia vsetky podstatne hodnoty
-    {
-        //metoda vraci atributy profilu KLIC HODNOTA;KLIC HODNOTA;...
+    public String getInfo(String id) {
         String query = "Select * from Users where id=" + id;
         try {
             statement = connect.createStatement();
@@ -298,8 +295,7 @@ public class DBConnection {
 
     }
 
-    String executeSql(String sql) //metoda ktora vykona zadany SQL prikaz a vrati vysledok vo formate splnujucom protocol
-    {
+    String executeSql(String sql) {
         String low_sql = sql.toLowerCase();
         if (low_sql.startsWith("select")) {
             try {
@@ -316,8 +312,8 @@ public class DBConnection {
                 return result;
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
-                System.out.println("Chyba v metode execute_command");
-                return "KO error in database";
+                System.out.println("Chyba v metode execute_command!");
+                return "KO Error in database!";
             }
         } else if (low_sql.startsWith("delete")) {
             try {
@@ -325,8 +321,8 @@ public class DBConnection {
                 statement.executeUpdate(sql);
                 return "OK";
             } catch (Exception ex) {
-                System.out.println("chyba v metode deleteUser v triede DBConnection");
-                return "KO error in database";
+                System.out.println("Chyba v metode execute_command!");
+                return "KO Error in database!";
             }
         } else if (low_sql.startsWith("insert") || low_sql.startsWith("replace")) {
             try {
@@ -335,11 +331,11 @@ public class DBConnection {
                 if (rows_effected != 0) {
                     return "OK";
                 } else {
-                    return "KO wrong input";
+                    return "KO Wrong input!";
                 }
             } catch (Exception ex) {
                 System.out.println("Chyba v metode addUser");
-                return "KO error in database";
+                return "KO Error in database!";
             }
         } else if (low_sql.startsWith("update")) {
             try {
@@ -348,15 +344,15 @@ public class DBConnection {
                 if (rows_effected != 0) {
                     return "OK";
                 } else {
-                    return "KO wrong input";
+                    return "KO Wrong input!";
                 }
             } catch (Exception ex) {
                 System.out.println("Chyba v metode addUser");
-                return "KO error in database";
+                return "KO Error in database!";
             }
         } else {
             System.out.println("Wrong sql");
-            return "KO error in sql exeption";
+            return "KO Error in sql exception!";
         }
     }
 
@@ -449,46 +445,50 @@ public class DBConnection {
         return executeSql(sql);
     }
 
-    String addGroup(String name, int[] idItems)// nebolo by lepsie vytvorit grupu len s nazvom a potom vkladat do tabulky Groups_has_Items?
-    {
-        sql = "Insert into Groups (name) values('" + name + "')";
-        if (!executeSql(sql).equals("OK"))//to same ako is_ok = executeSql(sql) == "OK" ? true : false;
-        {
-            return "KO error while adding Group";
+    String addGroup(String name, int[] idItems) {
+        try {
+            sql = "Insert into Groups (name) values('" + name + "')";
+            if (!executeSql(sql).equals("OK")) {
+                return "KO error while adding Group";
+            }
+            String query = "SELECT LAST_INSERT_ID()";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(query);
+            if (!resultSet.next()) {
+                return "KO Can't get user ID.";
+            }
+            String idNew = resultSet.getString(1);
+            if (!updateGroup(idNew, name, idItems).equals("OK")) {
+                return "KO error while updating Group";
+            }
+        } catch (Exception ex) {
+            System.out.println("Chyba v metode addUser");
+            return "KO error in database";
         }
-        sql = "Select id from Gropus where name='" + name + "')";
-        String id = executeSql(sql);
-        String[] tokens = id.split(":");
-        String input = "";
-        id = tokens[1];
-        id = id.substring(0, id.length() - 1);
-        for (int i = 0; i < idItems.length; i++) {
-            sql = "Replace into Groups_has_Items (Items_id) values('" + idItems[i] + "')";
-            executeSql(sql);
-        }
+
         return "OK";
     }
 
     String delTeam(String id) {
+        sql = "Delete from Teams_has_Users where Teams_id='" + id + "'";
+        if (!executeSql(sql).equals("OK")) {
+            return "KO Error while deleting team's binding!";
+        }
         sql = "Delete from Teams where id='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
-            return "KO error while adding Group";
-        }
-        sql = "Delete from Teams_has_Users where id='" + id + "'";
-        if (!executeSql(sql).equals("OK")) {
-            return "KO error while deleting Team";
+            return "KO Error while deleting team!";
         }
         return "OK";
     }
 
     String delGroup(String id) {
-        sql = "Delete from Groups where id='" + id + "'";
+        sql = "Delete from Groups_has_Items where Groups_idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
-            return "KO error while adding Group";
+            return "KO Error while deleting group's binding!";
         }
-        sql = "Delete from Groups_has_Items where id='" + id + "'";
+        sql = "Delete from Groups where idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
-            return "KO error while deleting Group";
+            return "KO Error while deleting group!";
         }
         return "OK";
     }
@@ -511,8 +511,7 @@ public class DBConnection {
         return executeSql(query);
     }
 
-    String updateGroup(String id, String name, int[] idItems) //spytat sa co to ma presne robit
-    {
+    String updateGroup(String id, String name, int[] idItems) {
         sql = "Update Groups set name='" + name + "' where idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
             return "KO error while updating Group's name";
