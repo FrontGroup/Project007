@@ -59,31 +59,33 @@ public class SourceGroupTest {
         fail("The test case is a prototype.");
     }
 
+    static class SCMockup implements ServerConnectionInterface {
+
+        @Override
+        public void close() {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+
+        @Override
+        public String connect(String id, String pass) {
+            throw new UnsupportedOperationException("Not supported yet.");
+        }
+        String message = null;
+
+        @Override
+        public String sendMSG(String msg) {
+            message = msg;
+            return "OK";
+        }
+    }
+
     /**
      * Test of addGroup method, of class SourceGroup.
      */
     @Test
     //@Ignore
     public void testAddGroup() {
-        class SCMockup implements ServerConnectionInterface {
 
-            @Override
-            public void close() {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-
-            @Override
-            public String connect(String id, String pass) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-            String message = null;
-
-            @Override
-            public String sendMSG(String msg) {
-                message = msg;
-                return "OK";
-            }
-        }
         System.out.println("addGroup");
         SCMockup sc = new SCMockup();
         Group group = new Group("jmeno", new int[]{1, 2, 3});
@@ -98,16 +100,15 @@ public class SourceGroupTest {
      * Test of delGroup method, of class SourceGroup.
      */
     @Test
-    @Ignore
+    //@Ignore
     public void testDelGroup() {
         System.out.println("delGroup");
-        int id = 0;
-        SourceGroup instance = new SourceGroup();
-        String expResult = "";
+        int id = 1;
+        SCMockup sc = new SCMockup();
+        SourceGroup instance = new SourceGroup(sc);
         String result = instance.delGroup(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("OK", result);
+        assertEquals("DEL_GROUP 1", sc.message);
     }
 
     /**

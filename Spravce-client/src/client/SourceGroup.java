@@ -60,8 +60,8 @@ public class SourceGroup implements SourceGroupInt {
 
     @Override
     public String delGroup(int id) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("DEL_GROUP " + id);
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("DEL_GROUP " + id);
         if (response.startsWith("KO")) {
             return response;
         }
