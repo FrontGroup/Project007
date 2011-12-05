@@ -90,14 +90,24 @@ public class ViewProfile extends JPanel implements Role {
     @Override
     public Iterable<JMenuItem> getMenuItems() {
         JMenuItem edit = new JMenuItem("Edit Profile");
+        final ViewProfile v = this;
         ActionListener akce = new ActionListener(){
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                new EmployeeFrame(idUser);
+                new EmployeeFrame(idUser, v);
             }
         };
         edit.addActionListener(akce);
         return Arrays.asList(edit);
+    }
+
+    void updateData(){
+        tname.setText(user.getName());
+        tlastname.setText(user.getLastName());
+        taddress.setText(user.getAddress());
+        tcity.setText(user.getCity());
+        temail.setText(user.getEmail());
+        tphone.setText(user.getPhone());
     }
 }

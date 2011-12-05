@@ -499,16 +499,16 @@ public class DBConnection {
     }
 
     String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
-        String query = "Update Users set id = '" + id + "'," + "name = '" + name + "'," + "lastname = '" + lastname + "'," + "address = '" + address + "',"
-                + "city = '" + city + "'," + "email = '" + email + "'," + "phone = '" + phone + "'," + "professia = '" + professia + "'";
-        return executeSql(sql);
+        String query = "Update Users set name = '" + name + "'," + "lastname = '" + lastname + "'," + "address = '" + address + "',"
+                + "city = '" + city + "'," + "email = '" + email + "'," + "phone = '" + phone + "'," + "professia = '" + professia + "' where id = '" + id + "'";
+        return executeSql(query);
     }
 
     String updateTeam(String id, String pm, String name, String project, String info, String goal)//
     {
         String query = "Update Teams set id = '" + id + "'," + "pm = '" + pm + "'," + "name = '" + name + "'," + "project = '" + project + "',"
                 + "info = '" + info + "'," + "goal = '" + goal + "'";
-        return executeSql(sql);
+        return executeSql(query);
     }
 
     String updateGroup(String id, String name, int[] idItems) {
