@@ -26,8 +26,10 @@ public class EmployeeFrame extends JFrame {
     SourceUser su;
     private User user;
     private int userId;
+    ViewProfile view;
 
-    public EmployeeFrame(int idUser) {
+    public EmployeeFrame(int idUser, ViewProfile view) {
+        this.view = view;
         userId = idUser;
         su = new SourceUser();
         su.loadData(userId);
@@ -65,12 +67,13 @@ public class EmployeeFrame extends JFrame {
         city = new JLabel("City:");
         email = new JLabel("E-mail:");
         phone = new JLabel("Phone:");
-        tname = new JTextField(user.getName(), 20);
-        tlastname = new JTextField(user.getLastName(), 20);
-        taddress = new JTextField(user.getAddress(), 20);
-        tcity = new JTextField(user.getCity(), 20);
-        temail = new JTextField(user.getEmail(), 20);
-        tphone = new JTextField(user.getPhone(), 20);
+        view.updateData();
+//        tname = new JTextField(20);
+//        tlastname = new JTextField(user.getLastName(), 20);
+//        taddress = new JTextField(user.getAddress(), 20);
+//        tcity = new JTextField(user.getCity(), 20);
+//        temail = new JTextField(user.getEmail(), 20);
+//        tphone = new JTextField(user.getPhone(), 20);
         back = new JButton("Back");
         save = new JButton("Save Changes");
         back.addActionListener(new ActionListener() {
@@ -91,7 +94,7 @@ public class EmployeeFrame extends JFrame {
                 user.setCity(tcity.getText());
                 user.setEmail(temail.getText());
                 user.setPhone(tphone.getText());
-                su.updateUser(userId, user);
+                su.updateUser(userId, user);                
                 setVisible(false);
                 dispose();
             }
