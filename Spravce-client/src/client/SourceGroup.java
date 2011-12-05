@@ -19,14 +19,18 @@ public class SourceGroup implements SourceGroupInt {
         conn = ServerConnection.getInstance();
     }
 
+    /**
+     * This constructor is provided for the sake of tests. TestCases can supply mockup server connections.
+     * @param c
+     */
     SourceGroup(ServerConnectionInterface c) {
         conn = c;
     }
 
     @Override
     public String loadData() {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("GET_GROUPS");
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("GET_GROUPS");
         if (response.startsWith("KO")) {
             return response;
         }
@@ -70,8 +74,8 @@ public class SourceGroup implements SourceGroupInt {
 
     @Override
     public String updateGroup(int id, Group group) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("UPDATE_GROUP " + group.getId() + " " + group.getName() + " " + group.getIdItemsString());
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("UPDATE_GROUP " + group.getId() + " " + group.getName() + " " + group.getIdItemsString());
         if (response.startsWith("KO")) {
             return response;
         }
