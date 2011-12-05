@@ -30,7 +30,7 @@ public class EmployeeFrame extends JFrame {
     public EmployeeFrame(int idUser) {
         userId = idUser;
         su = new SourceUser();
-        su.loadData();
+        su.loadData(idUser); // predavat id!
         user = su.getUser(idUser);
         initComponents();
     }
