@@ -30,7 +30,7 @@ public class EmployeeFrame extends JFrame {
     public EmployeeFrame(int idUser) {
         userId = idUser;
         su = new SourceUser();
-        su.loadData();
+        su.loadData(userId);
         user = su.getUser(idUser);
         initComponents();
     }
@@ -53,7 +53,6 @@ public class EmployeeFrame extends JFrame {
         help.add(Main.getAboutMenuItem());
         JMenuItem exit = new JMenuItem("EXIT");
         system.add(exit);
-        su = new SourceUser();
         panel = new JPanel();
         setLayout(new FlowLayout(FlowLayout.LEFT));
         getContentPane().add(panel);
