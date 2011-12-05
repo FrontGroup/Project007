@@ -6,6 +6,8 @@ package client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.Collection;
 import java.util.HashMap;
 import javax.swing.JButton;
@@ -29,11 +31,6 @@ public class FrameGroups extends javax.swing.JFrame {
     public FrameGroups() {
         initComponents();
         lookData();
-    }
-
-    public static void main(String[] args) {
-        FrameGroups fg = new FrameGroups();
-
     }
 
     private void initComponents() {
@@ -67,7 +64,38 @@ public class FrameGroups extends javax.swing.JFrame {
 
                     @Override
                     public void run() {
-                        new FrameEditGroup((Group) box.getSelectedItem(), sg).setVisible(true);
+                        FrameEditGroup feg = new FrameEditGroup((Group) box.getSelectedItem(), sg);
+                        feg.addWindowListener(new WindowListener() {
+
+                            @Override
+                            public void windowOpened(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowClosing(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                lookData();
+                            }
+
+                            @Override
+                            public void windowIconified(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowDeiconified(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowActivated(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowDeactivated(WindowEvent e) {
+                            }
+                        });
                     }
                 });
             }
@@ -80,7 +108,38 @@ public class FrameGroups extends javax.swing.JFrame {
 
                     @Override
                     public void run() {
-                        new FrameEditGroup(null, sg).setVisible(true);
+                        FrameEditGroup feg = new FrameEditGroup(null, sg);
+                        feg.addWindowListener(new WindowListener() {
+
+                            @Override
+                            public void windowOpened(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowClosing(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowClosed(WindowEvent e) {
+                                lookData();
+                            }
+
+                            @Override
+                            public void windowIconified(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowDeiconified(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowActivated(WindowEvent e) {
+                            }
+
+                            @Override
+                            public void windowDeactivated(WindowEvent e) {
+                            }
+                        });
                     }
                 });
             }
@@ -117,5 +176,6 @@ public class FrameGroups extends javax.swing.JFrame {
                     "ERROR", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        lookData();
     }
 }

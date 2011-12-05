@@ -4,7 +4,6 @@
  */
 package client;
 
-import java.awt.Color;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
@@ -28,7 +27,6 @@ public class FrameEditGroup extends javax.swing.JFrame {
     private static HashMap<Integer, Item> items = new HashMap<Integer, Item>();
     private JButton save;
     private JLabel lName = new JLabel("Name:");
-    private JLabel lSave = new JLabel("");
     private JTextField name;
     private Group group = null;
     private SourceGroup sg = new SourceGroup();
@@ -54,7 +52,6 @@ public class FrameEditGroup extends javax.swing.JFrame {
         if (group != null) {
             name.setText(group.getName());
         }
-        lSave.setForeground(Color.GREEN);
         JPanel p1 = new JPanel();
         p1.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
         JPanel p2 = new JPanel();
@@ -63,17 +60,14 @@ public class FrameEditGroup extends javax.swing.JFrame {
         p3.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
         JPanel p4 = new JPanel();
         p4.setLayout(new java.awt.GridLayout(7, 1));
-        JPanel p5 = new JPanel();
-        p5.setLayout(new java.awt.FlowLayout(java.awt.FlowLayout.CENTER));
         p1.add(lName);
         p2.add(name);
         p3.add(save);
-        p5.add(lSave);
         p4.add(new JPanel());
         p4.add(new JPanel());
         p4.add(p1);
         p4.add(p2);
-        p4.add(p5);
+        p4.add(new JPanel());
         p4.add(p3);
         p4.add(new JPanel());
         getContentPane().setLayout(new java.awt.GridLayout(1, 2));
@@ -134,13 +128,16 @@ public class FrameEditGroup extends javax.swing.JFrame {
             int[] idItems = group.getIdItems();
             for (int i : idItems) {
                 Item temp = items.get(i);
-                temp.setState(true);
-                items.put(i, temp);
+                if (temp != null) {
+                    temp.setState(true);
+                    items.put(i, temp);
+                }
             }
         }
     }
 
     private void saveGroup() {
+        int[] idItems = new int[0];
         String s = "";
         Collection<Item> values = items.values();
         for (Item i : values) {
@@ -148,10 +145,12 @@ public class FrameEditGroup extends javax.swing.JFrame {
                 s += i.getId() + " ";
             }
         }
-        String[] split = s.split(" ");
-        int[] idItems = new int[split.length];
-        for (int k = 0; k < idItems.length; k++) {
-            idItems[k] = Integer.valueOf(split[k]);
+        if (s.length() > 0) {
+            String[] split = s.split(" ");
+            idItems = new int[split.length];
+            for (int k = 0; k < idItems.length; k++) {
+                idItems[k] = Integer.valueOf(split[k]);
+            }
         }
         String response;
         if (group == null) {
@@ -163,11 +162,12 @@ public class FrameEditGroup extends javax.swing.JFrame {
             response = sg.updateGroup(group.getId(), group);
         }
         if (response.startsWith("KO")) {
-            lSave.setText("");
             JOptionPane.showMessageDialog(null, response.substring(3),
                     "ERROR", JOptionPane.ERROR_MESSAGE);
         } else {
-            lSave.setText("Saved!");
+            JOptionPane.showMessageDialog(null, "SAVED!",
+                    this.getTitle(), JOptionPane.INFORMATION_MESSAGE);
+            this.dispose();
         }
     }
 }
