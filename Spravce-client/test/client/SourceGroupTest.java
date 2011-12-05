@@ -17,14 +17,7 @@ import static org.junit.Assert.*;
  */
 public class SourceGroupTest {
 
-    ServerConnection sc;
-
     public SourceGroupTest() {
-        sc = ServerConnection.getInstance();
-        String ret = sc.connect("666", "admin");
-        if (!ret.equals("ADMIN")) {
-            fail("Failed to connect to server: " + ret);
-        }
     }
 
     @BeforeClass
@@ -70,16 +63,35 @@ public class SourceGroupTest {
      * Test of addGroup method, of class SourceGroup.
      */
     @Test
-    @Ignore
+    //@Ignore
     public void testAddGroup() {
+        class SCMockup implements ServerConnectionInterface {
+
+            @Override
+            public void close() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public String connect(String id, String pass) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+            String message = null;
+
+            @Override
+            public String sendMSG(String msg) {
+                message = msg;
+                return "OK";
+            }
+        }
         System.out.println("addGroup");
-        Group group = null;
-        SourceGroup instance = new SourceGroup();
-        String expResult = "";
+        SCMockup sc = new SCMockup();
+        Group group = new Group("jmeno", new int[]{1, 2, 3});
+        SourceGroup instance = new SourceGroup(sc);
+        instance.addGroup(group);
         String result = instance.addGroup(group);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("OK", result);
+        assertEquals("ADD_GROUP jmeno 3 1 2 3", sc.message);
     }
 
     /**
@@ -119,7 +131,7 @@ public class SourceGroupTest {
      * Test of getAllGroups method, of class SourceGroup.
      */
     @Test
-    //@Ignore
+    @Ignore
     public void testGetAllGroups() {
         System.out.println("getAllGroups");
         SourceGroup instance = new SourceGroup();

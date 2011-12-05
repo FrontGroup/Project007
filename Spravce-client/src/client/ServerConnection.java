@@ -8,7 +8,7 @@ import java.net.UnknownHostException;
  * Trida pro komunikaci se serverem.
  * @author lucas
  */
-public class ServerConnection {
+public class ServerConnection implements ServerConnectionInterface {
 
     protected static ServerConnection instance = null;
     private static int port = 10010;//cislo portu, na kterem server komunikuje

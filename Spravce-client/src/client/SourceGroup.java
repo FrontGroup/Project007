@@ -13,8 +13,14 @@ import java.util.HashMap;
 public class SourceGroup implements SourceGroupInt {
 
     HashMap<Integer, Group> data = null;
+    ServerConnectionInterface conn;
 
     public SourceGroup() {
+        conn = ServerConnection.getInstance();
+    }
+
+    SourceGroup(ServerConnectionInterface c) {
+        conn = c;
     }
 
     @Override
@@ -44,8 +50,8 @@ public class SourceGroup implements SourceGroupInt {
 
     @Override
     public String addGroup(Group group) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("ADD_GROUP " + group.getName() + " " + group.getIdItemsString());
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("ADD_GROUP " + group.getName() + " " + group.getIdItemsString());
         if (response.startsWith("KO")) {
             return response;
         }
