@@ -32,7 +32,7 @@ public class ViewProfile extends JPanel implements Role {
     public ViewProfile(int idUser) {
         this.idUser = idUser;
         su = new SourceUser();
-        su.loadData();
+        su.loadData(idUser);
         user = su.getUser(idUser);
         initComponents();
     }

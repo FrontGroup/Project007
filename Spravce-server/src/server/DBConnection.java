@@ -258,11 +258,13 @@ public class DBConnection {
             while (resultSet1.next()) {
                 result += resultSet1.getInt(1) + " " + resultSet1.getString(2);
                 ResultSet resultSet2 = statement2.executeQuery(sql2 + resultSet1.getInt(1));
-                result += " " + resultSet2.getFetchSize();
+                String s = "";
+                int size = 0;
                 while (resultSet2.next()) {
-                    result += " " + resultSet2.getInt(1);
+                    s += " " + resultSet2.getInt(1);
+                    size++;
                 }
-                result += ";";
+                result += " " + size + s + ";";
             }
             return result;
 
@@ -320,10 +322,7 @@ public class DBConnection {
         } else if (low_sql.startsWith("delete")) {
             try {
                 statement = connect.createStatement();
-                int delete = statement.executeUpdate(sql);
-                if (delete == 0) {
-                    return "KO id does not exist in the database";
-                }
+                statement.executeUpdate(sql);
                 return "OK";
             } catch (Exception ex) {
                 System.out.println("chyba v metode deleteUser v triede DBConnection");
@@ -518,8 +517,12 @@ public class DBConnection {
         if (!executeSql(sql).equals("OK")) {
             return "KO error while updating Group's name";
         }
+        sql = "Delete FROM Groups_has_Items where Groups_idGroups='" + id + "'";
+        if (!executeSql(sql).equals("OK")) {
+            return "KO error while deleting Group's Items";
+        }
         for (int i = 0; i < idItems.length; i++) {
-            sql = "Replace into Groups_has_Items (Items_id) values ('" + idItems[i] + "')";
+            sql = "Insert into Groups_has_Items values ('" + id + "','" + idItems[i] + "')";
             if (!executeSql(sql).equals("OK")) {
                 return "KO error while updating Group's Items";
             }

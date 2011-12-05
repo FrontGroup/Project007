@@ -67,7 +67,7 @@ public class FrameGroups extends javax.swing.JFrame {
 
                     @Override
                     public void run() {
-                        new FrameEditGroup((Group) box.getSelectedItem()).setVisible(true);
+                        new FrameEditGroup((Group) box.getSelectedItem(), sg).setVisible(true);
                     }
                 });
             }
@@ -80,7 +80,7 @@ public class FrameGroups extends javax.swing.JFrame {
 
                     @Override
                     public void run() {
-                        new FrameEditGroup(null).setVisible(true);
+                        new FrameEditGroup(null, sg).setVisible(true);
                     }
                 });
             }
