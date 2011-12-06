@@ -62,7 +62,7 @@ public class FramePMEditTeam extends JFrame {
 
 	private User loadUser(int id) {
 		SourceUser su = new SourceUser();
-		su.loadData();
+		su.loadData(id);
 		return su.getUser(id);
 	}
 
@@ -84,7 +84,7 @@ public class FramePMEditTeam extends JFrame {
 	}
 
 	private void initComponents() {
-		setDefaultCloseOperation(2);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(450, 500);
 		setMinimumSize(new Dimension(400, 500));
 
@@ -154,9 +154,11 @@ public class FramePMEditTeam extends JFrame {
 
 		JButton JBAddMembers = new JButton("Add members");
 		JBAddMembers.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				int userId = Integer.parseInt(JOptionPane
+						.showInputDialog("Enter user's ID"));
+				addMember(loadUser(userId));
 				// TODO Need displaying window for looking users
 			}
 		});
@@ -301,8 +303,8 @@ public class FramePMEditTeam extends JFrame {
 				}
 			}
 		} else {
-			setTitle("Showing team " + loadTeam(2).getName() + " (" + PM.getFullName()
-					+ ")");
+			setTitle("Showing team " + team.getName() + " ("
+					+ PM.getFullName() + ")");
 			JTFTeamName.setEditable(false);
 			JTFTeamGoal.setEditable(false);
 			JTFProject.setEditable(false);
@@ -360,11 +362,5 @@ public class FramePMEditTeam extends JFrame {
 			o++;
 		}
 		return Integer.parseInt(p);
-	}
-
-	public static void main(String[] args) {
-		// testing data
-		FramePMEditTeam fst = new FramePMEditTeam(12, 3, true);
-		fst.setVisible(true);
 	}
 }

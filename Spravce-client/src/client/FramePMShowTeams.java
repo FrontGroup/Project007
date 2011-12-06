@@ -38,9 +38,21 @@ public class FramePMShowTeams extends JFrame {
 
 	public FramePMShowTeams(int id) {
 		SourceUser su = new SourceUser();
-		su.loadData();
+		
+		String ld = su.loadData(id);
+		
+		if (ld.startsWith("KO")) {
+			JOptionPane.showMessageDialog(null, ld.substring(3),
+					"Error in loading", JOptionPane.ERROR_MESSAGE);
+		}
 		SourceTeam st = new SourceTeam();
-		st.loadDataFromPM(id);
+		
+		String ldfpm = st.loadDataFromPM(id);
+		
+		if (ldfpm.startsWith("KO")){
+			JOptionPane.showMessageDialog(null, ldfpm.substring(3),
+					"Error in loading", JOptionPane.ERROR_MESSAGE);
+		}
 
 		this.PM = su.getUser(id);
 		for (Team t : st.getAllTeams().values()) {
@@ -55,7 +67,7 @@ public class FramePMShowTeams extends JFrame {
 	}
 
 	private void initComponents() {
-		setDefaultCloseOperation(2);
+		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setTitle("Teams - " + PM.getFullName());
 		setSize(640, 450);
 		setMinimumSize(new Dimension(640, 450));
@@ -133,6 +145,7 @@ public class FramePMShowTeams extends JFrame {
 			tmpE++;
 		}
 
+		//writing teams into panel
 		int i = 1;
 		if (activeTeams.values().isEmpty()) {
 			headlineActive.setText("Active teams - none");
@@ -205,7 +218,7 @@ public class FramePMShowTeams extends JFrame {
 			headlineArchived.setText("Archived teams - none");
 		} else {
 			for (Team team : archivedTeams.values()) {
-				tableData[tmp][0] = Integer.valueOf(team.getId());
+				tableData[tmp][0] = team.getId();
 				tableData[tmp][1] = team.getName();
 				tableData[tmp][2] = team.getGoal();
 				tableData[tmp][3] = Integer.valueOf(team.getMembers().size());
