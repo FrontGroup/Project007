@@ -3,12 +3,14 @@ package client;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Arrays;
+import java.util.LinkedList;
+import java.util.List;
 
 import javax.swing.JMenuItem;
 
 import client.AdminRole.CreateUserDialog;
 
-public class PMRole implements Role {
+public class PMRole extends ViewProfile {
 	
 	int id;
 
@@ -36,6 +38,13 @@ public class PMRole implements Role {
 
             }
         });
-        return Arrays.asList(show, create);
+        
+        List<JMenuItem> m = new LinkedList<JMenuItem>();
+        for(JMenuItem i: super.getMenuItems()) {
+            m.add(i);
+        }
+        m.add(show);
+        m.add(create);
+        return m;
     }
 }
