@@ -54,12 +54,13 @@ public class MainFrame extends JFrame {
 
         help.add(Main.getAboutMenuItem());
 
-        // TODO get user information from server
         panel = new JPanel();
         getContentPane().add(panel);
-        ViewProfile info = new ViewProfile(userId);
-
-        panel.add(info);
+        if (r instanceof ViewProfile) {
+            panel.add((ViewProfile) r);
+        } else {
+            System.out.println("Role is not instance of ViewProfile!");
+        }
         pack();
         // UI event handling
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
