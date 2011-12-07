@@ -4,6 +4,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.util.Arrays;
 import java.awt.event.*;
+import java.lang.*;
 
 public class ViewProfile extends JPanel implements Role {
 
@@ -49,12 +50,33 @@ public class ViewProfile extends JPanel implements Role {
         email = new JLabel("E-mail:");
         phone = new JLabel("Phone:");
         tid = new JLabel(""+user.getId());
+        if(0==(tid.getText().compareTo("null"))){
+            tid.setText("");
+        }
         tname = new JLabel(user.getName());
+        if(0==(tname.getText().compareTo("null"))){
+            tname.setText("");
+        }
         tlastname = new JLabel(user.getLastName());
+        if(0==(tlastname.getText().compareTo("null"))){
+            tlastname.setText("");
+        }
         taddress = new JLabel(user.getAddress());
+        if(0==(taddress.getText().compareTo("null"))){
+            taddress.setText("");
+        }
         tcity = new JLabel(user.getCity());
+        if(0==(tcity.getText().compareTo("null"))){
+            tcity.setText("");
+        }
         temail = new JLabel(user.getEmail());
+        if(0==(temail.getText().compareTo("null"))){
+            temail.setText("");
+        }
         tphone = new JLabel(user.getPhone());
+        if(0==(tphone.getText().compareTo("null"))){
+            tphone.setText("");
+        }
         info0.setLayout(new FlowLayout());
         info1.setLayout(new FlowLayout());
         info2.setLayout(new FlowLayout());

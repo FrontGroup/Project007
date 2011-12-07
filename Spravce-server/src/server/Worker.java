@@ -145,7 +145,7 @@ public abstract class Worker {
             if (split.length != 4) {
                 return "KO Wrong requirement!";
             }
-            return dbc.addUser(Integer.valueOf(split[2]), split[3], null, null, null, null, null, null, Integer.valueOf(split[1]));
+            return dbc.addUser(Integer.valueOf(split[2]), split[3], Integer.valueOf(split[1]));
         }
     }
 

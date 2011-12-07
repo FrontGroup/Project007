@@ -67,12 +67,12 @@ public class EmployeeFrame extends JFrame {
         city = new JLabel("City:");
         email = new JLabel("E-mail:");
         phone = new JLabel("Phone:");        
-//        tname = new JTextField(20);
-//        tlastname = new JTextField(user.getLastName(), 20);
-//        taddress = new JTextField(user.getAddress(), 20);
-//        tcity = new JTextField(user.getCity(), 20);
-//        temail = new JTextField(user.getEmail(), 20);
-//        tphone = new JTextField(user.getPhone(), 20);
+        tname = new JTextField(view.tname.getText(), 20);
+        tlastname = new JTextField(view.tlastname.getText(), 20);
+        taddress = new JTextField(view.taddress.getText(), 20);
+        tcity = new JTextField(view.tcity.getText(), 20);
+        temail = new JTextField(view.temail.getText(), 20);
+        tphone = new JTextField(view.tphone.getText(), 20);
         back = new JButton("Back");
         save = new JButton("Save Changes");
         back.addActionListener(new ActionListener() {

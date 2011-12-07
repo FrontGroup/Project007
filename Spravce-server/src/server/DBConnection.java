@@ -6,7 +6,7 @@ import java.sql.*;
  *
  * @author beretis
  */
-public class DBConnection implements DBCInt{
+public class DBConnection implements DBCInt {
 
     private Connection connect = null;
     private Statement statement = null;
@@ -48,6 +48,7 @@ public class DBConnection implements DBCInt{
     @Override
     public String login(String id, String pass) {
         try {
+
             int role = 0;
             String query = "SELECT role FROM Users WHERE id='" + id + "' and pass='" + pass + "'"; // vytviry SQL dotaz
             statement = connect.createStatement();
@@ -81,23 +82,15 @@ public class DBConnection implements DBCInt{
     }
 
     @Override
-    public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email, String phone, int role) {
+    public String addUser(int Groups_idGroups, String pass, int role) {
         try {
-            String query = "INSERT into Users (Groups_idGroups, pass, name, lastname, address, city, email, phone, role)  VALUES ('" + Groups_idGroups + "', '" + pass + "', '" + name
-                    + "', '" + lastname + "', '" + address + "', '" + city + "', '" + email
-                    + "', '" + phone + "', '" + role + "')";
+            String query = "INSERT into Users (Groups_idGroups, pass, role)  VALUES ('" + Groups_idGroups + "', '" + pass + "', '" + role + "')";
             statement = connect.createStatement();
             int rows_effected = statement.executeUpdate(query);
             if (rows_effected == 0) {
                 return "KO NEW USER didn't save!";
             }
-            query = "SELECT LAST_INSERT_ID()";
-            statement = connect.createStatement();
-            resultSet = statement.executeQuery(query);
-            if (!resultSet.next()) {
-                return "KO Can't get user ID.";
-            }
-            return resultSet.getString(1);
+            return lastUsedId();
         } catch (Exception ex) {
             System.out.println(ex.getMessage());
             return "KO Error in database!";
@@ -274,6 +267,21 @@ public class DBConnection implements DBCInt{
         }
     }
 
+    public String lastUsedId() {
+        try {
+            String query = "SELECT LAST_INSERT_ID()";
+            statement = connect.createStatement();
+            resultSet = statement.executeQuery(query);
+            if (!resultSet.next()) {
+                return "KO Can't get group ID!";
+            }
+            String new_id = resultSet.getString(1);
+            return new_id;
+        } catch (SQLException ex) {
+            return "KO Error in database!";
+        }
+    }
+
     public String executeSql(String sql) {
         String low_sql = sql.toLowerCase();
         if (low_sql.startsWith("select")) {
@@ -394,6 +402,7 @@ public class DBConnection implements DBCInt{
     @Override
     public String getUserTeams(String idUser) {
         try {
+
             String result = "";
             sql = "Select * from Teams_has_Users where Users_id=" + idUser;
             statement = connect.createStatement();
@@ -423,17 +432,12 @@ public class DBConnection implements DBCInt{
     @Override
     public String addGroup(String name, int[] idItems) {
         try {
+
             sql = "Insert into Groups (name) values('" + name + "')";
             if (!executeSql(sql).equals("OK")) {
                 return "KO Error while adding group!";
             }
-            String query = "SELECT LAST_INSERT_ID()";
-            statement = connect.createStatement();
-            resultSet = statement.executeQuery(query);
-            if (!resultSet.next()) {
-                return "KO Can't get group ID!";
-            }
-            String idNew = resultSet.getString(1);
+            String idNew = lastUsedId();
             if (!updateGroup(idNew, name, idItems).equals("OK")) {
                 return "KO Error while updating group!";
             }
@@ -446,6 +450,7 @@ public class DBConnection implements DBCInt{
 
     @Override
     public String delTeam(String id) {
+
         sql = "Delete from Teams_has_Users where Teams_id='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
             return "KO Error while deleting team's binding!";
@@ -596,5 +601,4 @@ public class DBConnection implements DBCInt{
             return "KO Error in database!";
         }
     }
-
 }

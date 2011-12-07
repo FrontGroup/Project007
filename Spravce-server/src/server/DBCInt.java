@@ -16,7 +16,7 @@ public interface DBCInt {
 
     public String getUsers();
 
-    public String addUser(int valueOf, String string0, String string1, String string2, String string3, String string4, String string5, String string6, int valueOf0);
+    public String addUser(int valueOf, String string0, int valueOf0);
 
     public String deleteUser(String string);
 

@@ -8,7 +8,7 @@ package server;
  *
  * @author lucas
  */
-public class TestClassDBC implements DBCInt{
+public class TestClassDBC implements DBCInt {
 
     @Override
     public String login(String string, String string0) {
@@ -146,10 +146,7 @@ public class TestClassDBC implements DBCInt{
     }
 
     @Override
-    public String addUser(int valueOf, String string0, String string1, String string2, String string3, String string4, String string5, String string6, int valueOf0) {
+    public String addUser(int valueOf, String string0, int valueOf0) {
         return "OK";
     }
-    
-    
-    
 }
