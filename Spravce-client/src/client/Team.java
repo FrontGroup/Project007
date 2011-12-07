@@ -101,18 +101,6 @@ public class Team {
 	}
 
 	public HashMap<Integer, User> getMembers() {
-		SourceTeam st = new SourceTeam();
-		String lusit = st.loadUserStatusInTeam(this.id);
-		if (lusit.startsWith("KO")) {
-			JOptionPane.showMessageDialog(null, lusit.substring(3),
-					"Error in loading", JOptionPane.ERROR_MESSAGE);
-		}
-		HashMap<Integer, TeamStatus> u = st.getUserStatusInTeam();
-		for (Integer id : u.keySet()) {
-			SourceUser su = new SourceUser();
-			su.loadData(id);
-			addMember(su.getUser(id));
-		}
 		return members;
 	}
 
@@ -132,5 +120,20 @@ public class Team {
 	public void addMember(User member) {
 		members.put(member.getId(), member);
 
+	}
+	
+	public void loadMembers(){
+		SourceTeam st = new SourceTeam();
+		String lusit = st.loadUserStatusInTeam(this.id);
+		if (lusit.startsWith("KO")) {
+			JOptionPane.showMessageDialog(null, lusit.substring(3),
+					"Error in loading", JOptionPane.ERROR_MESSAGE);
+		}
+		HashMap<Integer, TeamStatus> u = st.getUserStatusInTeam();
+		for (Integer tmpId : u.keySet()) {
+			SourceUser su = new SourceUser();
+			su.loadData(tmpId);
+			addMember(su.getUser(tmpId));
+		}
 	}
 }

@@ -113,7 +113,9 @@ public class FramePMShowTeams extends JFrame {
 								arg0.toString().length() - a);
 						a++;
 					}
-					new FramePMEditTeam(PM.getId(), Integer.parseInt(idV),
+					String reverse = new StringBuffer(idV).
+							reverse().toString();
+					new FramePMEditTeam(PM.getId(), Integer.parseInt(reverse),
 							false).setVisible(true);
 				}
 			};
@@ -159,7 +161,7 @@ public class FramePMShowTeams extends JFrame {
 				JLabel id = new JLabel(team.getId() + "");
 				JLabel name = new JLabel(team.getName());
 				JLabel goal = new JLabel(team.getGoal());
-				JLabel numMembers = new JLabel(team.getMembers().size() + "");
+				JLabel numMembers = new JLabel(/*team.getMembers().size() + */"");
 
 				constraint.gridx = 0;
 				constraint.gridy = i;
@@ -221,7 +223,7 @@ public class FramePMShowTeams extends JFrame {
 				tableData[tmp][0] = team.getId();
 				tableData[tmp][1] = team.getName();
 				tableData[tmp][2] = team.getGoal();
-				tableData[tmp][3] = Integer.valueOf(team.getMembers().size());
+				tableData[tmp][3] = ""/*Integer.valueOf(team.getMembers().size())*/;
 				tmp++;
 			}
 		}

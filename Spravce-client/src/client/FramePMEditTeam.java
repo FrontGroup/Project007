@@ -53,11 +53,12 @@ public class FramePMEditTeam extends JFrame {
 		 * JOptionPane.ERROR_MESSAGE); } else {
 		 */
 		this.editing = editing;
-		team = loadTeam(teamId);
+		this.team = loadTeam(teamId);
+		this.team.loadMembers();
 		// }
-		initComponents();
 		fillInForm();
 		takeMembers();
+		initComponents();
 	}
 
 	private User loadUser(int id) {
