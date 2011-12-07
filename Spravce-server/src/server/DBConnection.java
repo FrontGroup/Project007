@@ -489,10 +489,9 @@ public class DBConnection implements DBCInt {
     }
 
     @Override
-    public String updateTeam(String id, String pm, String name, String project, String info, String goal)//
-    {
+    public String updateTeam(String id, String pm, String name, String project, String info, String goal, String active) {
         String query = "Update Teams set id = '" + id + "'," + "pm = '" + pm + "'," + "name = '" + name + "'," + "project = '" + project + "',"
-                + "info = '" + info + "'," + "goal = '" + goal + "'";
+                + "info = '" + info + "'," + "goal = '" + goal + "'" + "active = '" + active + "'";
         return executeSql(query);
     }
 

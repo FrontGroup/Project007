@@ -44,7 +44,7 @@ public interface DBCInt {
 
     public String addTeam(String string, String string0, String string1, String string2, String string3);
 
-    public String updateTeam(String string, String string0, String string1, String string2, String string3, String string4);
+    public String updateTeam(String string, String string0, String string1, String string2, String string3, String string4, String string5);
 
     public String delTeam(String string);
 

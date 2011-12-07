@@ -96,7 +96,9 @@ public class SourceTeam implements SourceTeamInt {
     @Override
     public String updateTeam(int id, Team team) {
         ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("UPDATE_TEAM " + id + " " + team.getPm() + " " + team.getName() + " " + team.getProject() + " " + team.getInfo() + " " + team.getGoal());
+        String response = sc.sendMSG("UPDATE_TEAM " + id + " " + team.getPm()
+                + " " + team.getName() + " " + team.getProject() + " "
+                + team.getInfo() + " " + team.getGoal() + " " + team.isActiveToInt());
         if (response.startsWith("KO")) {
             return response;
         }

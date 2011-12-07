@@ -296,10 +296,10 @@ public abstract class Worker {
 
         @Override
         public String process() {
-            if (split.length != 7) {
+            if (split.length != 8) {
                 return "KO Wrong requirement!";
             }
-            return dbc.updateTeam(split[1], split[2], split[3], split[4], split[5], split[6]);
+            return dbc.updateTeam(split[1], split[2], split[3], split[4], split[5], split[6], split[7]);
         }
     }
 

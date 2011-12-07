@@ -12,9 +12,6 @@ public class Protocol {
     private DBConnection dbc = new DBConnection(db_address);
     private Worker worker = null;
 
-    /**
-     * Konstruktor
-     */
     private Protocol() {
     }
 
@@ -25,11 +22,6 @@ public class Protocol {
         return instance;
     }
 
-    /**
-     * Metoda, ktera zpracuje prijatou zpravu podle jejiho pocatku.
-     * @param msg Prijata zprava.
-     * @return Informace o zpracovani zpravy.
-     */
     public String process(String msg) {
 
         if (msg.startsWith("TEST")) {
