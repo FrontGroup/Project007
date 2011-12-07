@@ -33,8 +33,8 @@ public class FramePMShowTeams extends JFrame {
 	private JButton[] editButtons;
 	private ActionListener[] viewListeners;
 	private ActionListener[] editListeners;
-	final Object[] tableHeaderData = { "ID", "Name", "Goal",
-			"Number of members" };
+	final Object[] tableHeaderData = { "ID", "Name", "Goal"/*,
+			"Number of members"*/ };
 
 	public FramePMShowTeams(int id) {
 		SourceUser su = new SourceUser();
@@ -223,7 +223,7 @@ public class FramePMShowTeams extends JFrame {
 				tableData[tmp][0] = team.getId();
 				tableData[tmp][1] = team.getName();
 				tableData[tmp][2] = team.getGoal();
-				tableData[tmp][3] = ""/*Integer.valueOf(team.getMembers().size())*/;
+				//tableData[tmp][3] = Integer.valueOf(team.getMembers().size());
 				tmp++;
 			}
 		}
