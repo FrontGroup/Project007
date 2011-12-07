@@ -92,7 +92,7 @@ public class WorkerTest {
 
     @Test
     public void testAddTeam() {
-        String msg = "ADD_TEAM 2 3 4 5 6";
+        String msg = "ADD_TEAM 2 3 4 5 6 7";
         TestClassDBC dbc = new TestClassDBC();
         Worker result = Worker.getWorker(msg, dbc);
         assertTrue("AddTeam class failed", result instanceof Worker.AddTeam);

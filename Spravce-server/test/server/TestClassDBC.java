@@ -91,7 +91,7 @@ public class TestClassDBC implements DBCInt {
     }
 
     @Override
-    public String updateTeam(String string, String string0, String string1, String string2, String string3, String string4) {
+    public String updateTeam(String string, String string0, String string1, String string2, String string3, String string4, String string5) {
         return "OK";
     }
 
