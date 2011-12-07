@@ -94,6 +94,8 @@ public class FramePMEditTeam extends JFrame {
 		getContentPane().add(JSPFoundedMembers());
 		getContentPane().add(JPButtons());
 
+		pack();
+
 	}
 
 	private void fillInForm() {
@@ -101,7 +103,7 @@ public class FramePMEditTeam extends JFrame {
 		teamLeader.setText(loadUser(team.getPm()).getFullName());
 		JTFTeamGoal.setText(team.getGoal());
 		JTFProject.setText(team.getProject());
-		JTFTeamInfo.setText(team.getProject());
+		JTFTeamInfo.setText(team.getInfo());
 		listModel.removeAllElements();
 		for (User member : team.getMembers().values()) {
 			addMember(member);
@@ -168,6 +170,9 @@ public class FramePMEditTeam extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				JOptionPane.showMessageDialog(null,
+						"This action do not appear in the database!", "Warning",
+						JOptionPane.WARNING_MESSAGE);
 				removeMember(JLMembers.getSelectedIndices());
 			}
 		});
@@ -180,13 +185,13 @@ public class FramePMEditTeam extends JFrame {
 					JOptionPane.showMessageDialog(null, "No one was selected!",
 							"Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					JOptionPane.showMessageDialog(null,
-							"Not implemented yet. Selected member #"
-									+ JLMembers.getSelectedIndex(),
-							"IMPLEMENTATION MISSING",
-							JOptionPane.INFORMATION_MESSAGE);
+					JFrame membersDetail = new JFrame();
+					JPanel memPan = new ViewProfile(whatIsSelectedId(JLMembers
+							.getSelectedIndex()));
+					membersDetail.add(memPan);
+					membersDetail.setSize(300, 250);
+					membersDetail.setVisible(true);
 				}
-				// TODO Need displaying user's profile
 			}
 		});
 		JButton JBSendInvitation = new JButton("Send invitation to all members");
@@ -229,7 +234,14 @@ public class FramePMEditTeam extends JFrame {
 					for (User member : members.values()) {
 						team.addMember(member);
 					}
-					// TODO Need working database
+
+					SourceTeam st = new SourceTeam();
+					String ut = st.updateTeam(team.getId(), team);
+					if (ut.startsWith("KO")) {
+						JOptionPane.showMessageDialog(null, ut.substring(3),
+								"Error in loading", JOptionPane.ERROR_MESSAGE);
+					}
+
 					JOptionPane.showMessageDialog(null, "Changes saved.", "OK",
 							JOptionPane.INFORMATION_MESSAGE);
 				}
@@ -260,10 +272,13 @@ public class FramePMEditTeam extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Need working database
-				JOptionPane.showMessageDialog(null, "Not implemented yet.",
-						"IMPLEMENTATION MISSING",
-						JOptionPane.INFORMATION_MESSAGE);
+				team.isActive(false);
+				SourceTeam st = new SourceTeam();
+				String ut = st.updateTeam(team.getId(), team);
+				if (ut.startsWith("KO")) {
+					JOptionPane.showMessageDialog(null, ut.substring(3),
+							"Error in loading", JOptionPane.ERROR_MESSAGE);
+				}
 			}
 		});
 
@@ -304,8 +319,8 @@ public class FramePMEditTeam extends JFrame {
 				}
 			}
 		} else {
-			setTitle("Showing team " + team.getName() + " ("
-					+ PM.getFullName() + ")");
+			setTitle("Showing team " + team.getName() + " (" + PM.getFullName()
+					+ ")");
 			JTFTeamName.setEditable(false);
 			JTFTeamGoal.setEditable(false);
 			JTFProject.setEditable(false);
