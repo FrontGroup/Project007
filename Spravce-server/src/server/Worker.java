@@ -18,88 +18,88 @@ public abstract class Worker {
     public static Worker getWorker(String msg, DBCInt dbc) {
         Worker.split = msg.split(" ");
         Worker.dbc = dbc;
-        if (split[0].contains("LOGIN")) {
+        if (split[0].equals("LOGIN")) {
             return new Login();
         }
-        if (split[0].contains("GET_USERS")) {
+        if (split[0].equals("GET_USERS")) {
             return new GetUsers();
         }
-        if (split[0].contains("GET_INFO")) {
+        if (split[0].equals("GET_INFO")) {
             return new GetInfo();
         }
-        if (split[0].contains("ADD_USER")) {
+        if (split[0].equals("ADD_USER")) {
             return new AddUser();
         }
-        if (split[0].contains("DEL_USER")) {
+        if (split[0].equals("DEL_USER")) {
             return new DelUser();
         }
-        if (split[0].contains("CHANGE_PASS")) {
+        if (split[0].equals("CHANGE_PASS")) {
             return new ChangePass();
         }
-        if (split[0].contains("ADMIN_CHANGE_PASS")) {
+        if (split[0].equals("ADMIN_CHANGE_PASS")) {
             return new AdminChangePass();
         }
-        if (split[0].contains("GET_GROUPS")) {
+        if (split[0].equals("GET_GROUPS")) {
             return new GetGroups();
         }
-        if (split[0].contains("GET_ITEMS")) {
+        if (split[0].equals("GET_ITEMS")) {
             return new GetItems();
         }
-        if (split[0].contains("GET_TEAMS")) {
+        if (split[0].equals("GET_TEAMS")) {
             return new GetTeams();
         }
-        if (split[0].contains("ADD_ITEM")) {
+        if (split[0].equals("ADD_ITEM")) {
             return new AddItem();
         }
-        if (split[0].contains("DEL_ITEM")) {
+        if (split[0].equals("DEL_ITEM")) {
             return new DelItem();
         }
-        if (split[0].contains("UPDATE_ITEM")) {
+        if (split[0].equals("UPDATE_ITEM")) {
             return new UpdateItem();
         }
-        if (split[0].contains("ADD_TEAM")) {
+        if (split[0].equals("ADD_TEAM")) {
             return new AddTeam();
         }
-        if (split[0].contains("DEL_TEAM")) {
+        if (split[0].equals("DEL_TEAM")) {
             return new DelTeam();
         }
-        if (split[0].contains("UPDATE_USER")) {
+        if (split[0].equals("UPDATE_USER")) {
             return new UpdateUser();
         }
-        if (split[0].contains("ADD_GROUP")) {
+        if (split[0].equals("ADD_GROUP")) {
             return new AddGroup();
         }
-        if (split[0].contains("DEL_GROUP")) {
+        if (split[0].equals("DEL_GROUP")) {
             return new DelGroup();
         }
-        if (split[0].contains("UPDATE_GROUP")) {
+        if (split[0].equals("UPDATE_GROUP")) {
             return new UpdateGroup();
         }
-        if (split[0].contains("GET_USER_ITEMS")) {
+        if (split[0].equals("GET_USER_ITEMS")) {
             return new GetUserItems();
         }
-        if (split[0].contains("GET_USER_TEAMS")) {
+        if (split[0].equals("GET_USER_TEAMS")) {
             return new GetUserTeams();
         }
-        if (split[0].contains("GET_PM_TEAMS")) {
+        if (split[0].equals("GET_PM_TEAMS")) {
             return new GetPMTeams();
         }
-        if (split[0].contains("GET_TEAM_USERS")) {
+        if (split[0].equals("GET_TEAM_USERS")) {
             return new GetTeamUsers();
         }
-        if (split[0].contains("USER_IN_TEAM")) {
+        if (split[0].equals("USER_IN_TEAM")) {
             return new UserInTeam();
         }
-        if (split[0].contains("USER_OUT_TEAM")) {
+        if (split[0].equals("USER_OUT_TEAM")) {
             return new UserOutTeam();
         }
-        if (split[0].contains("SET_TEAM_CONFIRMED")) {
+        if (split[0].equals("SET_TEAM_CONFIRMED")) {
             return new SetTeamConfirmed();
         }
-        if (split[0].contains("UPDATE_TEAM")) {
+        if (split[0].equals("UPDATE_TEAM")) {
             return new UpdateTeam();
         }
-        if (split[0].contains("SET_ITEM_STATE")) {
+        if (split[0].equals("SET_ITEM_STATE")) {
             return new SetItemState();
         }
         return null;
@@ -344,7 +344,7 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             boolean confirmed = true;
-            if (split[3].contains("false") || split[3].contains("0")) {
+            if (split[3].equals("false") || split[3].equals("0")) {
                 confirmed = false;
             }
             return dbc.setTeamConfirmed(split[1], split[2], confirmed);
@@ -359,7 +359,7 @@ public abstract class Worker {
                 return "KO Wrong requirement!";
             }
             boolean state = true;
-            if (split[3].contains("false") || split[3].contains("0")) {
+            if (split[3].equals("false") || split[3].equals("0")) {
                 state = false;
             }
             return dbc.setItemState(split[1], split[2], state);
