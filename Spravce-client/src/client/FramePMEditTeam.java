@@ -159,9 +159,13 @@ public class FramePMEditTeam extends JFrame {
 		JBAddMembers.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				int userId = Integer.parseInt(JOptionPane
-						.showInputDialog("Enter user's ID"));
-				addMember(loadUser(userId));
+				if (JOptionPane.showConfirmDialog(null,
+						"This action do not appear in the database! Continue?",
+						"Warning", JOptionPane.WARNING_MESSAGE) == 0) {
+					addMember(loadUser(Integer.parseInt(JOptionPane
+							.showInputDialog("Enter user's ID"))));
+
+				}
 				// TODO Need displaying window for looking users
 			}
 		});
@@ -170,10 +174,12 @@ public class FramePMEditTeam extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"This action do not appear in the database!", "Warning",
-						JOptionPane.WARNING_MESSAGE);
-				removeMember(JLMembers.getSelectedIndices());
+				if (JOptionPane.showConfirmDialog(null,
+						"This action do not appear in the database! Continue?",
+						"Warning", JOptionPane.WARNING_MESSAGE) == 0) {
+					removeMember(JLMembers.getSelectedIndices());
+
+				}
 			}
 		});
 		JButton JBShowDetail = new JButton("Show member's detail");
@@ -261,10 +267,14 @@ public class FramePMEditTeam extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Need working database
-				JOptionPane.showMessageDialog(null, "Not implemented yet.",
-						"IMPLEMENTATION MISSING",
-						JOptionPane.INFORMATION_MESSAGE);
+				SourceTeam st = new SourceTeam();
+				String ut = st.delTeam(team.getId());
+				if (ut.startsWith("KO")) {
+					JOptionPane.showMessageDialog(null, ut.substring(3),
+							"Error in loading", JOptionPane.ERROR_MESSAGE);
+				}
+				JOptionPane.showMessageDialog(null, "Team has been deleted..",
+						"Team deleted", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		JButton JBArchiveTeam = new JButton("Archive team");
