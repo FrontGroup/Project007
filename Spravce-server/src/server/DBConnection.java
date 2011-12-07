@@ -6,7 +6,7 @@ import java.sql.*;
  *
  * @author beretis
  */
-public class DBConnection {
+public class DBConnection implements DBCInt{
 
     private Connection connect = null;
     private Statement statement = null;
@@ -45,6 +45,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String login(String id, String pass) {
         try {
             int role = 0;
@@ -79,6 +80,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String addUser(int Groups_idGroups, String pass, String name, String lastname, String address, String city, String email, String phone, int role) {
         try {
             String query = "INSERT into Users (Groups_idGroups, pass, name, lastname, address, city, email, phone, role)  VALUES ('" + Groups_idGroups + "', '" + pass + "', '" + name
@@ -102,6 +104,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String changePass(String id, String oldpass, String newpass) {
         String query = "UPDATE Users SET pass = '" + newpass + "' WHERE id ='" + id + "' and pass ='" + oldpass + "'";
         try {
@@ -135,6 +138,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String deleteUser(String id) {
         try {
             String query = "DELETE from Users WHERE id = '" + id + "'";
@@ -182,6 +186,7 @@ public class DBConnection {
         this.db_address = db_address;
     }
 
+    @Override
     public String adminChangePass(String id, String newpass) {
         String query = "UPDATE Users SET pass = '" + newpass + "' WHERE id ='" + id + "'";
         try {
@@ -198,6 +203,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String getInfo(String id) {
         String query = "Select * from Users where id=" + id;
         try {
@@ -222,6 +228,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String getGroups() {
         try {
             String result = "";
@@ -327,6 +334,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String getItems() {
         try {
             String result = "";
@@ -343,6 +351,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String getTeams() {
         try {
             String result = "";
@@ -365,6 +374,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String getUserItems(String idUser) {
         try {
             String result = "";
@@ -381,7 +391,8 @@ public class DBConnection {
         }
     }
 
-    String getUserTeams(String idUser) {
+    @Override
+    public String getUserTeams(String idUser) {
         try {
             String result = "";
             sql = "Select * from Teams_has_Users where Users_id=" + idUser;
@@ -397,16 +408,19 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String addItem(String name) {
         sql = "Insert into Items (name) values('" + name + "')";
         return executeSql(sql);
     }
 
+    @Override
     public String addTeam(String pm, String name, String project, String info, String goal) {
         sql = "Insert into Teams (name,project,info,goal) values('" + name + "','" + project + "','" + info + "','" + goal + "')";
         return executeSql(sql);
     }
 
+    @Override
     public String addGroup(String name, int[] idItems) {
         try {
             sql = "Insert into Groups (name) values('" + name + "')";
@@ -430,6 +444,7 @@ public class DBConnection {
         return "OK";
     }
 
+    @Override
     public String delTeam(String id) {
         sql = "Delete from Teams_has_Users where Teams_id='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
@@ -442,6 +457,7 @@ public class DBConnection {
         return "OK";
     }
 
+    @Override
     public String delGroup(String id) {
         sql = "Delete from Groups_has_Items where Groups_idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
@@ -454,17 +470,20 @@ public class DBConnection {
         return "OK";
     }
 
+    @Override
     public String delItem(String id) {
         sql = "Delete from Items where id='" + id + "'";
         return executeSql(sql);
     }
 
+    @Override
     public String updateUser(String id, String name, String lastname, String address, String city, String email, String phone, String professia) {
         String query = "Update Users set name = '" + name + "'," + "lastname = '" + lastname + "'," + "address = '" + address + "',"
                 + "city = '" + city + "'," + "email = '" + email + "'," + "phone = '" + phone + "'," + "professia = '" + professia + "' where id = '" + id + "'";
         return executeSql(query);
     }
 
+    @Override
     public String updateTeam(String id, String pm, String name, String project, String info, String goal)//
     {
         String query = "Update Teams set id = '" + id + "'," + "pm = '" + pm + "'," + "name = '" + name + "'," + "project = '" + project + "',"
@@ -472,6 +491,7 @@ public class DBConnection {
         return executeSql(query);
     }
 
+    @Override
     public String updateGroup(String id, String name, int[] idItems) {
         sql = "Update Groups set name='" + name + "' where idGroups='" + id + "'";
         if (!executeSql(sql).equals("OK")) {
@@ -490,31 +510,37 @@ public class DBConnection {
         return "OK";
     }
 
+    @Override
     public String updateItem(String id, String name) {
         sql = "Update Items set name='" + name + "' WHERE id='" + id + "'";
         return executeSql(sql);
     }
 
+    @Override
     public String userInTeam(String idUser, String idTeam) {
         sql = "Replace into Teams_has_Users (Teams_id, Users_id) values('" + idTeam + "', '" + idUser + "')";
         return executeSql(sql);
     }
 
+    @Override
     public String userOutTeam(String idUser, String idTeam) {
         sql = "Delete Teams_has_Users where Teams_id = '" + idTeam + "' and Users_id = '" + idUser + "'";
         return executeSql(sql);
     }
 
+    @Override
     public String setTeamConfirmed(String idUser, String idTeam, boolean confirmed) {
         sql = "Update Teams_has_Users set confirmed='" + confirmed + "' WHERE Users_id='" + idUser + "' and Teams_id='" + idTeam + "'";
         return executeSql(sql);
     }
 
+    @Override
     public String setItemState(String idUser, String idItem, boolean state) {
         sql = "Update Users_has_Items set state='" + state + "' WHERE Users_id='" + idUser + "' and Items_id='" + idItem + "'";
         return executeSql(sql);
     }
 
+    @Override
     public String getUsers() {
         try {
             String result = "";
@@ -531,6 +557,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String getPMTeams(String idPM) {
         try {
             String result = "";
@@ -553,6 +580,7 @@ public class DBConnection {
         }
     }
 
+    @Override
     public String getTeamUsers(String idTeam) {
         try {
             String result = "";
@@ -568,4 +596,5 @@ public class DBConnection {
             return "KO Error in database!";
         }
     }
+
 }

@@ -11,101 +11,101 @@ package server;
 public abstract class Worker {
 
     private static String[] split = null;
-    private static DBConnection dbc = null;
+    private static DBCInt dbc = null;
 
     public abstract String process();
 
-    public static Worker getWorker(String msg, DBConnection dbc) {
+    public static Worker getWorker(String msg, DBCInt dbc) {
         Worker.split = msg.split(" ");
         Worker.dbc = dbc;
         if (split[0].contains("LOGIN")) {
-            return new login();
+            return new Login();
         }
         if (split[0].contains("GET_USERS")) {
-            return new getUsers();
+            return new GetUsers();
         }
         if (split[0].contains("GET_INFO")) {
-            return new getInfo();
+            return new GetInfo();
         }
         if (split[0].contains("ADD_USER")) {
-            return new addUser();
+            return new AddUser();
         }
         if (split[0].contains("DEL_USER")) {
-            return new delUser();
+            return new DelUser();
         }
         if (split[0].contains("CHANGE_PASS")) {
-            return new changePass();
+            return new ChangePass();
         }
         if (split[0].contains("ADMIN_CHANGE_PASS")) {
-            return new adminChangePass();
+            return new AdminChangePass();
         }
         if (split[0].contains("GET_GROUPS")) {
-            return new getGroups();
+            return new GetGroups();
         }
         if (split[0].contains("GET_ITEMS")) {
-            return new getItems();
+            return new GetItems();
         }
         if (split[0].contains("GET_TEAMS")) {
-            return new getTeams();
+            return new GetTeams();
         }
         if (split[0].contains("ADD_ITEM")) {
-            return new addItem();
+            return new AddItem();
         }
         if (split[0].contains("DEL_ITEM")) {
-            return new delItem();
+            return new DelItem();
         }
         if (split[0].contains("UPDATE_ITEM")) {
-            return new updateItem();
+            return new UpdateItem();
         }
         if (split[0].contains("ADD_TEAM")) {
-            return new addTeam();
+            return new AddTeam();
         }
         if (split[0].contains("DEL_TEAM")) {
-            return new delTeam();
+            return new DelTeam();
         }
         if (split[0].contains("UPDATE_USER")) {
-            return new updateUser();
+            return new UpdateUser();
         }
         if (split[0].contains("ADD_GROUP")) {
-            return new addGroup();
+            return new AddGroup();
         }
         if (split[0].contains("DEL_GROUP")) {
-            return new delGroup();
+            return new DelGroup();
         }
         if (split[0].contains("UPDATE_GROUP")) {
-            return new updateGroup();
+            return new UpdateGroup();
         }
         if (split[0].contains("GET_USER_ITEMS")) {
-            return new getUserItems();
+            return new GetUserItems();
         }
         if (split[0].contains("GET_USER_TEAMS")) {
-            return new getUserTeams();
+            return new GetUserTeams();
         }
         if (split[0].contains("GET_PM_TEAMS")) {
-            return new getPMTeams();
+            return new GetPMTeams();
         }
         if (split[0].contains("GET_TEAM_USERS")) {
-            return new getTeamUsers();
+            return new GetTeamUsers();
         }
         if (split[0].contains("USER_IN_TEAM")) {
-            return new userInTeam();
+            return new UserInTeam();
         }
         if (split[0].contains("USER_OUT_TEAM")) {
-            return new userOutTeam();
+            return new UserOutTeam();
         }
         if (split[0].contains("SET_TEAM_CONFIRMED")) {
-            return new setTeamConfirmed();
+            return new SetTeamConfirmed();
         }
         if (split[0].contains("UPDATE_TEAM")) {
-            return new updateTeam();
+            return new UpdateTeam();
         }
         if (split[0].contains("SET_ITEM_STATE")) {
-            return new setItemState();
+            return new SetItemState();
         }
         return null;
     }
 
-    public static class login extends Worker {
+    public static class Login extends Worker {
 
         @Override
         public String process() {
@@ -116,7 +116,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getInfo extends Worker {
+    public static class GetInfo extends Worker {
 
         @Override
         public String process() {
@@ -127,7 +127,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getUsers extends Worker {
+    public static class GetUsers extends Worker {
 
         @Override
         public String process() {
@@ -138,7 +138,7 @@ public abstract class Worker {
         }
     }
 
-    public static class addUser extends Worker {
+    public static class AddUser extends Worker {
 
         @Override
         public String process() {
@@ -149,7 +149,7 @@ public abstract class Worker {
         }
     }
 
-    public static class delUser extends Worker {
+    public static class DelUser extends Worker {
 
         @Override
         public String process() {
@@ -160,7 +160,7 @@ public abstract class Worker {
         }
     }
 
-    public static class changePass extends Worker {
+    public static class ChangePass extends Worker {
 
         @Override
         public String process() {
@@ -171,7 +171,7 @@ public abstract class Worker {
         }
     }
 
-    public static class adminChangePass extends Worker {
+    public static class AdminChangePass extends Worker {
 
         @Override
         public String process() {
@@ -182,7 +182,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getItems extends Worker {
+    public static class GetItems extends Worker {
 
         @Override
         public String process() {
@@ -193,7 +193,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getTeams extends Worker {
+    public static class GetTeams extends Worker {
 
         @Override
         public String process() {
@@ -204,7 +204,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getUserItems extends Worker {
+    public static class GetUserItems extends Worker {
 
         @Override
         public String process() {
@@ -215,7 +215,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getUserTeams extends Worker {
+    public static class GetUserTeams extends Worker {
 
         @Override
         public String process() {
@@ -226,7 +226,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getGroups extends Worker {
+    public static class GetGroups extends Worker {
 
         @Override
         public String process() {
@@ -237,7 +237,7 @@ public abstract class Worker {
         }
     }
 
-    public static class addItem extends Worker {
+    public static class AddItem extends Worker {
 
         @Override
         public String process() {
@@ -248,7 +248,7 @@ public abstract class Worker {
         }
     }
 
-    public static class delItem extends Worker {
+    public static class DelItem extends Worker {
 
         @Override
         public String process() {
@@ -259,7 +259,7 @@ public abstract class Worker {
         }
     }
 
-    public static class updateItem extends Worker {
+    public static class UpdateItem extends Worker {
 
         @Override
         public String process() {
@@ -270,7 +270,7 @@ public abstract class Worker {
         }
     }
 
-    public static class updateUser extends Worker {
+    public static class UpdateUser extends Worker {
 
         @Override
         public String process() {
@@ -281,7 +281,7 @@ public abstract class Worker {
         }
     }
 
-    public static class addTeam extends Worker {
+    public static class AddTeam extends Worker {
 
         @Override
         public String process() {
@@ -292,7 +292,7 @@ public abstract class Worker {
         }
     }
 
-    public static class updateTeam extends Worker {
+    public static class UpdateTeam extends Worker {
 
         @Override
         public String process() {
@@ -303,7 +303,7 @@ public abstract class Worker {
         }
     }
 
-    public static class delTeam extends Worker {
+    public static class DelTeam extends Worker {
 
         @Override
         public String process() {
@@ -314,7 +314,7 @@ public abstract class Worker {
         }
     }
 
-    public static class userInTeam extends Worker {
+    public static class UserInTeam extends Worker {
 
         @Override
         public String process() {
@@ -325,7 +325,7 @@ public abstract class Worker {
         }
     }
 
-    public static class userOutTeam extends Worker {
+    public static class UserOutTeam extends Worker {
 
         @Override
         public String process() {
@@ -336,7 +336,7 @@ public abstract class Worker {
         }
     }
 
-    public static class setTeamConfirmed extends Worker {
+    public static class SetTeamConfirmed extends Worker {
 
         @Override
         public String process() {
@@ -351,7 +351,7 @@ public abstract class Worker {
         }
     }
 
-    public static class setItemState extends Worker {
+    public static class SetItemState extends Worker {
 
         @Override
         public String process() {
@@ -366,7 +366,7 @@ public abstract class Worker {
         }
     }
 
-    public static class addGroup extends Worker {
+    public static class AddGroup extends Worker {
 
         @Override
         public String process() {
@@ -381,7 +381,7 @@ public abstract class Worker {
         }
     }
 
-    public static class updateGroup extends Worker {
+    public static class UpdateGroup extends Worker {
 
         @Override
         public String process() {
@@ -396,7 +396,7 @@ public abstract class Worker {
         }
     }
 
-    public static class delGroup extends Worker {
+    public static class DelGroup extends Worker {
 
         @Override
         public String process() {
@@ -407,7 +407,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getPMTeams extends Worker {
+    public static class GetPMTeams extends Worker {
 
         @Override
         public String process() {
@@ -418,7 +418,7 @@ public abstract class Worker {
         }
     }
 
-    public static class getTeamUsers extends Worker {
+    public static class GetTeamUsers extends Worker {
 
         @Override
         public String process() {

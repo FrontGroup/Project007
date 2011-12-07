@@ -16,7 +16,7 @@ import static org.junit.Assert.*;
  * @author lucas
  */
 public class WorkerTest {
-
+    
     public WorkerTest() {
     }
 
@@ -27,25 +27,23 @@ public class WorkerTest {
     @AfterClass
     public static void tearDownClass() throws Exception {
     }
-
+    
     @Before
     public void setUp() {
     }
-
+    
     @After
     public void tearDown() {
     }
 
-    /**
-     * Test of getWorker method, of class Worker.
-     */
+
     @Test
-    public void testGetWorker() {
-        System.out.println("getWorker ADD_USER");
-        String msg = "ADD_USER";
-        DBConnection dbc = null;
-        Worker expResult = new Worker.addUser();
+    public void testAddUser() {
+        String msg = "ADD_USER 2 3 4";
+        TestClassDBC dbc = new TestClassDBC();
         Worker result = Worker.getWorker(msg, dbc);
-        assertTrue("NO",result instanceof Worker.addUser);
+        assertTrue("AddUser class failed", result instanceof Worker.AddUser);
+        assertTrue("AddUser process failed", result.process().contains("OK"));
     }
+
 }
