@@ -7,6 +7,7 @@ package client;
 import org.junit.Ignore;
 import client.AdminRole.Pair;
 import java.util.Arrays;
+import java.util.Iterator;
 import javax.swing.JMenuItem;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
@@ -34,7 +35,13 @@ public class AdminRoleTest {
     public void testAdminRole() {
         Role r = new AdminRole();
         Iterable<JMenuItem> is = r.getMenuItems();
-        assertEquals("Add user", is.iterator().next().getText());
+        boolean contains = false;
+        Iterator<JMenuItem> i = is.iterator();
+        while (i.hasNext()) {
+            contains |= i.next().getText().equals("Add user");
+        }
+        assertTrue("Menu item included.", contains);
+        //assertEquals("Add user", is.iterator().next().getText());
     }
 
     @Test
