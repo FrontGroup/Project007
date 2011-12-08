@@ -149,8 +149,8 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String delUser(int idUser) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("DEL_USER " + idUser);
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("DEL_USER " + idUser);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -159,7 +159,7 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String updateUser(int idUser, User user) {
-        ServerConnection sc = ServerConnection.getInstance();
+        //ServerConnection sc = ServerConnection.getInstance();
         String s = "UPDATE_USER ";
         s += idUser + " ";
         s += user.getName() + " ";
@@ -169,7 +169,7 @@ public class SourceUser implements SourceUserInt {
         s += user.getEmail() + " ";
         s += user.getPhone() + " ";
         s += user.getProfession();
-        String response = sc.sendMSG(s);
+        String response = conn.sendMSG(s);
         if (response.startsWith("KO")) {
             return response;
         }

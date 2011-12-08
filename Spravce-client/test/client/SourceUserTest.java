@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package client;
 
 import org.junit.After;
@@ -138,7 +137,7 @@ public class SourceUserTest {
     @Test
     public void testAddUser() {
         System.out.println("addUser");
-        SCMockup sc=new SCMockup();
+        SCMockup sc = new SCMockup();
         User user = new User(2, 3, "kocka");
         SourceUser instance = new SourceUser(sc);
         String expResult = "ADD_USER 2 3 kocka";
@@ -155,13 +154,10 @@ public class SourceUserTest {
     @Test
     public void testDelUser() {
         System.out.println("delUser");
-        int idUser = 0;
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.delUser(idUser);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SCMockup sc = new SCMockup();
+        SourceUser instance = new SourceUser(sc);
+        instance.delUser(44);
+        assertEquals("DEL_USER 44", sc.message);
     }
 
     /**
@@ -170,14 +166,14 @@ public class SourceUserTest {
     @Test
     public void testUpdateUser() {
         System.out.println("updateUser");
+        SCMockup sc = new SCMockup();
         int idUser = 0;
-        User user = null;
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.updateUser(idUser, user);
-        assertEquals(expResult, result);
+        User user = new User(6, 2, 3, "Honza", "Krabat", null, null, null, null, null);//new User(6, 3, "heslo", "Jmeno", "Prijmeni", "adresa", "mesto", "", "", "");
+        SourceUser instance = new SourceUser(sc);
+        instance.updateUser(6, user);
+        assertEquals("UPDATE_USER 6 Honza Krabat null null null null null" ,sc.message);
         // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        //fail("The test case is a prototype.");
     }
 
     /**
@@ -194,5 +190,4 @@ public class SourceUserTest {
         // TODO review the generated test code and remove the default call to fail.
         fail("The test case is a prototype.");
     }
-
 }
