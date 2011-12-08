@@ -425,7 +425,7 @@ public class DBConnection implements DBCInt {
 
     @Override
     public String addTeam(String pm, String name, String project, String info, String goal) {
-        sql = "Insert into Teams (name,project,info,goal) values('" + name + "','" + project + "','" + info + "','" + goal + "')";
+        sql = "Insert into Teams (pm,name,project,info,goal) values('" + pm + "','" + name + "','" + project + "','" + info + "','" + goal + "')";
         return executeSql(sql);
     }
 
