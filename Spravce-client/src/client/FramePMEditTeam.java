@@ -40,7 +40,8 @@ public class FramePMEditTeam extends JFrame {
 		teamLeader.setText(PM.getFullName());
 		this.editing = true;
 		this.newTeam = true;
-		team = new Team(PM.getId());
+		team = new Team();
+		team.setPm(PM.getId());
 		initComponents();
 	}
 
@@ -242,10 +243,21 @@ public class FramePMEditTeam extends JFrame {
 					}
 
 					SourceTeam st = new SourceTeam();
-					String ut = st.updateTeam(team.getId(), team);
-					if (ut.startsWith("KO")) {
-						JOptionPane.showMessageDialog(null, ut.substring(3),
-								"Error in loading", JOptionPane.ERROR_MESSAGE);
+
+					if (newTeam) {
+						String ut = st.addTeam(team);
+						if (ut.startsWith("KO")) {
+							JOptionPane.showMessageDialog(null,
+									ut.substring(3), "Error in loading",
+									JOptionPane.ERROR_MESSAGE);
+						}
+					} else {
+						String ut = st.updateTeam(team.getId(), team);
+						if (ut.startsWith("KO")) {
+							JOptionPane.showMessageDialog(null,
+									ut.substring(3), "Error in loading",
+									JOptionPane.ERROR_MESSAGE);
+						}
 					}
 
 					JOptionPane.showMessageDialog(null, "Changes saved.", "OK",
