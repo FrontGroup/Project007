@@ -10,6 +10,7 @@ import java.util.Random;
 
 import javax.swing.DefaultListModel;
 import javax.swing.JButton;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JList;
@@ -18,7 +19,9 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextField;
 
-public class FramePMEditTeam extends JFrame {
+import com.sun.xml.internal.ws.Closeable;
+
+public class FramePMEditTeam extends JDialog {
 
 	private boolean editing, newTeam;
 
@@ -36,6 +39,7 @@ public class FramePMEditTeam extends JFrame {
 	private static JList JLMembers = new JList();
 
 	public FramePMEditTeam(int id) {
+		members.clear();
 		this.PM = loadUser(id);
 		teamLeader.setText(PM.getFullName());
 		this.editing = true;
@@ -46,17 +50,12 @@ public class FramePMEditTeam extends JFrame {
 	}
 
 	public FramePMEditTeam(int userId, int teamId, boolean editing) {
+		members.clear();
 		this.PM = loadUser(userId);
 		teamLeader.setText(PM.getFullName());
-		/*
-		 * if (teamId == ) { JOptionPane.showMessageDialog(null,
-		 * "Error in concstructor FramePMEditTeam", "Error",
-		 * JOptionPane.ERROR_MESSAGE); } else {
-		 */
 		this.editing = editing;
 		this.team = loadTeam(teamId);
 		this.team.loadMembers();
-		// }
 		fillInForm();
 		takeMembers();
 		initComponents();
@@ -89,6 +88,7 @@ public class FramePMEditTeam extends JFrame {
 		setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 		setSize(450, 500);
 		setMinimumSize(new Dimension(400, 500));
+		setModal(true);
 
 		getContentPane().setLayout(new GridLayout(3, 1));
 		getContentPane().add(JPTeamInformation());

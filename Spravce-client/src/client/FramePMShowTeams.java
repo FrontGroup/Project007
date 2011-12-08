@@ -37,6 +37,8 @@ public class FramePMShowTeams extends JFrame {
 			"Number of members"*/ };
 
 	public FramePMShowTeams(int id) {
+		activeTeams.clear();
+		archivedTeams.clear();
 		SourceUser su = new SourceUser();
 		
 		String ld = su.loadData(id);
@@ -78,7 +80,7 @@ public class FramePMShowTeams extends JFrame {
 		setVisible(true);
 	}
 
-	public JScrollPane JSPActiveTeams() {
+	private JScrollPane JSPActiveTeams() {
 		JPanel panel = new JPanel();
 		GridBagLayout gridbag = new GridBagLayout();
 		GridBagConstraints constraint = new GridBagConstraints();
@@ -141,6 +143,7 @@ public class FramePMShowTeams extends JFrame {
 					}
 					new FramePMEditTeam(PM.getId(), Integer.parseInt(idE), true)
 							.setVisible(true);
+					reloadPage();
 				}
 			};
 			editButtons[tmpE].addActionListener(editListeners[tmpE]);
@@ -265,5 +268,35 @@ public class FramePMShowTeams extends JFrame {
 
 		JScrollPane jsp = new JScrollPane(panel);
 		return (JScrollPane) jsp;
+	}
+	
+	private void reloadPage(){
+		activeTeams.clear();
+		archivedTeams.clear();
+		SourceUser su = new SourceUser();
+		
+		String ld = su.loadData(this.PM.getId());
+		
+		if (ld.startsWith("KO")) {
+			JOptionPane.showMessageDialog(null, ld.substring(3),
+					"Error in loading", JOptionPane.ERROR_MESSAGE);
+		}
+		SourceTeam st = new SourceTeam();
+		
+		String ldfpm = st.loadDataFromPM(this.PM.getId());
+		
+		if (ldfpm.startsWith("KO")){
+			JOptionPane.showMessageDialog(null, ldfpm.substring(3),
+					"Error in loading", JOptionPane.ERROR_MESSAGE);
+		}
+		for (Team t : st.getAllTeams().values()) {
+			if (t.isActive()) {
+				activeTeams.put(t.getId(), t);
+			} else {
+				archivedTeams.put(t.getId(), t);
+			}
+		}
+		getContentPane().removeAll();
+		initComponents();
 	}
 }
