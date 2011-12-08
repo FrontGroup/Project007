@@ -134,6 +134,7 @@ public class Team {
 	}
 
 	public void loadMembers() {
+		removeAllMembers();
 		SourceTeam st = new SourceTeam();
 		String lusit = st.loadUserStatusInTeam(this.id);
 		if (lusit.startsWith("KO")) {
