@@ -18,6 +18,12 @@ public class SourceUser implements SourceUserInt {
     private int[] idUsers = null;
 
     public SourceUser() {
+        conn = ServerConnection.getInstance();
+    }
+    ServerConnectionInterface conn;
+
+    SourceUser(ServerConnectionInterface sc) {
+        conn = sc;
     }
 
     private void saveData(String response, int id) {
@@ -40,7 +46,7 @@ public class SourceUser implements SourceUserInt {
         if (response.startsWith("KO")) {
             return response;
         }
-        if (response.length()>0) {
+        if (response.length() > 0) {
             String[] split = response.split(";");
             for (int i = 0; i < split.length; i++) {
                 String[] s = split[i].split(" ");
@@ -52,7 +58,7 @@ public class SourceUser implements SourceUserInt {
         if (response.startsWith("KO")) {
             return response;
         }
-        if (response.length()>0) {
+        if (response.length() > 0) {
             String[] split = response.split(";");
             for (int i = 0; i < split.length; i++) {
                 String[] s = split[i].split(" ");
@@ -129,7 +135,7 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String addUser(User user) {
-        ServerConnection sc = ServerConnection.getInstance();
+        ServerConnectionInterface sc = conn; //ServerConnection.getInstance();
         String s = "ADD_USER ";
         s += user.getRole() + " ";
         s += user.getGroup() + " ";
