@@ -15,7 +15,7 @@ public class PMRole extends ViewProfile {
 	int id;
 
     public PMRole(int userId) {
-        super();
+        super(userId);
         id = userId;
     }
 
