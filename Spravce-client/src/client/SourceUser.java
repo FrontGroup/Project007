@@ -95,8 +95,8 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String setTeam(int idUser, int idTeam) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("USER_IN_TEAM " + idUser + " " + idTeam);
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("USER_IN_TEAM " + idUser + " " + idTeam);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -105,8 +105,8 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String delTeam(int idUser, int idTeam) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("USER_OUT_TEAM " + idUser + " " + idTeam);
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("USER_OUT_TEAM " + idUser + " " + idTeam);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -115,8 +115,8 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String setTeamConfirmed(int idUser, int idTeam, boolean confirmed) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("SET_TEAM_CONFIRMED " + idUser + " " + idTeam + " " + confirmed);
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("SET_TEAM_CONFIRMED " + idUser + " " + idTeam + " " + confirmed);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -125,8 +125,8 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String setItemState(int idUser, int idItem, boolean state) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("SET_ITEM_STATE " + idUser + " " + idItem + " " + state);
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("SET_ITEM_STATE " + idUser + " " + idItem + " " + state);
         if (response.startsWith("KO")) {
             return response;
         }

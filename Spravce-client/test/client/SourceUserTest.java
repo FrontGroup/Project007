@@ -42,7 +42,7 @@ public class SourceUserTest {
     }
 
     /**
-     * Test of getUser method, of class SourceUser.
+     * Test of methods getUser and loadData of class SourceUser.
      */
     @Test
     //@Ignore
@@ -104,70 +104,55 @@ public class SourceUserTest {
      * Test of setTeam method, of class SourceUser.
      */
     @Test
-    @Ignore
+    //@Ignore
     public void testSetTeam() {
         System.out.println("setTeam");
-        int idUser = 0;
-        int idTeam = 0;
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.setTeam(idUser, idTeam);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SCMockup sc = new SCMockup();
+        SourceUser instance = new SourceUser(sc);
+        String result = instance.setTeam(6, 17);
+        assertEquals("OK", result);
+        assertEquals("USER_IN_TEAM 6 17", sc.message);
     }
 
     /**
      * Test of delTeam method, of class SourceUser.
      */
     @Test
-    @Ignore
+    //@Ignore
     public void testDelTeam() {
         System.out.println("delTeam");
-        int idUser = 0;
-        int idTeam = 0;
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.delTeam(idUser, idTeam);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SCMockup sc = new SCMockup();
+        SourceUser instance = new SourceUser(sc);
+        instance.delTeam(7, 17);
+        assertEquals("USER_OUT_TEAM 7 17", sc.message);
     }
 
     /**
      * Test of setTeamConfirmed method, of class SourceUser.
      */
     @Test
-    @Ignore
+    //@Ignore
     public void testSetTeamConfirmed() {
         System.out.println("setTeamConfirmed");
-        int idUser = 0;
-        int idTeam = 0;
-        boolean confirmed = false;
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.setTeamConfirmed(idUser, idTeam, confirmed);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SCMockup sc = new SCMockup();
+        SourceUser instance = new SourceUser(sc);
+        String result = instance.setTeamConfirmed(10, 20, true);
+        assertEquals("OK", result);
+        assertEquals("SET_TEAM_CONFIRMED 10 20 true", sc.message);
     }
 
     /**
      * Test of setItemState method, of class SourceUser.
      */
     @Test
-    @Ignore
+    //@Ignore
     public void testSetItemState() {
         System.out.println("setItemState");
-        int idUser = 0;
-        int idItem = 0;
-        boolean state = false;
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.setItemState(idUser, idItem, state);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        SCMockup sc = new SCMockup();
+        SourceUser instance = new SourceUser(sc);
+        String result = instance.setItemState(16, 6, false);
+        assertEquals("OK", result);
+        assertEquals("SET_ITEM_STATE 16 6 false", sc.message);
     }
 
     /**
