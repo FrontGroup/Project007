@@ -4,6 +4,11 @@
  */
 package client;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.List;
+import java.util.LinkedList;
+import org.junit.Ignore;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -37,38 +42,69 @@ public class SourceUserTest {
     }
 
     /**
-     * Test of loadData method, of class SourceUser.
+     * Test of getUser method, of class SourceUser.
      */
     @Test
-    public void testLoadData_int() {
-        System.out.println("loadData");
+    //@Ignore
+    public void testLoadDataAndGetUser() {
+        System.out.println("LoadDataAndGetUser");
         int id = 0;
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.loadData(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
-    }
+        class MultiSCMockup implements ServerConnectionInterface {
 
-    /**
-     * Test of loadData method, of class SourceUser.
-     */
-    @Test
-    public void testLoadData_0args() {
-        System.out.println("loadData");
-        SourceUser instance = new SourceUser();
-        String expResult = "";
-        String result = instance.loadData();
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+            List<String> messages = new LinkedList<String>();
+            String[] responses;// = new LinkedList<String>();
+            int iresp = 0;
+
+            public MultiSCMockup(String[] cresponses) {
+                responses = cresponses;
+            }
+
+            @Override
+            public void close() {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public String connect(String id, String pass) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+
+            @Override
+            public String sendMSG(String msg) {
+                messages.add(msg);
+                return responses[iresp++];
+            }
+        }
+        MultiSCMockup sc = new MultiSCMockup(new String[]{"2;13;Jan;Jeliman;adresa;city;email;phone;professia", //reply to GET_INFO
+                    "3 false;5 true;", //reply to GET_USER_ITEMS
+                    "15 false;"//reply to GET_USER_TEAMS
+                });
+        SourceUser instance = new SourceUser(sc);
+        String sret = instance.loadData(6);
+        assertEquals("OK", sret);
+        assertEquals("GET_INFO 6", sc.messages.get(0));
+
+        User ures = instance.getUser(6);
+        //Test several values from getUser, getTeams, getItems.
+        //User uexp = new User(6, 2, 13, "Jan", "Jeliman", "adresa", "city", "email", "phone", "professia"); --equals not implemented
+        assertEquals("Jan", ures.getName());
+        assertEquals(13, ures.getGroup());
+
+        Map<Integer, ItemStatus> ires = ures.getItems();
+        assertEquals(2, ires.size());
+        assertTrue(ires.containsKey(3));
+        assertFalse(ires.get(3).isState());
+
+        Map<Integer, TeamStatus> tres = ures.getTeams();
+        assertEquals(1, tres.size());
+        assertTrue(tres.containsKey(15));
     }
 
     /**
      * Test of setTeam method, of class SourceUser.
      */
     @Test
+    @Ignore
     public void testSetTeam() {
         System.out.println("setTeam");
         int idUser = 0;
@@ -85,6 +121,7 @@ public class SourceUserTest {
      * Test of delTeam method, of class SourceUser.
      */
     @Test
+    @Ignore
     public void testDelTeam() {
         System.out.println("delTeam");
         int idUser = 0;
@@ -101,6 +138,7 @@ public class SourceUserTest {
      * Test of setTeamConfirmed method, of class SourceUser.
      */
     @Test
+    @Ignore
     public void testSetTeamConfirmed() {
         System.out.println("setTeamConfirmed");
         int idUser = 0;
@@ -118,6 +156,7 @@ public class SourceUserTest {
      * Test of setItemState method, of class SourceUser.
      */
     @Test
+    @Ignore
     public void testSetItemState() {
         System.out.println("setItemState");
         int idUser = 0;
@@ -171,23 +210,6 @@ public class SourceUserTest {
         User user = new User(6, 2, 3, "Honza", "Krabat", null, null, null, null, null);//new User(6, 3, "heslo", "Jmeno", "Prijmeni", "adresa", "mesto", "", "", "");
         SourceUser instance = new SourceUser(sc);
         instance.updateUser(6, user);
-        assertEquals("UPDATE_USER 6 Honza Krabat null null null null null" ,sc.message);
-        // TODO review the generated test code and remove the default call to fail.
-        //fail("The test case is a prototype.");
-    }
-
-    /**
-     * Test of getUser method, of class SourceUser.
-     */
-    @Test
-    public void testGetUser() {
-        System.out.println("getUser");
-        int id = 0;
-        SourceUser instance = new SourceUser();
-        User expResult = null;
-        User result = instance.getUser(id);
-        assertEquals(expResult, result);
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        assertEquals("UPDATE_USER 6 Honza Krabat null null null null null", sc.message);
     }
 }

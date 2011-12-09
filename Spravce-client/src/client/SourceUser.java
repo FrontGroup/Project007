@@ -35,7 +35,7 @@ public class SourceUser implements SourceUserInt {
 
     @Override
     public String loadData(int id) {
-        ServerConnection sc = ServerConnection.getInstance();
+        ServerConnectionInterface sc = conn;//ServerConnection.getInstance();
         String response = sc.sendMSG("GET_INFO " + id);
         if (response.startsWith("KO")) {
             return response;
