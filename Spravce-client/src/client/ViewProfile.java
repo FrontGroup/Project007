@@ -125,6 +125,8 @@ public class ViewProfile extends JPanel implements Role {
     }
 
     void updateData(){
+        su.loadData(idUser);
+        user = su.getUser(idUser);
         tname.setText(user.getName());
         tlastname.setText(user.getLastName());
         taddress.setText(user.getAddress());
