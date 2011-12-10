@@ -61,13 +61,21 @@ public class FramePMEditTeam extends JDialog {
 
 	private User loadUser(int id) {
 		SourceUser su = new SourceUser();
-		su.loadData(id);
+		String ld = su.loadData(id);
+		if (ld.startsWith("KO")) {
+			JOptionPane.showMessageDialog(null, ld.substring(3),
+					"Error in loading", JOptionPane.ERROR_MESSAGE);
+		}
 		return su.getUser(id);
 	}
 
 	private Team loadTeam(int id) {
 		SourceTeam st = new SourceTeam();
-		st.loadData();
+		String ld = st.loadData();
+		if (ld.startsWith("KO")) {
+			JOptionPane.showMessageDialog(null, ld.substring(3),
+					"Error in loading", JOptionPane.ERROR_MESSAGE);
+		}
 		Team t = st.getTeam(id);
 		return t;
 	}
@@ -101,8 +109,12 @@ public class FramePMEditTeam extends JDialog {
 		JTFTeamName.setText(team.getName());
 		teamLeader.setText(loadUser(team.getPm()).getFullName());
 		JTFTeamGoal.setText(team.getGoal());
-		JTFProject.setText(team.getProject());
-		JTFTeamInfo.setText(team.getInfo());
+		if (!team.getProject().equals("null")) {
+			JTFProject.setText(team.getProject());
+		}
+		if (!team.getInfo().equals("null")) {
+			JTFTeamInfo.setText(team.getInfo());
+		}
 		listModel.removeAllElements();
 		for (User member : team.getMembers().values()) {
 			addMember(member);
@@ -190,7 +202,8 @@ public class FramePMEditTeam extends JDialog {
 					JOptionPane.showMessageDialog(null, "No one was selected!",
 							"Error", JOptionPane.ERROR_MESSAGE);
 				} else {
-					JFrame membersDetail = new JFrame();
+					JDialog membersDetail = new JDialog();
+					membersDetail.setModal(true);
 					JPanel memPan = new ViewProfile(whatIsSelectedId(JLMembers
 							.getSelectedIndex()));
 					membersDetail.add(memPan);
@@ -241,25 +254,31 @@ public class FramePMEditTeam extends JDialog {
 					}
 
 					SourceTeam st = new SourceTeam();
-
 					if (newTeam) {
 						String ut = st.addTeam(team);
 						if (ut.startsWith("KO")) {
 							JOptionPane.showMessageDialog(null,
-									ut.substring(3), "Error in loading",
+									ut.substring(3), "Error in saving",
 									JOptionPane.ERROR_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Changes saved.", "OK",
+									JOptionPane.INFORMATION_MESSAGE);
+							setVisible(false);
 						}
 					} else {
 						String ut = st.updateTeam(team.getId(), team);
 						if (ut.startsWith("KO")) {
 							JOptionPane.showMessageDialog(null,
-									ut.substring(3), "Error in loading",
+									ut.substring(3), "Error in saving",
 									JOptionPane.ERROR_MESSAGE);
+						} else {
+							JOptionPane.showMessageDialog(null,
+									"Changes saved.", "OK",
+									JOptionPane.INFORMATION_MESSAGE);
+							setVisible(false);
 						}
 					}
-
-					JOptionPane.showMessageDialog(null, "Changes saved.", "OK",
-							JOptionPane.INFORMATION_MESSAGE);
 				}
 			}
 		});
@@ -281,10 +300,13 @@ public class FramePMEditTeam extends JDialog {
 				String ut = st.delTeam(team.getId());
 				if (ut.startsWith("KO")) {
 					JOptionPane.showMessageDialog(null, ut.substring(3),
-							"Error in loading", JOptionPane.ERROR_MESSAGE);
+							"Error in deleting", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Team has been deleted.", "Team deleted",
+							JOptionPane.INFORMATION_MESSAGE);
+					setVisible(false);
 				}
-				JOptionPane.showMessageDialog(null, "Team has been deleted..",
-						"Team deleted", JOptionPane.INFORMATION_MESSAGE);
 			}
 		});
 		JButton JBArchiveTeam = new JButton("Archive team");
@@ -297,7 +319,12 @@ public class FramePMEditTeam extends JDialog {
 				String ut = st.updateTeam(team.getId(), team);
 				if (ut.startsWith("KO")) {
 					JOptionPane.showMessageDialog(null, ut.substring(3),
-							"Error in loading", JOptionPane.ERROR_MESSAGE);
+							"Error in archiving", JOptionPane.ERROR_MESSAGE);
+				} else {
+					JOptionPane.showMessageDialog(null,
+							"Team has been archived.", "Team archived",
+							JOptionPane.INFORMATION_MESSAGE);
+					setVisible(false);
 				}
 			}
 		});
