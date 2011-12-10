@@ -38,7 +38,7 @@ public class SourceItemTest {
     }
 
     /**
-     * Test of loadData method, of class SourceItem.
+     * Test of loadData and getItem method, of class SourceItem.
      */
     @Test
     public void testLoadDataAndGetItem() {
@@ -92,5 +92,11 @@ public class SourceItemTest {
     public void testUpdateItem() {
         System.out.println("updateItem");
         int id = 1;
+        Item item = new Item("newName");
+        SCMockup sc = new SCMockup();
+        SourceItem instance = new SourceItem(sc);
+        String result = instance.updateItem(id, item);
+        assertEquals("OK", result);
+        assertEquals("UPDATE_ITEM 1 newName", sc.message);
     }
 }
