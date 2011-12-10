@@ -14,13 +14,19 @@ public class SourceTeam implements SourceTeamInt {
 
     private HashMap<Integer, Team> data = null;
     private HashMap<Integer, TeamStatus> users = null;
+    ServerConnectionInterface conn;
 
     public SourceTeam() {
+        conn = ServerConnection.getInstance();
+    }
+
+    SourceTeam(ServerConnectionInterface sc) {
+        conn = sc;
     }
 
     @Override
     public String loadDataFromPM(int idPM) {
-        ServerConnection sc = ServerConnection.getInstance();
+        ServerConnectionInterface sc = conn;
         String response = sc.sendMSG("GET_PM_TEAMS " + idPM);
         if (response.startsWith("KO")) {
             return response;
@@ -36,7 +42,7 @@ public class SourceTeam implements SourceTeamInt {
 
     @Override
     public String loadData() {
-        ServerConnection sc = ServerConnection.getInstance();
+        ServerConnectionInterface sc = conn;
         String response = sc.sendMSG("GET_TEAMS");
         if (response.startsWith("KO")) {
             return response;
@@ -52,7 +58,7 @@ public class SourceTeam implements SourceTeamInt {
 
     @Override
     public String loadUserStatusInTeam(int idTeam) {
-        ServerConnection sc = ServerConnection.getInstance();
+        ServerConnectionInterface sc = conn;
         users = new HashMap<Integer, TeamStatus>();
         String response = sc.sendMSG("GET_TEAM_USERS " + idTeam);
         if (response.startsWith("KO")) {
@@ -75,8 +81,8 @@ public class SourceTeam implements SourceTeamInt {
 
     @Override
     public String addTeam(Team team) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("ADD_TEAM " + team.getPm() + " " + team.getName() + " " + team.getProject() + " " + team.getInfo() + " " + team.getGoal());
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("ADD_TEAM " + team.getPm() + " " + team.getName() + " " + team.getProject() + " " + team.getInfo() + " " + team.getGoal());
         if (response.startsWith("KO")) {
             return response;
         }
@@ -85,8 +91,8 @@ public class SourceTeam implements SourceTeamInt {
 
     @Override
     public String delTeam(int id) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("DEL_TEAM " + id);
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("DEL_TEAM " + id);
         if (response.startsWith("KO")) {
             return response;
         }
@@ -95,8 +101,8 @@ public class SourceTeam implements SourceTeamInt {
 
     @Override
     public String updateTeam(int id, Team team) {
-        ServerConnection sc = ServerConnection.getInstance();
-        String response = sc.sendMSG("UPDATE_TEAM " + id + " " + team.getPm()
+        //ServerConnection sc = ServerConnection.getInstance();
+        String response = conn.sendMSG("UPDATE_TEAM " + id + " " + team.getPm()
                 + " " + team.getName() + " " + team.getProject() + " "
                 + team.getInfo() + " " + team.getGoal() + " " + team.isActiveToInt());
         if (response.startsWith("KO")) {
