@@ -40,17 +40,13 @@ public class FramePMShowTeams extends JFrame {
 		activeTeams.clear();
 		archivedTeams.clear();
 		SourceUser su = new SourceUser();
-		
 		String ld = su.loadData(id);
-		
 		if (ld.startsWith("KO")) {
 			JOptionPane.showMessageDialog(null, ld.substring(3),
 					"Error in loading", JOptionPane.ERROR_MESSAGE);
 		}
 		SourceTeam st = new SourceTeam();
-		
 		String ldfpm = st.loadDataFromPM(id);
-		
 		if (ldfpm.startsWith("KO")){
 			JOptionPane.showMessageDialog(null, ldfpm.substring(3),
 					"Error in loading", JOptionPane.ERROR_MESSAGE);
@@ -274,17 +270,13 @@ public class FramePMShowTeams extends JFrame {
 		activeTeams.clear();
 		archivedTeams.clear();
 		SourceUser su = new SourceUser();
-		
 		String ld = su.loadData(this.PM.getId());
-		
 		if (ld.startsWith("KO")) {
 			JOptionPane.showMessageDialog(null, ld.substring(3),
 					"Error in loading", JOptionPane.ERROR_MESSAGE);
 		}
 		SourceTeam st = new SourceTeam();
-		
 		String ldfpm = st.loadDataFromPM(this.PM.getId());
-		
 		if (ldfpm.startsWith("KO")){
 			JOptionPane.showMessageDialog(null, ldfpm.substring(3),
 					"Error in loading", JOptionPane.ERROR_MESSAGE);
