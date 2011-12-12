@@ -29,7 +29,7 @@ public class MainFrame extends JFrame {
         userId = id;
         // UI design&layout
         setTitle("Systém SPRÁVCE");
-
+        setSize(300,300);
         menubar = new JMenuBar();
         menubar = new JMenuBar();
         setJMenuBar(menubar);
@@ -61,7 +61,7 @@ public class MainFrame extends JFrame {
         } else {
             System.out.println("Role is not instance of ViewProfile!");
         }
-        pack();
+        //pack();
         // UI event handling
         setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
         addWindowListener(new WindowAdapter() {

@@ -66,8 +66,8 @@ public class LoginFrame extends javax.swing.JFrame {
         JButton cancel = new JButton("cancel");
         warn = new JLabel("");
         warn.setForeground(Color.red);
-        r1.setLayout(new FlowLayout());
-        r2.setLayout(new FlowLayout());
+        r1.setLayout(new FlowLayout(java.awt.FlowLayout.RIGHT));
+        r2.setLayout(new FlowLayout(java.awt.FlowLayout.RIGHT));
         r0.setLayout(new FlowLayout());
         r0.add(warn);
         r1.add(luser);

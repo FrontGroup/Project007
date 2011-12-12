@@ -63,10 +63,10 @@ public class ServerConnection implements ServerConnectionInterface {
      */
     public String sendMSG(String msg) {
         try {
-            System.out.println("OUT:" + msg);
+            //System.out.println("OUT:" + msg);
             out.println(msg);
             String response = in.readLine();
-            System.out.println("IN:" + response);
+            //System.out.println("IN:" + response);
             return response;
         } catch (IOException ex) {
             System.err.println("IO-Exception by running!");
